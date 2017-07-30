@@ -21,5 +21,12 @@ We created a facebook group for keeping in contact and a github for keeping our 
 
 Present Members:
 Ashley
+Misha
+Josh
 
 Agenda: Assign first tasks, review the tasks ahead
+
+What was achieved:
+
+Our tool of online meetings was decided upon (Discord), Josh presented some sketches for the web system UI, further meetings were discussed, the team agreement was discussed and reviewed, and we wrote up a list of questions to ask the tutor in our next tutorial.
+
