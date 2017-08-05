@@ -20,7 +20,7 @@ We created a facebook group for keeping in contact and a github for keeping our 
 1st Meeting: 30/July/2017 7:00PM
 
 Present Members:
-Ashley/n
+Ashley
 Misha
 Josh
 
