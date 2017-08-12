@@ -41,3 +41,15 @@ Agenda: Draw up list of stories to be done
 What was achieved:
 
 System Roles were filled out, A checklist of stories was created, questions for the client were written
+
+3rd Meeting 12/August/2017 1:00PM - 
+
+Present Members:
+Ashley
+Charles
+
+Agenda: Organise stories, alter stories to coinicide with client's wishes
+
+What was achieved:
+
+Stories were reformatted into a single font and format, checklist was updated to include premium options and the effects they have on existing stories
