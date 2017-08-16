@@ -54,12 +54,12 @@ What was achieved:
 
 Stories were reformatted into a single font and format, checklist was updated to include premium options and the effects they have on existing stories
 
-4th Meeting 16/August/2017 10:30AM - 1:00PM
+4th Meeting 16/August/2017 10:30AM - 1:00PM, 2:00PM - 4:00PM
 
 Present Members
 Ashley
 Charles
 
-Agenda: Finalise User Stories, assign point values and priorities
+Agenda: Finalise User Stories with INVEST, assign point values and priorities
 
-What was achieved: User stories finalised, point values began to be assigned
+What was achieved: User stories finalised, checklist cleaned up
