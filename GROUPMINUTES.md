@@ -56,10 +56,22 @@ Stories were reformatted into a single font and format, checklist was updated to
 
 4th Meeting 16/August/2017 10:30AM - 1:00PM, 2:00PM - 4:00PM
 
-Present Members
+Present Members:
 Ashley
 Charles
 
 Agenda: Finalise User Stories with INVEST, assign point values and priorities
 
-What was achieved: User stories finalised, checklist cleaned up
+What was achieved: 8 User stories adjusted to INVEST standards, checklist cleaned up
+
+5th Meeting 17/August/2017 5:30PM - 
+
+Present Members:
+Ashley
+Josh
+Fahd
+
+Agenda: Continue applying INVEST to User stories, begin assigning priorities
+
+What was achieved:
+11 more user stories adjusted to INVEST standards
