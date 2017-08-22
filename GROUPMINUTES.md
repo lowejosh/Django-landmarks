@@ -64,7 +64,7 @@ Agenda: Finalise User Stories with INVEST, assign point values and priorities
 
 What was achieved: 8 User stories adjusted to INVEST standards, checklist cleaned up
 
-5th Meeting 17/August/2017 5:30PM - 
+5th Meeting 17/August/2017 5:30PM - 8:00PM
 
 Present Members:
 Ashley
@@ -75,3 +75,16 @@ Agenda: Continue applying INVEST to User stories, begin assigning priorities
 
 What was achieved:
 11 more user stories adjusted to INVEST standards
+
+6th Meeting 22/August/2017 1:00PM - 3:00PM
+
+Present Members:
+Ashley
+Fahd
+Misha
+Josh
+
+Agenda: Finish applying INVEST to User stories
+
+What was acheived:
+All user stories except #7 have been finalised with regards to INVEST standards
