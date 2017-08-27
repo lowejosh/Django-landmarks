@@ -84,7 +84,20 @@ Fahd
 Mikhail
 Josh
 
-Agenda: Finish applying INVEST to User stories
+Agenda: Finish applying INVEST to user stories
 
 What was acheived:
 All user stories except #7 have been finalised with regards to INVEST standards
+
+7th Meeting 27/August/2017 12:00PM - 3:00PM
+
+Present Members:
+Charles
+Mikhail
+Ashley
+Fahd
+
+Agenda: Remove story dependencies and assign story points
+
+What was achieved:
+User stories condensed down to 30, story points assigned, work on release and sprint plan started
