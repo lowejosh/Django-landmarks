@@ -12,11 +12,14 @@
                     <td>
                         <h1>The Good Boys</h1>
                     </td>
-		    <!-- The navBar is dynamic (just in case) -->
-		    <td align="right">
-			    {{ navBar }}
-			    <!--<h5><a>Log in</a><br /><a>Register</a></h5>-->
-		    </td> 
+					<!-- The navBar is dynamic (just in case) -->
+					<td align="right">
+							<!-- Temporarily turn autoescape off so HTML isn't escaped -->
+							{% autoescape off %} 
+							{{ navBar }}
+							{% endautoescape %}
+					
+					</td> 
                 </tr>
             </tbody>
         </table>
