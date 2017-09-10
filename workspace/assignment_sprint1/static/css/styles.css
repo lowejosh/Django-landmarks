@@ -1,0 +1,44 @@
+html {
+    background-color: #D3D3D3;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+header {
+    height: 10%;
+}
+
+body {
+    height: 90%;
+    position: relative;
+    margin: 0;
+    min-height: 100%;
+    font-family: 'Arial Rounded MT';
+	margin-bottom: 300px; /* Temporary room for footer */
+}
+
+.header {
+    background-color: #808080;
+}
+
+.footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	width: 100%;
+    background-color: #808080;
+	background-attachment: scroll;
+	background-repeat: repeat;
+	background-position: 0% 0%;
+}
+
+.centered-content {
+    text-align: center;
+}
