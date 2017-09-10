@@ -21,4 +21,6 @@ from sprint1 import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^register/', views.register, name='register'),
+    url(r'^signup/', views.signup, name='signup'),
 ]
