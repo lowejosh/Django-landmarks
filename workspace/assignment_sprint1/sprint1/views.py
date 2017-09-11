@@ -26,7 +26,14 @@ def signup(request):
             # Retrieve data from forms and link to the User model
             user = form.save()
             user.refresh_from_db()  # Loads the profile instance created from the signal
+            user.profile.firstName = form.cleaned_data.get('firstName')
+            user.profile.lastName = form.cleaned_data.get('lastName')
+            user.profile.gender = form.cleaned_data.get('gender')
+            user.profile.accountType = form.cleaned_data.get('accountType')
             user.profile.dateOfBirth = form.cleaned_data.get('dateOfBirth')
+            user.profile.email = form.cleaned_data.get('email')
+            user.profile.phoneNumber = form.cleaned_data.get('phoneNumber')
+            user.profile.address = form.cleaned_data.get('address')
             user.save()
             raw_password = form.cleaned_data.get('password1')
 

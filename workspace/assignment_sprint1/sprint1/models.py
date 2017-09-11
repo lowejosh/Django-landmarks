@@ -6,8 +6,16 @@ from django.dispatch import receiver
 
 # Profile Model
 class Profile(models.Model):
+    # Model the table fields
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dateOfBirth = models.DateField(null=True, blank=True)
+    firstName = models.CharField(max_length=63, null=True)
+    lastName = models.CharField(max_length=63, null=True)
+    gender = models.CharField(max_length=31, null=True)
+    accountType = models.CharField(max_length=31, null=True)
+    dateOfBirth = models.DateField(null=True)
+    email = models.EmailField(max_length=254, null=True)
+    phoneNumber = models.CharField(max_length=31, null=True, blank=True)
+    address = models.CharField(max_length=254, null=True)
 
     # Define string representation
     def __str__(self):
