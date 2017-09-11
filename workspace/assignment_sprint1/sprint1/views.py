@@ -16,7 +16,7 @@ def index(request):
 def signup(request):
 
     # Define the navbar
-    navBar = '<h5><a>Log in</a><br /><a>Register</a></h5>'
+    navBar = '<h5><a>Log in</a><br /><a href="/signup/">Register</a></h5>'
 
     # Form functions
     if request.method == 'POST' :
