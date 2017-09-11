@@ -30,6 +30,9 @@ SECRET_KEY = 'd8g3!g$#glc-^^8b-2ks8m*y7hx4*#71k36c8%e4@i24yyf47o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Login redirect to index
+LOGIN_REDIRECT_URL = 'index'
+
 ALLOWED_HOSTS = []
 
 

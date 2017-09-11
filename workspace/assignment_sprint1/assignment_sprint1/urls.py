@@ -16,10 +16,15 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from sprint1 import views
+
+navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/',}, name='logout'),
     url(r'^admin/', admin.site.urls),
-    url(r'^signup/', views.signup, name='signup'),
 ]
