@@ -28,6 +28,3 @@ def update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     instance.profile.save()
 
-# Admin profile
-#Profile.objects.create(user=User.objects.get(username="admin"))
-
