@@ -27,6 +27,9 @@ body {
     background-color: #808080;
 }
 
+/* I temporarily changed the footer to stick to the bottom as you scroll because it was sitting in the middle 
+ * of the page when my browser was scrollable. Could keep it like this or just put it at the very bottom
+ * and not have it in a fixed position, your call. - Josh */
 .footer {
     position: fixed;
     right: 0;
