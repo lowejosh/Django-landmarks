@@ -5,12 +5,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from sprint1.forms import SignUpForm
 
+
 # Index page view
 def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><br />'
+        navBar = '<h5><a href="/logout/">Log out</a><h5><a href="/modify/">Modify Account</a>'
     # If the user isn't logged in
     else:
         # Define the navbar to show login button
@@ -72,4 +73,18 @@ def locations(request, location_id):
 
     # Return the template
     return render(request, 'locations.html', context=context_dict)
-    
+
+def modify(request):
+
+    if (request.user.is_authenticated()):
+        # Define the navbar to only show logout button
+        navBar = '<h5><a href="/logout/">Log out</a><h5><a href="/modify/">Modify Account</a>'
+    # If the user isn't logged in
+    else:
+        # Define the navbar to show login button
+        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    context_dict = {'navBar' : navBar}
+    return render(request, 'modify.html', context=context_dict)
+

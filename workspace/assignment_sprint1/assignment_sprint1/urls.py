@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from sprint1 import views
 
-navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
+navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/modify/">Modify Account</a></h5>'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/',}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^location/(?P<location_id>[0-9]+)/$', views.locations, name='locations'),
+    url(r'^modify/$', views.modify, name='modify'),
 ]
