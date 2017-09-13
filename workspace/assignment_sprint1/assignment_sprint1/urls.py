@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/',}, name='logout'),
     url(r'^admin/', admin.site.urls),
+    url(r'^location/$', views.locationfeed, name='locationfeed'),
     url(r'^location/(?P<location_id>[0-9]+)/$', views.locations, name='locations'),
 ]
