@@ -20,6 +20,3 @@ if __name__ == "__main__":
             )
         raise
     execute_from_command_line(sys.argv)
-    
-    
-    fhad was heres
