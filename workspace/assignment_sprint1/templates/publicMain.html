@@ -12,7 +12,11 @@
                     <td>
                         <h1>The Good Boys</h1>
                     </td>
-                    <td align="right"><h5><a>Log in</a><br /><a>Register</a></h5></td>
+					<td align="right">
+							{% autoescape off %}
+							{{ navBar }}
+							{% endautoescape %}
+					</td>
                 </tr>
             </tbody>
         </table>
