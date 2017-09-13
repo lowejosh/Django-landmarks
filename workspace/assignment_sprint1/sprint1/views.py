@@ -56,3 +56,20 @@ def signup(request):
     # Render the page and set the context of python variables
     return render(request, 'signup.html', {'form': form, 'navBar' : navBar,})
 
+# Location Index
+def locations(request, location_id):
+    # If the user is logged in
+    if (request.user.is_authenticated()):
+        # Define the navbar to only show logout button
+        navBar = '<h5><a href="/logout/">Log out</a><br />'
+    # If the user isn't logged in
+    else:
+        # Define the navbar to show login button
+        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
+
+    # Define the context of the python vars
+    context_dict = {'navBar' : navBar, 'location_id' : location_id,}
+
+    # Return the template
+    return render(request, 'locations.html', context=context_dict)
+    
