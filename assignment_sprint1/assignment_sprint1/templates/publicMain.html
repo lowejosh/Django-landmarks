@@ -1,0 +1,76 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Really Good Boys</title>
+<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+    <div class="header">
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <h1>The Good Boys</h1>
+                    </td>
+					<td align="right">
+							{% autoescape off %}
+							{{ navBar }}
+							{% endautoescape %}
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</head>
+
+<body>
+    <br />
+    <table border="2" width="80%" align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <h2>About Us</h2>
+                    <p>We are a group of students who created this website to offer all of you the best information about favourite places in our beautiful Brisbane. You can find everything you are looking for, and also learn and give your experiences from card-holders reviews.</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table border="2" width="80%" align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <h2>History of Brisbane</h2>
+                    <p>Brisbane's recorded history dates from 1799, when Matthew Flinders explored Moreton Bay on an expedition from Port Jackson, although the region had long been occupied by the Jagera and Turrbal aboriginal tribes. The town was conceived initially as a penal colony for British convicts sent from Sydney. Its suitability for fishing, farming, timbering, and other occupations, however, caused it to be opened to free settlement in 1838. The town became a municipality in 1859 and a consolidated metropolitan area in 1924. Brisbane encountered major flooding disasters in 1893, 1974 and 2011. Significant numbers of US troops were stationed in Brisbane during World War II. The city hosted the 1982 Commonwealth Games, World Expo 88, and the 2014 G20 Brisbane summit.</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table border="2" width="80%" align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <h2>Types of Accounts</h2>
+                    <p>Premium User:<br />Tourist:<br />Bussiness Man:<br />Student:</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <div class="footer">
+        <table width="100%" height="5px" cellpadding="10px">
+            <tbody>
+                <tr>
+                    <td align="left">
+                        <h6>Telephone: 1300 975 707 | Fax: | Facebook: <a>The Good Boys</a></h6>
+                    </td>
+                    <td align="right">
+                        <h6><a>Terms of Service</a></h6>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
