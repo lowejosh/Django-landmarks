@@ -148,8 +148,18 @@ What was achieved:
 
 The task checklist was updated to reflect recent progress and more tasks were assigned to team members. Charles and Ashley worked on the data flow diagram together.
 
-# 9th Meeting 17/September/2017 7:00PM - 
+# 9th Meeting 17/September/2017 10:30PM - 11:30PM
 
 Present Members:
 
+Ashley
+
+Charles
+
+Josh
+
 Agenda: Discuss and update task checklist, assign tasks
+
+What was achieved:
+
+The task checklist was looked over and we reviewed the assignment feedback for our release plan.
