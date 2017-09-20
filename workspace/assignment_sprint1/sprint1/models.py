@@ -29,6 +29,7 @@ class Location(models.Model):
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.CharField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
+    locationImagePath = models.CharField(max_length=127) 
 
 class Review(models.Model):
     user = models.ForeignKey(Profile)
@@ -38,7 +39,7 @@ class Review(models.Model):
 
 class Image(models.Model):
     location = models.ForeignKey(Location)
-    imageDirectory = models.CharField(max_length=127)
+    imagePath = models.CharField(max_length=127)
 
 class Tag(models.Model):
     location = models.ForeignKey(Location)
