@@ -36,15 +36,13 @@ class Review(models.Model):
     reviewText = models.TextField(max_length=1023)
     rating = models.IntegerField(null=True)
 
-class Images(models.Model):
+class Image(models.Model):
     location = models.ForeignKey(Location)
     imageDirectory = models.CharField(max_length=127)
 
-#TODO
-#tags
-
-    
-
+class Tag(models.Model):
+    location = models.ForeignKey(Location)
+    tagText = models.CharField(max_length=254)
 
 # Create and update user from signal
 @receiver(post_save, sender=User)
