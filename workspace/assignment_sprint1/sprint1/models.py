@@ -22,7 +22,6 @@ class Profile(models.Model):
         return self.user.username
 
 class Location(models.Model):
-    # Temp until we decide on the proper model
     # The primary key is automatically created if not specified (id)
     locationName = models.CharField(max_length=254, null=True)
     latitude = models.IntegerField(null=True)
@@ -32,14 +31,17 @@ class Location(models.Model):
     locationType = models.IntegerField(null=True)
 
 class Review(models.Model):
-   user = models.ForeignKey(Profile)
-   location = models.ForeignKey(Location)
-   reviewText = models.TextField(max_length=1023)
-   rating = models.IntegerField(null=True)
+    user = models.ForeignKey(Profile)
+    location = models.ForeignKey(Location)
+    reviewText = models.TextField(max_length=1023)
+    rating = models.IntegerField(null=True)
+
+class Images(models.Model):
+    location = models.ForeignKey(Location)
+    imageDirectory = models.CharField(max_length=127)
 
 #TODO
 #tags
-#images
 
     
 
