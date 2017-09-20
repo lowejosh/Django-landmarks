@@ -27,12 +27,22 @@ class Location(models.Model):
     locationName = models.CharField(max_length=254, null=True)
     latitude = models.IntegerField(null=True)
     longtiude = models.IntegerField(null=True)
+    locationAddress = models.CharField(max_length=254, null=True)
+    locationBio = models.CharField(max_length=511, null=True)
+    locationType = models.IntegerField(null=True)
 
 class Review(models.Model):
    user = models.ForeignKey(Profile)
    location = models.ForeignKey(Location)
    reviewText = models.TextField(max_length=1023)
    rating = models.IntegerField(null=True)
+
+#TODO
+#tags
+#images
+
+    
+
 
 # Create and update user from signal
 @receiver(post_save, sender=User)
