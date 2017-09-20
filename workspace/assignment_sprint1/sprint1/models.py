@@ -28,6 +28,12 @@ class Location(models.Model):
     latitude = models.IntegerField(null=True)
     longtiude = models.IntegerField(null=True)
 
+class Review(models.Model):
+   user = models.ForeignKey(Profile)
+   location = models.ForeignKey(Location)
+   reviewText = models.TextField(max_length=1023)
+   rating = models.IntegerField(null=True)
+
 # Create and update user from signal
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
