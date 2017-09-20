@@ -29,7 +29,7 @@ class Location(models.Model):
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.CharField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
-    locationImagePath = models.CharField(max_length=127) 
+    locationImagePath = models.CharField(max_length=127, null=True) 
 
 class Review(models.Model):
     user = models.ForeignKey(Profile)
