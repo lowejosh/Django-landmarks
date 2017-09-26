@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
-from sprint1.forms import SignUpForm
-
+from django.contrib.auth import login, authenticate, update_session_auth_hash
+from sprint1.forms import SignUpForm, EditProfileForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.models import User
 
 # Index page view
 def index(request):
@@ -75,16 +76,56 @@ def locations(request, location_id):
     return render(request, 'locations.html', context=context_dict)
 
 def modify(request):
-
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
         navBar = '<h5><a href="/logout/">Log out</a><h5><a href="/modify/">Modify Account</a>'
     # If the user isn't logged in
+	
     else:
         # Define the navbar to show login button
         navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'navBar' : navBar}
+	
     return render(request, 'modify.html', context=context_dict)
 
+
+def edit_profile(request):
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+		
+		if form.is_valid():
+			form.save()
+			return redirect('modify')
+	
+	else:
+		form = EditProfileForm(instance=request.user)
+		args = {'form': form}
+		return render(request, 'edit_profile.html', args)
+
+
+def password(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(data=request.POST, user=request.user)
+		
+		if form.is_valid():
+				form.save()
+				update_session_auth_hash(request, form.user)
+				return redirect('modify')
+		else:
+			return redirect('/modify/password')
+	else: 
+		form = PasswordChangeForm(user=request.user)
+		args = {'form': form}
+		return render(request, 'password.html', args)
+
+def del_user(request, username):
+	try:
+		u = User.objects.get(username = username)
+		u.delete()
+		messages.sucess(request, "The user is deleted")
+	except User.DoesNotExist:
+		messages.error(request,"User does not exist")
+		return render(request, 'index.html')
+	return render(request, 'del_user.html')

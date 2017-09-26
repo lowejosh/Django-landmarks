@@ -1,0 +1,36 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base2.html' %}
+
+<!-- Main content -->
+{% block content %}
+<p>
+	<button type="submit" onclick="deleteAccount()">Delete Account</button>
+</p>
+<div style="width:40%; float: left; margin-left: 15%; display: inline-block;">
+		<h1>Profile Information</h1>
+		<p>Username: {{ user }}</p>
+		<p>First Name: {{ user.profile.firstName }}</p>
+		<p>Last Name: {{ user.profile.lastName }}</p>
+		<p>Email Address: {{ user.profile.email }}</p>
+		<p>Account Type: {{ user.profile.accountType }}</p>
+		<p>Phone Number: {{ user.profile.phoneNumber }}</p>
+		<p>Address: {{ user.profile.address }}</p>
+</div>
+
+
+<div style="width:40%; float: right; display: inline-block;">
+		<h1>Modify Information</h1>
+		<form method='post'>
+			{% csrf_token %}
+			{% for field in form %}
+				<p>
+					{{ field.label_tag }} <br />
+					{{ field }}
+					{% for error in field.errors %}
+						<p style="color: red">{{ error }}</p>
+					{% endfor %}
+				</p>
+			{% endfor %}
+</div>
+
+{% endblock %}
