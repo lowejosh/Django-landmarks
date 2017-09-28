@@ -1,7 +1,7 @@
 ﻿html {
     background-color: #D3D3D3;
-    height: 100%;
     box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 *,
@@ -10,16 +10,11 @@
     box-sizing: inherit;
 }
 
-header {
-    height: 10%;
-}
-
 .header {
     text-align: center;
 }
 
 .nav-wrap {
-    background-color: #808080;
     padding: 0em;
 }
 
@@ -27,11 +22,27 @@ header {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    background-color: #474747;
+}
+
+.nav-wrap li.right {
+    float: right;
+}
+
+.nav-wrap li {
+    float: left;
 }
 
 .nav-wrap li a {
     display: block;
-    width: 60px;
+    color: white;
+    text-decoration: none;
+    padding: 14px 16px;
+}
+
+.nav-wrap li a:hover {
+    background-color: #111;
 }
 
 body {
@@ -113,7 +124,7 @@ a {
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: #808080;
+    background-color: #474747;
     padding-left: 20px;
     padding-right: 20px;
     text-align: center;
@@ -125,10 +136,18 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #808080;
+    background-color: #474747;
     background-attachment: scroll;
     background-repeat: repeat;
     background-position: 0%;
+}
+
+.footermain a {
+    color: #000;
+}
+
+.footermain a:hover {
+    text-decoration: underline;
 }
 
 .centered-content {
