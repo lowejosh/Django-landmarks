@@ -34,7 +34,7 @@ def index(request):
 def signup(request):
 
     # Define the navbar
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(False)
 
     # Form functions
     if request.method == 'POST' :

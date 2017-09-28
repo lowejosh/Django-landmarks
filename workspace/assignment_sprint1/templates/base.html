@@ -3,55 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Really Good Boys</title>
-<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
-    <div class="header">
-        <table width="100%">
-            <tbody>
-                <tr>
-                    <td>
-                        <h1>The Good Boys</h1>
-                    </td>
-					<!-- The navBar is dynamic (just in case) -->
-					<td align="right">
-							<!-- Temporarily turn autoescape off so HTML isn't escaped -->
-							{% autoescape off %} 
-							{{ navBar }}
-							{% endautoescape %}
-					
-					</td> 
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <title>Really Good Boys</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"> 
 </head>
-
 <body>
-    <br />
-    <table border="2" width="80%" align="center">
-        <tbody>
-            <tr>
-                <td>
-						{% block content %}
-						{% endblock %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p>&nbsp;</p>
-    <div class="footer">
-        <table width="100%" height="5px" cellpadding="10px">
-            <tbody>
-                <tr>
-                    <td align="left">
-                        <h6>Telephone: 1300 975 707 | Fax: | Facebook: <a>The Good Boys</a></h6>
-                    </td>
-                    <td align="right">
-                        <h6><a>Terms of Service</a></h6>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="header">
+        <h1>The Good Boys</h1>
     </div>
+    <div class="nav-wrap">
+        {% autoescape off %}
+        {{ navBar }}
+        {% endautoescape %}
+    </div>
+    {% block content %}
+
+    {% endblock %}
+    <br /><br /><br /><br /><br />
+
+    <div class="footermain">
+        <h6>&nbsp&nbsp&nbspTelephone: 1300 975 707 | Fax: 1-888-473-2963 | Facebook: <a href="https://www.facebook.com/groups/122820418378364">The Good Boys</a></h6>
+	</div>
 </body>
 </html>
