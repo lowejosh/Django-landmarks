@@ -1,4 +1,4 @@
-html {
+﻿html {
     background-color: #D3D3D3;
     height: 100%;
     box-sizing: border-box;
@@ -14,34 +14,260 @@ header {
     height: 10%;
 }
 
+.header {
+    text-align: center;
+}
+
+.nav-wrap {
+    background-color: #808080;
+    padding: 0em;
+}
+
+.nav-wrap ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-wrap li a {
+    display: block;
+    width: 60px;
+}
+
 body {
-    height: 90%;
     position: relative;
     margin: 0;
     min-height: 100%;
     font-family: 'Arial Rounded MT';
-	margin-bottom: 300px; /* Temporary room for footer */
+    color: black;
 }
 
-.header {
+table {
+    border-radius: 15px;
+    border: 2px solid #000000;
+    background: #FFFFFF;
+    padding: 20px;
+}
+
+p {
+    font-family: 'Arial Rounded MT';
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+    a:visited {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    a:focus {
+        text-decoration: none;
+    }
+
+    a:hover, a:active {
+        text-decoration: none;
+    }
+
+.button {
+    background-color: white;
+    border: 2px solid #808080;
+    border-radius: 4px;
+    color: #808080;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+    .button:hover {
+        background-color: #808080;
+        color: white;
+    }
+
+.topcorner {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #FAFAFA;
+    text-align: center;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.footerright {
+    position: fixed;
+    right: 0;
+    bottom: 0;
     background-color: #808080;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
 }
 
-/* I temporarily changed the footer to stick to the bottom as you scroll because it was sitting in the middle 
- * of the page when my browser was scrollable. Could keep it like this or just put it at the very bottom
- * and not have it in a fixed position, your call. - Josh */
-.footer {
+.footermain {
     position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
-	width: 100%;
+    width: 100%;
     background-color: #808080;
-	background-attachment: scroll;
-	background-repeat: repeat;
-	background-position: 0% 0%;
+    background-attachment: scroll;
+    background-repeat: repeat;
+    background-position: 0%;
 }
 
 .centered-content {
     text-align: center;
+}
+
+.failure {
+    outline: none;
+    border-color: #FF0000;
+    box-shadow: 0 0 10px #FF0000;
+}
+
+.contact_form ul {
+    width: 750px;
+    list-style-type: none;
+    list-style-position: outside;
+    margin: 0px;
+    padding: 0px;
+}
+
+.contact_form li {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.contact_form label {
+    width: 250px;
+    margin-top: 3px;
+    display: inline-block;
+    float: left;
+    padding: 3px;
+}
+
+.contact_form input {
+    height: 30px;
+    width: 220px;
+    padding: 5px 8px;
+}
+
+.contact_form textarea {
+    padding: 8px;
+    width: 300px;
+}
+
+.contact_form input, .contact_form textarea {
+    border: 1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius: 2px;
+}
+
+    .contact_form input:focus, .contact_form textarea:focus {
+        background: #fff;
+        border: 1px solid #555;
+        box-shadow: 0 0 3px #aaa;
+    }
+
+/*
+    Star Review System
+*/
+.rate {
+    border: 1px solid #cccccc;
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+    pointer-events: none
+}
+
+    .rate:not(:checked) > input {
+        position: absolute;
+        top: -9999px;
+    }
+
+    .rate:not(:checked) > label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
+    }
+
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+
+    .rate > input:checked ~ label {
+        color: #ffc700;
+    }
+
+/*
+    Review Images
+*/
+#photos {
+    /* Prevent vertical gaps */
+    line-height: 0;
+    -webkit-column-count: 5;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 5;
+    -moz-column-gap: 0px;
+    column-count: 5;
+    column-gap: 0px;
+}
+
+    #photos img {
+        /* Just in case there are inline attributes */
+        width: 100% !important;
+        height: auto !important;
+    }
+
+@media (max-width: 1200px) {
+    #photos {
+        -moz-column-count: 4;
+        -webkit-column-count: 4;
+        column-count: 4;
+    }
+}
+
+@media (max-width: 1000px) {
+    #photos {
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
+    }
+}
+
+@media (max-width: 800px) {
+    #photos {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media (max-width: 400px) {
+    #photos {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
 }
