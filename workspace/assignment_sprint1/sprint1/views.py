@@ -5,17 +5,25 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from sprint1.forms import SignUpForm
 
+# Navbar function that returns the proper list 
+def navBarFunc(isLogged): 
+    if (isLogged == True):
+        return '<h5><a href="/logout/">Log out</a><br /><a href="/location/">Locations</a></h5>'
+    else:
+        return '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/location/">Locations</a></h5>'
+
+
 # Index page view
 def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><br /><a href="/location/">Locations</a></h5>'
-    # If the user isn't logged in
+        navBar = navBarFunc(True)   
+        # If the user isn't logged in
     else:
         # Define the navbar to show login button
-        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/location/">Locations</a></h5>'
-
+        navBar = navBarFunc(False) 
+        
     # Define the context of the python vars
     context_dict = {'navBar' : navBar,}
 
@@ -26,7 +34,7 @@ def index(request):
 def signup(request):
 
     # Define the navbar
-    navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/location/">Locations</a></h5>'
+    navBar = navBarFunc(True)
 
     # Form functions
     if request.method == 'POST' :
@@ -58,14 +66,11 @@ def signup(request):
 
 # Location Index
 def locations(request, location_id):
-    # If the user is logged in
+    # Show the correct navBar
     if (request.user.is_authenticated()):
-        # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><br /><a href="/location/">Locations</a></h5>'
-    # If the user isn't logged in
+        navBar = navBarFunc(True)
     else:
-        # Define the navbar to show login button
-        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/location/">Locations</a></h5>'
+        navBar = navBarFunc(False)
 
     # Define the context of the python vars
     context_dict = {'navBar' : navBar, 'location_id' : location_id,}
@@ -75,14 +80,11 @@ def locations(request, location_id):
     
 # Location Feed
 def locationfeed(request):
-    # If the user is logged in
+    # Show the correct navBar
     if (request.user.is_authenticated()):
-        # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><br /><a href="/location/">Locations</a></h5>'
-    # If the user isn't logged in
+        navBar = navBarFunc(True)
     else:
-        # Define the navbar to show login button
-        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a><br /><a href="/location/">Locations</a></h5>'
+        navBar = navBarFunc(False)
 
     # Define the context of the python vars
     context_dict = {'navBar' : navBar,}
