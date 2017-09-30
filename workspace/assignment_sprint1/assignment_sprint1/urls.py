@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^location/(?P<location_id>[0-9]+)/$', views.locations, name='locations'),
     url(r'^modify/$', views.modify, name='modify'),
 	url(r'^modify/edit_profile/$', views.edit_profile, name='edit_profile'),
-	url(r'^modify/password/$', views.password, name='password')
+	url(r'^modify/password/$', views.password, name='password'),
+	url(r'^email/$', views.email, name='email'),
 ]

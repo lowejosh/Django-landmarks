@@ -3,9 +3,11 @@ from django.http import HttpResponse
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Index page view
 def index(request):
@@ -129,3 +131,22 @@ def del_user(request, username):
 		messages.error(request,"User does not exist")
 		return render(request, 'index.html')
 	return render(request, 'del_user.html')
+
+	
+def email(request):	
+	if request.method == 'POST':
+		form = EmailForm(request.POST)
+		
+		if form.is_valid():
+			save_it = form.save()
+			save_it.save()
+			subject = 'Come check out the IFB299 Website'
+			message = 'Come check out the website: link'
+			from_email = settings.EMAIL_HOST_USER
+			to_list = ['save_it.email, settings.EMAIL_HOST_USER']
+			send_mail(subject, message, from_email, to_list, fail_silently=True)
+			return redirect('email')	
+	else:
+		form = EmailForm()
+		args = {'form': form}
+		return render(request, 'email.html', args)	

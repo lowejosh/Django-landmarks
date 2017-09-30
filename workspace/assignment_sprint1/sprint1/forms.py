@@ -32,3 +32,14 @@ class EditProfileForm(UserChangeForm):
 			'last_name',
 			'password'
 			)
+
+			
+
+class EmailForm(forms.Form):
+	email = forms.EmailField()
+	first_name = forms.CharField()
+	last_name = forms.CharField()
+	
+
+	
+
