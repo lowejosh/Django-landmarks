@@ -101,11 +101,8 @@ def locationfeed(request):
     return render(request, 'locationfeed.html', context=context_dict)
 
 def modify(request):
-    # Show the correct navBar
-    if (request.user.is_authenticated()):
-        navBar = navBarFunc(True)
-    else:
-        navBar = navBarFunc(False)
+    # User must be logged in to access modify page
+    navBar = navBarFunc(True)
 	
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -115,67 +112,69 @@ def modify(request):
 
 
 def edit_profile(request):
-	if request.method == 'POST':
-		form = EditProfileForm(request.POST, instance=request.user)
-		
-		if form.is_valid():
-			form.save()
-			return redirect('modify')
-	
-	else:
-		form = EditProfileForm(instance=request.user)
-		args = {'form': form}
-		return render(request, 'edit_profile.html', args)
+    navBar = navBarFunc(True)
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('modify')
+    
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form, 'navBar': navBar}
+        return render(request, 'edit_profile.html', args)
 
 
 def password(request):
-	if request.method == 'POST':
-		form = PasswordChangeForm(data=request.POST, user=request.user)
-		
-		if form.is_valid():
-				form.save()
-				update_session_auth_hash(request, form.user)
-				return redirect('modify')
-		else:
-			return redirect('/modify/password')
-	else: 
-		form = PasswordChangeForm(user=request.user)
-		args = {'form': form}
-		return render(request, 'password.html', args)
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('modify')
+        else:
+            return redirect('/modify/password')
+    else: 
+        form = PasswordChangeForm(user=request.user)
+        args = {'form': form}
+        return render(request, 'password.html', args)
 
 def del_user(request):
-	if request.method == 'POST':
-		form = DeleteUserForm(request.POST)
-		
-		if form.is_valid():
-			rem = User.objects.get(username=form.cleaned_data['username'])
-			if rem is not None:
-				rem.delete()
-				return redirect ('index.html')
-					
-			else:
-				return redirect('del_user.html')
-			
-	else:
-		form = DeleteUserForm()
-		context = {'form': form}
-		return render(request, 'del_user.html', context)
-	
-	
+    if request.method == 'POST':
+        form = DeleteUserForm(request.POST)
+        
+        if form.is_valid():
+            rem = User.objects.get(username=form.cleaned_data['username'])
+            if rem is not None:
+                rem.delete()
+                return redirect ('index.html')
+                                
+            else:
+                return redirect('del_user.html')
+                
+    else:
+        form = DeleteUserForm()
+        context = {'form': form}
+        return render(request, 'del_user.html', context)
+    
+    
 def email(request):	
-	if request.method == 'POST':
-		form = EmailForm(request.POST)
-		
-		if form.is_valid():
-			save_it = form.save()
-			save_it.save()
-			subject = 'Come check out the IFB299 Website'
-			message = 'Come check out the website: link'
-			from_email = settings.EMAIL_HOST_USER
-			to_list = ['save_it.email, settings.EMAIL_HOST_USER']
-			send_mail(subject, message, from_email, to_list, fail_silently=True)
-			return redirect('email')	
-	else:
-		form = EmailForm()
-		args = {'form': form}
-		return render(request, 'email.html', args)	
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+            
+        if form.is_valid():
+            save_it = form.save()
+            save_it.save()
+            subject = 'Come check out the IFB299 Website'
+            message = 'Come check out the website: link'
+            from_email = settings.EMAIL_HOST_USER
+            to_list = ['save_it.email, settings.EMAIL_HOST_USER']
+            send_mail(subject, message, from_email, to_list, fail_silently=True)
+            return redirect('email')	
+    else:
+        form = EmailForm()
+        args = {'form': form}
+        return render(request, 'email.html', args)	
