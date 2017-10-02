@@ -41,5 +41,7 @@ class EmailForm(forms.Form):
 	last_name = forms.CharField()
 	
 
-	
+
+class DeleteUserForm(forms.Form):
+	username = forms.CharField()
 

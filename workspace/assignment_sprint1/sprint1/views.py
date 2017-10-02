@@ -3,7 +3,7 @@ from django.http import HttpResponse
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -14,11 +14,11 @@ def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><h5><a href="/modify/">Modify Account</a>'
+        navBar = '<h5><a href="/logout/">Log out</a><br><a href="/modify/">Modify Account</a><h5>'
     # If the user isn't logged in
     else:
         # Define the navbar to show login button
-        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
+        navBar = '<h5><a href="/login/">Log in</a><br><a href="/signup/">Register</a></h5>'
 
     # Define the context of the python vars
     context_dict = {'navBar' : navBar,}
@@ -80,12 +80,12 @@ def locations(request, location_id):
 def modify(request):
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = '<h5><a href="/logout/">Log out</a><h5><a href="/modify/">Modify Account</a>'
+        navBar = '<h5><a href="/logout/">Log out</a><br><a href="/modify/">Modify Account</a><h5>'
     # If the user isn't logged in
 	
     else:
         # Define the navbar to show login button
-        navBar = '<h5><a href="/login/">Log in</a><br /><a href="/signup/">Register</a></h5>'
+        navBar = '<h5><a href="/login/">Log in</a><br><a href="/signup/">Register</a></h5>'
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'navBar' : navBar}
@@ -122,16 +122,24 @@ def password(request):
 		args = {'form': form}
 		return render(request, 'password.html', args)
 
-def del_user(request, username):
-	try:
-		u = User.objects.get(username = username)
-		u.delete()
-		messages.sucess(request, "The user is deleted")
-	except User.DoesNotExist:
-		messages.error(request,"User does not exist")
-		return render(request, 'index.html')
-	return render(request, 'del_user.html')
-
+def del_user(request):
+	if request.method == 'POST':
+		form = DeleteUserForm(request.POST)
+		
+		if form.is_valid():
+			rem = User.objects.get(username=form.cleaned_data['username'])
+			if rem is not None:
+				rem.delete()
+				return redirect ('index.html')
+					
+			else:
+				return redirect('del_user.html')
+			
+	else:
+		form = DeleteUserForm()
+		context = {'form': form}
+		return render(request, 'del_user.html', context)
+	
 	
 def email(request):	
 	if request.method == 'POST':
