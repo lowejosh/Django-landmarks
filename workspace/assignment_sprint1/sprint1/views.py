@@ -65,6 +65,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form, 'navBar' : navBar,})
 
 # Location Index
+# needs a lot of work
 def locations(request, location_id):
     # Show the correct navBar
     if (request.user.is_authenticated()):
@@ -76,7 +77,7 @@ def locations(request, location_id):
     context_dict = {'navBar' : navBar, 'location_id' : location_id,}
 
     # Return the template
-    return render(request, 'locations.html', context=context_dict)
+    return render(request, 'viewLocation.html', context=context_dict)
     
 # Location Feed
 def locationfeed(request):
