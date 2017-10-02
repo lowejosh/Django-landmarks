@@ -3,18 +3,20 @@
 
 <!-- Main content -->
 {% block content %}
-<div style="width:40%; float: left; margin-left: 15%; display: inline-block;">
-		<h1>Profile Information</h1>
-		<p>Username: {{ user }}</p>
-		<p>First Name: {{ user.first_name }}</p>
-		<p>Last Name: {{ user.last_name }}</p>
-		<p>Email Address: {{ user.email }}</p>
-		<p>Account Type: {{ user.profile.accountType }}</p>
-		<p>Phone Number: {{ user.profile.phoneNumber }}</p>
-		<p>Address: {{ user.profile.address }}</p>
+<div style="width:40%; margin-left: 10%; display: inline-block;">
+    <h1>Profile Information</h1>
+    <p>Username: {{ user }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email Address: {{ user.email }}</p>
+    <p>Account Type: {{ user.profile.accountType }}</p>
+    <p>Phone Number: {{ user.profile.phoneNumber }}</p>
+    <p>Address: {{ user.profile.address }}</p>
 </div>
-<div style="width:40%; float: right; margin-left: 15%; display: inline-block;">
-		<a href="/modify/edit_profile/">Edit Profile Information</a><br />
+<div style="width:40%; float: right; margin-left: 10%; display: inline-block;">
+    <br /><br />
+    <a href="/modify/edit_profile/">Edit Profile Information</a><br />
+    <br />
 </div>
 
 {% endblock %}
