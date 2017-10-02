@@ -131,6 +131,7 @@ a {
 }
 
 .footermain {
+    opacity: 0.85;
     position: fixed;
     right: 0;
     bottom: 0;
