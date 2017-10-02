@@ -8,15 +8,17 @@
 		<form method='post'>
 			{% csrf_token %}
 			{% for field in form %}
+            <br />
 				<p>
-					{{ field.label_tag }} <br />
+                {{ field.label_tag }} <br />
 					{{ field }}
 					{% for error in field.errors %}
 						<p style="color: red">{{ error }}</p>
 					{% endfor %}
 				</p>
 			{% endfor %}
-			<button type='submit'>Sign up</button><br />
+            <br />
+			<button class="pretty-button" type='submit'>Sign up</button><br />
 		</form><br />
 	</div>
 {% endblock %}
