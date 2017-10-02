@@ -8,9 +8,9 @@ from sprint1.forms import SignUpForm
 # Navbar function that returns the proper list 
 def navBarFunc(isLogged): 
     if (isLogged == True):
-        return '<ul><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li></ul>'
     else:
-        return '<ul><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
 
 
 # Index page view
