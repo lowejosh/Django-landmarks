@@ -1,0 +1,22 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+<div style="width:40%; margin-left: 10%; display: inline-block; font-size: 12px;">
+    <h1>Profile Information</h1>
+    <p><strong>Username:</strong> {{ user }}</p>
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>Email Address:</strong> {{ user.email }}</p>
+    <p><strong>Account Type:</strong> {{ user.profile.accountType }}</p>
+    <p><strong>Phone Number:</strong> {{ user.profile.phoneNumber }}</p>
+    <p><strong>Address:</strong> {{ user.profile.address }}</p>
+</div>
+<div style="width:40%; float: right; margin-left: 10%; display: inline-block;">
+    <br />
+    <a href="/modify/edit_profile/">Edit Profile Information</a><br />
+</div>
+
+   <br />
+{% endblock %}

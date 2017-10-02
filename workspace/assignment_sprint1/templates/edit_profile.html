@@ -1,0 +1,14 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit">Submit</button>
+</form>
+<br>
+<br>
+
+{% endblock %}

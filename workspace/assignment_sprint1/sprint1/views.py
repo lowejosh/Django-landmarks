@@ -2,13 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
-from sprint1.forms import SignUpForm
+from django.contrib.auth import login, authenticate, update_session_auth_hash
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Navbar function that returns the proper list 
 def navBarFunc(isLogged): 
     if (isLogged == True):
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
 
@@ -96,3 +100,83 @@ def locationfeed(request):
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
 
+def modify(request):
+    # User must be logged in to access modify page
+    navBar = navBarFunc(True)
+	
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    context_dict = {'navBar' : navBar}
+	
+    return render(request, 'modify.html', context=context_dict)
+
+
+def edit_profile(request):
+    navBar = navBarFunc(True)
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('modify')
+    
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form, 'navBar': navBar}
+        return render(request, 'edit_profile.html', args)
+
+
+def password(request):
+    navBar = navBarFunc(True)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('modify')
+        else:
+            return redirect('/modify/password')
+    else: 
+        form = PasswordChangeForm(user=request.user)
+        args = {'form': form, 'navBar': navBar}
+        return render(request, 'password.html', args)
+
+def del_user(request):
+    if request.method == 'POST':
+        form = DeleteUserForm(request.POST)
+        
+        if form.is_valid():
+            rem = User.objects.get(username=form.cleaned_data['username'])
+            if rem is not None:
+                rem.delete()
+                return redirect ('index.html')
+                                
+            else:
+                return redirect('del_user.html')
+                
+    else:
+        form = DeleteUserForm()
+        context = {'form': form}
+        return render(request, 'del_user.html', context)
+    
+    
+def email(request):	
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+            
+        if form.is_valid():
+            save_it = form.save()
+            save_it.save()
+            subject = 'Come check out the IFB299 Website'
+            message = 'Come check out the website: link'
+            from_email = settings.EMAIL_HOST_USER
+            to_list = ['save_it.email, settings.EMAIL_HOST_USER']
+            send_mail(subject, message, from_email, to_list, fail_silently=True)
+            return redirect('email')	
+    else:
+        form = EmailForm()
+        args = {'form': form}
+        return render(request, 'email.html', args)	
