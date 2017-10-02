@@ -19,16 +19,19 @@ def index(request):
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
         navBar = navBarFunc(True)   
+        # Define the context of the python vars
+        context_dict = {'navBar' : navBar,}
+        # Return the template
+        return render(request, 'privateMain.html', context=context_dict)
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
         navBar = navBarFunc(False) 
+        # Define the context of the python vars
+        context_dict = {'navBar' : navBar,}
+        # Return the template
+        return render(request, 'publicMain.html', context=context_dict)
         
-    # Define the context of the python vars
-    context_dict = {'navBar' : navBar,}
-
-    # Return the template
-    return render(request, 'publicMain.html', context=context_dict)
 
 # Signup page view
 def signup(request):
