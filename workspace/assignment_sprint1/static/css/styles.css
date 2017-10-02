@@ -39,9 +39,28 @@
     color: white;
     text-decoration: none;
     padding: 14px 16px;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
 }
 
 .nav-wrap li a:hover {
+    background-color: #111;
+}
+
+.pretty-button {
+    background-color: #474747;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer; 
+}
+
+.pretty-button:hover {
     background-color: #111;
 }
 
