@@ -1,25 +1,7 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Really Good Boys</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"> 
-</head>
-
-
-<body>
-    <div class="header">
-        <h1>The Good Boys</h1>
-    </div>
-    <div class="nav-wrap">
-        {% autoescape off %}
-        {{ navBar }}
-        {% endautoescape %}
-    </div>
-
-    <br />
+{% block content %}
 	<h2 style="padding-left:10%;">About Us</h2>
     <table width="80%" align="center" style="background-color: lightsalmon;">
         <tbody>
@@ -52,11 +34,4 @@
             </tr>
         </tbody>
     </table>
-
-    <br /><br /><br /><br /><br />
-
-    <div class="footermain">
-	<h6>&nbsp&nbsp&nbspTelephone: 1300 975 707 | Fax: 1-888-473-2963 | Facebook: <a href="https://www.facebook.com/groups/122820418378364">The Good Boys</a></h6>
-	</div>
-</body>
-</html>
+{% endblock %}
