@@ -1,5 +1,5 @@
 ﻿html {
-    background-color: #D3D3D3;
+    background-color: #BABABA;
     box-sizing: border-box;
     font-family: 'Source Sans Pro', sans-serif;
 }
@@ -8,6 +8,12 @@
 *:before,
 *:after {
     box-sizing: inherit;
+}
+
+.main-content {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #DCDCDC;
 }
 
 .header {
