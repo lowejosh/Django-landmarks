@@ -128,6 +128,8 @@ def edit_profile(request):
 
 
 def password(request):
+    navBar = navBarFunc(True)
+
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
         
@@ -139,7 +141,7 @@ def password(request):
             return redirect('/modify/password')
     else: 
         form = PasswordChangeForm(user=request.user)
-        args = {'form': form}
+        args = {'form': form, 'navBar': navBar}
         return render(request, 'password.html', args)
 
 def del_user(request):
