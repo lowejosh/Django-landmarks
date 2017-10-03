@@ -22,7 +22,7 @@ def locationOutput(locationId):
     try:
         l = Location.objects.get(id=locationId)
     except: 
-        return
+        return ""
 
     locationName = l.locationName
     locationBio = l.locationBio
@@ -108,20 +108,27 @@ def locations(request, location_id):
     
 # Location Feed
 def locationfeed(request):
+    
+    # Current page
+    page = 0 
+
     # Show the correct navBar
     if (request.user.is_authenticated()):
         navBar = navBarFunc(True)
     else:
         navBar = navBarFunc(False)
 
-    
-
-    location1 = locationOutput(1)
-    location2 = locationOutput(2)
-
+    location1 = locationOutput(page * 8 + 1)
+    location2 = locationOutput(page * 8 + 2)
+    location3 = locationOutput(page * 8 + 3)
+    location4 = locationOutput(page * 8 + 4)
+    location5 = locationOutput(page * 8 + 5)
+    location6 = locationOutput(page * 8 + 6)
+    location7 = locationOutput(page * 8 + 7)
+    location8 = locationOutput(page * 8 + 8)
 
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'location1': location1, 'location2': location2,}
+    context_dict = {'navBar' : navBar, 'page': page + 1, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
