@@ -18,8 +18,10 @@
     </table>
     -->
     
-    {{ location1 }}
-    {{ location2 }}
-    {{ location3 }}
+    {% autoescape off %}
+        {{ location1 }}
+        {{ location2 }}
+        {{ location3 }}
+    {% endautoescape %}
     
 {% endblock %}

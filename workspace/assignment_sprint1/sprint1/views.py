@@ -22,7 +22,13 @@ def locationOutput(locationId):
     l = Location.objects.get(id=locationId)
     locationName = l.locationName
     locationBio = l.locationBio
-    return locationName
+
+    return """
+        <div class="location-wrap">
+            <h3>""" + locationName + """ </h3>
+            """ + locationBio + """
+        </div>
+    """
 
 
 

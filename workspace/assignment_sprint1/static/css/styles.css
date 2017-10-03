@@ -10,6 +10,14 @@
     box-sizing: inherit;
 }
 
+.location-wrap {
+    margin-top: 32px;
+    margin-left: 32px;
+    background-color: #FCFCFC;
+    margin-right: 32px;
+}
+
+
 .main-content {
     margin-left: 10%;
     margin-right: 10%;
