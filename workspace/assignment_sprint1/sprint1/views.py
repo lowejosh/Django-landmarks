@@ -105,11 +105,10 @@ def locations(request, location_id):
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
+
     
 # Location Feed
 def locationfeed(request, page):
-
-    # If the page 
 
     # To normalize it (yeah i know)
     page = int(page) - 1
