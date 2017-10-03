@@ -21,16 +21,19 @@ def navBarFunc(isLogged):
 def locationOutput(locationId):
     try:
         l = Location.objects.get(id=locationId)
-        locationName = l.locationName
-        locationBio = l.locationBio
-        return """
-            <div class="location-wrap">
-                <span class="location-name">""" + locationName + """ </span>
-                """ + locationBio + """
-            </div>
-        """
     except: 
         return
+
+    locationName = l.locationName
+    locationBio = l.locationBio
+    linkId = str(locationId)
+
+    return """
+        <div class='location-wrap'>
+            <span class='location-name'><a href="/location/""" + linkId + """">""" + locationName + """</a></span>
+            """ + locationBio + """
+        </div>
+    """
 
 
 
@@ -115,11 +118,10 @@ def locationfeed(request):
 
     location1 = locationOutput(1)
     location2 = locationOutput(2)
-    location3 = locationOutput(3)
 
 
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'location1': location1, 'location2': location2, 'location3': location3,}
+    context_dict = {'navBar' : navBar, 'location1': location1, 'location2': location2,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
