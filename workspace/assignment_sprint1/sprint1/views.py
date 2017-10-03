@@ -30,7 +30,7 @@ def locationOutput(locationId):
 
     return """
         <div class='location-wrap'>
-            <span class='location-name'><a href="/location/individual/""" + linkId + """">""" + locationName + """</a></span>
+            <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """</a>
             """ + locationBio + """
         </div>
     """

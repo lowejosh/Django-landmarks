@@ -15,15 +15,21 @@
     margin-left: 32px;
     background-color: #F9F9F9;
     margin-right: 32px;
-    padding: 12px;
     border: 1px solid black;
 }
 
 .location-name { 
+    padding: 4px;
+    text-decoration: none;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     display: block;
+    background-color: #474747;
+}
+
+.location-name a {
+    color: white;
 }
 
 .next-page {

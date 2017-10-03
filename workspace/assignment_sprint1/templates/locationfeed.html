@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+
+    {% if page > 1 %}
+        <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:-1 }}">Previous page?</a></button></span>
+    {% endif %}
     
     {% autoescape off %}
         {{ location1 }}
@@ -12,9 +16,6 @@
         {{ location8 }}
     {% endautoescape %}
 
-    {% if page > 1 %}
-        <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:-1 }}">Previous page?</a></button></span>
-    {% endif %}
     <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:1 }}">Next page?</a></button></span>
     <span class="current-page">Current page: {{ page }}</span>
     
