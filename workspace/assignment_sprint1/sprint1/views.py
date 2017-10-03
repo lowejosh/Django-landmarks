@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from sprint1.models import Location
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
@@ -15,6 +16,14 @@ def navBarFunc(isLogged):
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+
+# Function that returns the html output of a location
+def locationOutput(locationId):
+    l = Location.objects.get(id=locationId)
+    locationName = l.locationName
+    locationBio = l.locationBio
+    return locationName
+
 
 
 # Index page view
@@ -94,8 +103,13 @@ def locationfeed(request):
     else:
         navBar = navBarFunc(False)
 
+    
+
+    location1 = locationOutput(1)
+
+
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar,}
+    context_dict = {'navBar' : navBar, 'location1': location1,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
