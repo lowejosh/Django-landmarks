@@ -13,9 +13,9 @@ from django.conf import settings
 # Navbar function that returns the proper list 
 def navBarFunc(isLogged): 
     if (isLogged == True):
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/page-1">Locations</a></li></ul>'
 
 # Function that returns the html output of a location
 def locationOutput(locationId):
@@ -30,7 +30,7 @@ def locationOutput(locationId):
 
     return """
         <div class='location-wrap'>
-            <span class='location-name'><a href="/location/""" + linkId + """">""" + locationName + """</a></span>
+            <span class='location-name'><a href="/location/individual/""" + linkId + """">""" + locationName + """</a></span>
             """ + locationBio + """
         </div>
     """
@@ -107,10 +107,10 @@ def locations(request, location_id):
     return render(request, 'viewLocation.html', context=context_dict)
     
 # Location Feed
-def locationfeed(request):
-    
-    # Current page
-    page = 0 
+def locationfeed(request, page):
+
+    # To normalize it (yeah i know)
+    page = int(page) - 1
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
