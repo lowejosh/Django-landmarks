@@ -13,10 +13,18 @@
 .location-wrap {
     margin-top: 32px;
     margin-left: 32px;
-    background-color: #FCFCFC;
+    background-color: #F9F9F9;
     margin-right: 32px;
+    padding: 12px;
+    border: 1px solid black;
 }
 
+.location-name { 
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+}
 
 .main-content {
     margin-left: 10%;
