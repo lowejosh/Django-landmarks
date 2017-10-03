@@ -26,6 +26,22 @@
     display: block;
 }
 
+.next-page {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    text-align: center;
+    display: block;
+}
+
+.current-page {
+    float: right;
+    display: block;
+    margin-bottom: 32px;
+    margin-right: 32px;
+    padding: 6px;
+    font-size: 12px;
+}
+
 .main-content {
     margin-left: 10%;
     margin-right: 10%;

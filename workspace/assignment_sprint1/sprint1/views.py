@@ -109,6 +109,8 @@ def locations(request, location_id):
 # Location Feed
 def locationfeed(request, page):
 
+    # If the page 
+
     # To normalize it (yeah i know)
     page = int(page) - 1
 
