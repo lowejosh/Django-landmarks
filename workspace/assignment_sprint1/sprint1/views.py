@@ -26,12 +26,13 @@ def locationOutput(locationId):
 
     locationName = l.locationName
     locationBio = l.locationBio
+    locationSt = l.locationAddress
     linkId = str(locationId)
 
     return """
         <div class='location-wrap'>
             <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """</a>
-            """ + locationBio + """
+            <span class='location-bio'>""" + locationSt + """</span>
         </div>
     """
 
