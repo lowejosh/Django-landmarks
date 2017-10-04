@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from sprint1.models import Location
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
@@ -12,9 +13,29 @@ from django.conf import settings
 # Navbar function that returns the proper list 
 def navBarFunc(isLogged): 
     if (isLogged == True):
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/page-1">Locations</a></li></ul>'
+
+# Function that returns the html output of a location
+def locationOutput(locationId):
+    try:
+        l = Location.objects.get(id=locationId)
+    except: 
+        return ""
+
+    locationName = l.locationName
+    locationBio = l.locationBio
+    locationSt = l.locationAddress
+    linkId = str(locationId)
+
+    return """
+        <div class='location-wrap'>
+            <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """</a>
+            <span class='location-bio'>""" + locationSt + """</span>
+        </div>
+    """
+
 
 
 # Index page view
@@ -85,17 +106,31 @@ def locations(request, location_id):
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
+
     
 # Location Feed
-def locationfeed(request):
+def locationfeed(request, page):
+
+    # To normalize it (yeah i know)
+    page = int(page) - 1
+
     # Show the correct navBar
     if (request.user.is_authenticated()):
         navBar = navBarFunc(True)
     else:
         navBar = navBarFunc(False)
 
+    location1 = locationOutput(page * 8 + 1)
+    location2 = locationOutput(page * 8 + 2)
+    location3 = locationOutput(page * 8 + 3)
+    location4 = locationOutput(page * 8 + 4)
+    location5 = locationOutput(page * 8 + 5)
+    location6 = locationOutput(page * 8 + 6)
+    location7 = locationOutput(page * 8 + 7)
+    location8 = locationOutput(page * 8 + 8)
+
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar,}
+    context_dict = {'navBar' : navBar, 'page': page + 1, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)

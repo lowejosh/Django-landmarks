@@ -10,6 +10,56 @@
     box-sizing: inherit;
 }
 
+.location-wrap {
+    margin-top: 32px;
+    background-color: #F9F9F9;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.location-name { 
+    padding: 6px;
+    padding-left: 12px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    display: block;
+    background-color: #474557;
+    transition: 0.2s;
+}
+
+.location-bio {
+    padding: 12px;
+    display: block;
+}
+
+.location-name:hover {
+    background-color: #111;
+    padding: 10px;
+    padding-left: 12px;
+}
+
+.location-name a {
+    color: white;
+}
+
+.next-page {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    text-align: center;
+    display: block;
+}
+
+
+.current-page {
+    float: right;
+    display: block;
+    margin-bottom: 32px;
+    margin-right: 32px;
+    padding: 6px;
+    font-size: 12px;
+}
+
 .main-content {
     margin-left: 10%;
     margin-right: 10%;

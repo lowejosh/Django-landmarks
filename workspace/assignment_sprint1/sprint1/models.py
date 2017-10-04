@@ -28,7 +28,7 @@ class Location(models.Model):
     latitude = models.IntegerField(null=True)
     longtiude = models.IntegerField(null=True)
     locationAddress = models.CharField(max_length=254, null=True)
-    locationBio = models.CharField(max_length=511, null=True)
+    locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
     locationImagePath = models.CharField(max_length=127, null=True) 
 

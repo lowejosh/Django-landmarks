@@ -6,8 +6,8 @@
 <div style="width:40%; margin-left: 10%; display: inline-block; font-size: 12px;">
     <h1>Profile Information</h1>
     <p><strong>Username:</strong> {{ user }}</p>
-    <p><strong>First Name:</strong> {{ user.first_name }}</p>
-    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>First Name:</strong> {{ user.profile.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ user.profile.lastName }}</p>
     <p><strong>Email Address:</strong> {{ user.email }}</p>
     <p><strong>Account Type:</strong> {{ user.profile.accountType }}</p>
     <p><strong>Phone Number:</strong> {{ user.profile.phoneNumber }}</p>
