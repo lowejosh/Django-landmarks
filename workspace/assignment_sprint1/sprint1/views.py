@@ -144,14 +144,14 @@ def locationfeed(request, page):
 
         testingBox = resultIds
         
-        location1 = locationOutput(1, search_query)
-        location2 = locationOutput(2, search_query)
-        location3 = locationOutput(3, search_query)
-        location4 = locationOutput(4, search_query)
-        location5 = locationOutput(5, search_query)
-        location6 = locationOutput(6, search_query)
-        location7 = locationOutput(7, search_query)
-        location8 = locationOutput(8, search_query)
+        location1 = locationOutput(page * 8 + 1, search_query)
+        location2 = locationOutput(page * 8 + 2, search_query)
+        location3 = locationOutput(page * 8 + 3, search_query)
+        location4 = locationOutput(page * 8 + 4, search_query)
+        location5 = locationOutput(page * 8 + 5, search_query)
+        location6 = locationOutput(page * 8 + 6, search_query)
+        location7 = locationOutput(page * 8 + 7, search_query)
+        location8 = locationOutput(page * 8 + 8, search_query)
 
 
 #        count = 0
@@ -170,13 +170,16 @@ def locationfeed(request, page):
 
 
     # Show error if there are no results
-    if (locationOutput(page * 8 + 1, search_query) == ""):
+    errorMessageCount = 0
+    for i in range(1, 8):
+        if (locationOutput(page * 8 + i, search_query) != ""):
+            errorMessageCount+=1
+        
+    if errorMessageCount == 0:
         errorMessage = "<span class='no-location-error'>Sorry, there are no locations matching your search</span>"
     else:
         errorMessage = ""
-        
     # Show next page button if there exists a location on the next page
-    # TODO THIS WILL BREAK
     if (locationOutput((page + 1) * 8 + 1, search_query) != ""):
         nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
     else:
@@ -189,16 +192,6 @@ def locationfeed(request, page):
         navBar = navBarFunc(request, False)
 
     
-    # TEMPORARY
-#   location1 = locationOutput(page * 8 + 1)
-#    location2 = locationOutput(page * 8 + 2)
-#    location3 = locationOutput(page * 8 + 3)
-#    location4 = locationOutput(page * 8 + 4)
-#    location5 = locationOutput(page * 8 + 5)
-#    location6 = locationOutput(page * 8 + 6)
-#    location7 = locationOutput(page * 8 + 7)
-#    location8 = locationOutput(page * 8 + 8)
-
     # Define the context of the python vars
     context_dict = {'testingBox': testingBox, 'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
 
