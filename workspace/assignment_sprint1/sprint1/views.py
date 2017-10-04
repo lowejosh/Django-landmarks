@@ -5,7 +5,7 @@ from sprint1.models import Location
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
@@ -21,9 +21,10 @@ def navBarFunc(request, isLogged):
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/page-1">Locations</a></li></ul>'
 
 # Function that returns the html output of a location
-def locationOutput(locationId):
+#TODO
+def locationOutput(locationId, search_query):
     try:
-        l = Location.objects.get(id=locationId)
+        l = Location.objects.get(id=locationId, locationName__contains=search_query)
     except: 
         return ""
 
@@ -40,7 +41,6 @@ def locationOutput(locationId):
     """
 
 def returnSearch(search_query):
-    #TODO
     return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
     
 
@@ -118,11 +118,14 @@ def locations(request, location_id):
 # Location Feed
 def locationfeed(request, page):
     
+    # Default Search Query
+    search_query = ""
+
     # To normalize it (yeah i know)
     page = int(page) - 1
 
     # Defaults
-    location1 = ""
+    location1 = locationOutput(1, search_query)
     location2 = ""
     location3 = ""
     location4 = ""
@@ -137,27 +140,44 @@ def locationfeed(request, page):
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")
         resultIds = returnSearch(search_query)
-        d={}
-        testingBox = returnSearch(search_query)
-        count = 0
-        if resultIds == []:
-            for i in resultIds:
-                if count < 8:
-                    d["location{0}".format(i + 1)] = locationOutput(resultIds[i])
-                    count+=1
+#        d={}
 
+        testingBox = resultIds
+        
+        location1 = locationOutput(1, search_query)
+        location2 = locationOutput(2, search_query)
+        location3 = locationOutput(3, search_query)
+        location4 = locationOutput(4, search_query)
+        location5 = locationOutput(5, search_query)
+        location6 = locationOutput(6, search_query)
+        location7 = locationOutput(7, search_query)
+        location8 = locationOutput(8, search_query)
+
+
+#        count = 0
+#        if resultIds.count() > 0:
+#            for i in resultIds:
+#                if count < 8:
+#                    d["location{0}".format(count + 1)] = locationOutput(resultIds[count])
+#                    count+=1
+#
     else:
         testingBox = ""
 
 
+    # Display the new results
+
+
+
     # Show error if there are no results
-    if (locationOutput(page * 8 + 1) == ""):
+    if (locationOutput(page * 8 + 1, search_query) == ""):
         errorMessage = "<span class='no-location-error'>Sorry, there are no locations matching your search</span>"
     else:
         errorMessage = ""
         
     # Show next page button if there exists a location on the next page
-    if (locationOutput((page + 1) * 8 + 1) != ""):
+    # TODO THIS WILL BREAK
+    if (locationOutput((page + 1) * 8 + 1, search_query) != ""):
         nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
     else:
         nextPage = ""
