@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Location, Review, Tag
+from .models import Profile, Location, Review, Tag, Map, LocationSuggestion
 
 # Register your models here.
 admin.site.register(Profile)

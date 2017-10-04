@@ -46,6 +46,37 @@ class Tag(models.Model):
     location = models.ForeignKey(Location)
     tagText = models.CharField(max_length=254)
 
+class LocationSuggestion(models.Model):
+    locationName = models.CharField(max_length=254, null=True)
+    latitude = models.IntegerField(null=True)
+    longtiude = models.IntegerField(null=True)
+    locationAddress = models.CharField(max_length=254, null=True)
+    locationBio = models.TextField(max_length=511, null=True)
+    locationType = models.IntegerField(null=True)
+    locationImagePath = models.CharField(max_length=127, null=True) 
+
+class Map(models.Model):
+    city = models.CharField(max_length=127)
+    imagePath = models.CharField(max_length=127)
+
+ 
+class AdminViewer(models.Model):
+    # Model the table fields
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    firstName = models.CharField(max_length=63, null=True)
+    lastName = models.CharField(max_length=63, null=True)
+    gender = models.CharField(max_length=31, null=True)
+    accountType = models.CharField(max_length=31, null=True)
+    dateOfBirth = models.DateField(null=True)
+    email = models.EmailField(max_length=254, null=True)
+    phoneNumber = models.CharField(max_length=31, null=True, blank=True)
+    address = models.CharField(max_length=254, null=True)
+
+
+    # Define string representation
+    def __str__(self):
+        return self.user.username
+
 # Create and update user from signal
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
