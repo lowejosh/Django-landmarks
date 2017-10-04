@@ -11,9 +11,12 @@ from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 
 # Navbar function that returns the proper list 
-def navBarFunc(isLogged): 
-    if (isLogged == True):
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+def navBarFunc(request, isLogged): 
+    if (isLogged):
+        if (request.session.get('admin', None) == True):
+            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+        else :
+            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/page-1">Locations</a></li></ul>'
 
@@ -47,7 +50,7 @@ def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = navBarFunc(True)   
+        navBar = navBarFunc(request, True)   
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
@@ -55,7 +58,7 @@ def index(request):
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
-        navBar = navBarFunc(False) 
+        navBar = navBarFunc(request, False) 
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
@@ -66,7 +69,7 @@ def index(request):
 def signup(request):
 
     # Define the navbar
-    navBar = navBarFunc(False)
+    navBar = navBarFunc(request, False)
 
     # Form functions
     if request.method == 'POST' :
@@ -101,9 +104,9 @@ def signup(request):
 def locations(request, location_id):
     # Show the correct navBar
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(True)
+        navBar = navBarFunc(request, True)
     else:
-        navBar = navBarFunc(False)
+        navBar = navBarFunc(request, False)
 
     # Define the context of the python vars
     context_dict = {'navBar' : navBar, 'location_id' : location_id,}
@@ -140,9 +143,9 @@ def locationfeed(request, page):
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(True)
+        navBar = navBarFunc(request, True)
     else:
-        navBar = navBarFunc(False)
+        navBar = navBarFunc(request, False)
 
     # TEMPORARY
     location1 = locationOutput(page * 8 + 1)
@@ -162,7 +165,7 @@ def locationfeed(request, page):
 
 def modify(request):
     # User must be logged in to access modify page
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(request, True)
 	
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -172,7 +175,7 @@ def modify(request):
 
 
 def edit_profile(request):
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(request, True)
 
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -188,7 +191,7 @@ def edit_profile(request):
 
 
 def password(request):
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(request, True)
 
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -206,7 +209,7 @@ def password(request):
 
 def del_user(request):
     # User must be logged in to access modify page
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(request, True)
 	
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -229,7 +232,7 @@ def del_user(request):
     
     
 def email(request):
-    navBar = navBarFunc(True)
+    navBar = navBarFunc(request, True)
     if request.method == 'GET':
         form = ContactForm()
     else:
