@@ -4,6 +4,10 @@
     {% if page > 1 %}
         <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:-1 }}">Previous page?</a></button></span>
     {% endif %}
+
+    {% autoescape off %}
+        {{ errorMessage }}
+    {% endautoescape %}
     
     {% autoescape off %}
         {{ location1 }}
@@ -16,7 +20,9 @@
         {{ location8 }}
     {% endautoescape %}
 
-    <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:1 }}">Next page?</a></button></span>
+    <!-- Only shows when there is a next page of data -->
+    {{ nextPage }}
+    
     <span class="current-page">Current page: {{ page }}</span>
     
 {% endblock %}
