@@ -62,9 +62,11 @@
     float: right;
     display: block;
     margin-bottom: 32px;
-    margin-right: 32px;
-    padding: 6px;
+    margin-right: 10%;
+    color: #242424;
     font-size: 12px;
+    font-style: italic;
+    margin-top: 12px;
 }
 
 .main-content {

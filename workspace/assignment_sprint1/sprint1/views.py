@@ -122,7 +122,7 @@ def locationfeed(request, page):
         
     # Show next page button if there exists a location on the next page
     if (locationOutput((page + 1) * 8 + 1) != ""):
-        nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:1 }}">Next page?</a></button></span>'
+        nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
     else:
         nextPage = ""
 
@@ -132,6 +132,7 @@ def locationfeed(request, page):
     else:
         navBar = navBarFunc(False)
 
+    # TEMPORARY
     location1 = locationOutput(page * 8 + 1)
     location2 = locationOutput(page * 8 + 2)
     location3 = locationOutput(page * 8 + 3)

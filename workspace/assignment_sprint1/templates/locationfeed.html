@@ -7,9 +7,7 @@
 
     {% autoescape off %}
         {{ errorMessage }}
-    {% endautoescape %}
     
-    {% autoescape off %}
         {{ location1 }}
         {{ location2 }}
         {{ location3 }}
@@ -18,11 +16,12 @@
         {{ location6 }}
         {{ location7 }}
         {{ location8 }}
+
+        <!-- Only shows when there is a next page of data -->
+        {{ nextPage }}
+    
     {% endautoescape %}
 
-    <!-- Only shows when there is a next page of data -->
-    {{ nextPage }}
-    
     <span class="current-page">Current page: {{ page }}</span>
     
 {% endblock %}
