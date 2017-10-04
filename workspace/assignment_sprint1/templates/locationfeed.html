@@ -32,5 +32,14 @@
     {% endautoescape %}
 
     <span class="current-page">Current page: {{ page }}</span>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            var input = document.createElement('input');
+            input.value = input.defaultValue = 'DefaultValue2';
+            document.getElementById('container').appendChild(input);
+        }
+    </script>
     
 {% endblock %}
+

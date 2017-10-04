@@ -38,8 +38,8 @@ def locationOutput(locationId):
 
 def returnSearch(search_query):
     #TODO
-    amountOfResults = Location.objects.filter(locationName__contains=search_query).count()
-    return amountOfResults
+    return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
+    
 
 
 # Index page view
@@ -118,12 +118,33 @@ def locationfeed(request, page):
     # To normalize it (yeah i know)
     page = int(page) - 1
 
+    # Defaults
+    location1 = ""
+    location2 = ""
+    location3 = ""
+    location4 = ""
+    location5 = ""
+    location6 = ""
+    location7 = ""
+    location8 = ""
+
 
     #TODO
     # If someone searches
     if request.method == 'GET':
-        search_query = request.GET.get('search-box', None)
+        search_query = request.GET.get('search-box', "")
+        resultIds = returnSearch(search_query)
+        d={}
         testingBox = returnSearch(search_query)
+        count = 0
+        if resultIds == []:
+            for i in resultIds:
+                if count < 8:
+                    d["location{0}".format(i + 1)] = locationOutput(resultIds[i])
+                    count+=1
+
+    else:
+        testingBox = ""
 
 
     # Show error if there are no results
@@ -144,15 +165,16 @@ def locationfeed(request, page):
     else:
         navBar = navBarFunc(False)
 
+    
     # TEMPORARY
-    location1 = locationOutput(page * 8 + 1)
-    location2 = locationOutput(page * 8 + 2)
-    location3 = locationOutput(page * 8 + 3)
-    location4 = locationOutput(page * 8 + 4)
-    location5 = locationOutput(page * 8 + 5)
-    location6 = locationOutput(page * 8 + 6)
-    location7 = locationOutput(page * 8 + 7)
-    location8 = locationOutput(page * 8 + 8)
+#   location1 = locationOutput(page * 8 + 1)
+#    location2 = locationOutput(page * 8 + 2)
+#    location3 = locationOutput(page * 8 + 3)
+#    location4 = locationOutput(page * 8 + 4)
+#    location5 = locationOutput(page * 8 + 5)
+#    location6 = locationOutput(page * 8 + 6)
+#    location7 = locationOutput(page * 8 + 7)
+#    location8 = locationOutput(page * 8 + 8)
 
     # Define the context of the python vars
     context_dict = {'testingBox': testingBox, 'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
