@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from sprint1.models import Location
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 
 # Navbar function that returns the proper list 
@@ -198,20 +198,21 @@ def del_user(request):
         return render(request, 'del_user.html', context)
     
     
-def email(request):	
-    if request.method == 'POST':
-        form = EmailForm(request.POST)
-            
-        if form.is_valid():
-            save_it = form.save()
-            save_it.save()
-            subject = 'Come check out the IFB299 Website'
-            message = 'Come check out the website: link'
-            from_email = settings.EMAIL_HOST_USER
-            to_list = ['save_it.email, settings.EMAIL_HOST_USER']
-            send_mail(subject, message, from_email, to_list, fail_silently=True)
-            return redirect('email')	
+def email(request):
+    if request.method == 'GET':
+        form = ContactForm()
     else:
-        form = EmailForm()
-        args = {'form': form}
-        return render(request, 'email.html', args)	
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('email')
+    return render(request, "email.html", {'form': form})
+
+def thanks(request):
+    return HttpResponse('Thank you for your message.')
