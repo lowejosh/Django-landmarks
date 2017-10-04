@@ -204,6 +204,7 @@ def del_user(request):
     
     
 def email(request):
+    navBar = navBarFunc(True)
     if request.method == 'GET':
         form = ContactForm()
     else:
@@ -217,7 +218,8 @@ def email(request):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('email')
-    return render(request, "email.html", {'form': form})
+    context = {'form': form, 'navBar': navBar}
+    return render(request, "email.html", context)
 
 def thanks(request):
     return HttpResponse('Thank you for your message.')
