@@ -180,6 +180,11 @@ def password(request):
         return render(request, 'password.html', args)
 
 def del_user(request):
+    # User must be logged in to access modify page
+    navBar = navBarFunc(True)
+	
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     if request.method == 'POST':
         form = DeleteUserForm(request.POST)
         
@@ -194,7 +199,7 @@ def del_user(request):
                 
     else:
         form = DeleteUserForm()
-        context = {'form': form}
+        context = {'form': form, 'navBar' : navBar}
         return render(request, 'del_user.html', context)
     
     
@@ -208,7 +213,7 @@ def email(request):
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
             try:
-                send_mail(subject, message, from_email, ['admin@example.com'])
+                send_mail(subject, message, from_email, ['sendto_email'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('email')

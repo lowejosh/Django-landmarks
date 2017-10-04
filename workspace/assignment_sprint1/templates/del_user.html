@@ -1,12 +1,14 @@
 <!-- This file is an extension of base.html -->
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 
 <!-- Main content -->
 {% block content %}
+
+<h3>Please Enter You Username:</h3>
 <form method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<button type="submit">Submit</button>
+	<br><button type="submit">Submit</button>
 </form>
 <br>
 <br>

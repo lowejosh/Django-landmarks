@@ -3,9 +3,11 @@
 
 <!-- Main content -->
 {% block content %}
+<br>
 <form method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
+	<br>
 	<button type="submit">Submit</button>
 </form>
 <br>
