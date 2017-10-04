@@ -43,6 +43,13 @@
     color: white;
 }
 
+.no-location-error {
+    text-align: center;
+    margin-top: 32px;
+    display: block; 
+    margin-bottom: 12px;
+}
+
 .next-page {
     margin-top: 32px;
     margin-bottom: 12px;
