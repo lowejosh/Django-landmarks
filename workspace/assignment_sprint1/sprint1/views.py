@@ -142,8 +142,6 @@ def locationfeed(request, page):
         resultIds = returnSearch(search_query)
 #        d={}
 
-        testingBox = resultIds
-        
         location1 = locationOutput(page * 8 + 1, search_query)
         location2 = locationOutput(page * 8 + 2, search_query)
         location3 = locationOutput(page * 8 + 3, search_query)
@@ -161,8 +159,6 @@ def locationfeed(request, page):
 #                    d["location{0}".format(count + 1)] = locationOutput(resultIds[count])
 #                    count+=1
 #
-    else:
-        testingBox = ""
 
 
     # Display the new results
@@ -193,7 +189,7 @@ def locationfeed(request, page):
 
     
     # Define the context of the python vars
-    context_dict = {'testingBox': testingBox, 'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
+    context_dict = {'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
