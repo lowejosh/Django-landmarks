@@ -3,10 +3,12 @@
 
     <div class="search-bar"> 
         <form type="get" action".">
-            <input id="search-box" type="text" name="search_box" placeholder="Search...">
+            <input id="search-box" type="text" name="search-box" placeholder="Search...">
             <button id="search-submit" type="submit">Search</button>
         </form>
     </div>
+
+    {{ testingBox }}
 
     {% if page > 1 %}
         <span class="next-page"><a class="pretty-button" href="/location/page-{{ page|add:-1 }}">Previous page?</a></button></span>

@@ -36,6 +36,10 @@ def locationOutput(locationId):
         </div>
     """
 
+def returnSearch(search_query):
+    #TODO
+    amountOfResults = Location.objects.filter(locationName__contains=search_query).count()
+    return amountOfResults
 
 
 # Index page view
@@ -114,6 +118,14 @@ def locationfeed(request, page):
     # To normalize it (yeah i know)
     page = int(page) - 1
 
+
+    #TODO
+    # If someone searches
+    if request.method == 'GET':
+        search_query = request.GET.get('search-box', None)
+        testingBox = returnSearch(search_query)
+
+
     # Show error if there are no results
     if (locationOutput(page * 8 + 1) == ""):
         errorMessage = "<span class='no-location-error'>Sorry, there are no locations matching your search</span>"
@@ -143,7 +155,7 @@ def locationfeed(request, page):
     location8 = locationOutput(page * 8 + 8)
 
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
+    context_dict = {'testingBox': testingBox, 'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
