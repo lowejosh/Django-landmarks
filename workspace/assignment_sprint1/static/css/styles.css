@@ -57,6 +57,20 @@
     background-color: #C6C6C6;
 }
 
+.search-checkboxes {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.checkbox-table {
+    border: none;
+    width: 100%;
+    text-align: left;
+    background-color: #D3D3D3;
+}
+
 .next-page {
     margin-top: 32px;
     margin-bottom: 12px;

@@ -1,10 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
     <div class="search-bar"> 
-        <form type="get" action".">
-            <input id="search-box" type="text" name="search-box" placeholder="Search...">
-            <button id="search-submit" type="submit">Search</button>
+        <form type="get" action"." id="container">
+            <input id="search-box" type="text" name="search-box" placeholder="Search a location name..."><br />
+            <div class="search-checkboxes">
+                <table class="checkbox-table">
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="foo" value="1" checked>Libraries</input>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="foo" value="2" checked>Hotels</input>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="foo" value="3" checked>Universities</input>
+                        </td>
+                    </tr>
+                    <tr>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="foo" value="4" checked>Museums</input>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="foo" value="5" checked>Public Places</input>
+                        </td>
+                        <td>
+                            <input type="checkbox" value="5" onClick="toggle(this)" checked>Select All</input>
+                        </td>
+                </table>
+            </div>
+            <input type="submit" value="Search" id="submit">
         </form>
     </div>
 
@@ -32,11 +59,13 @@
 
     <span class="current-page">Current page: {{ page }}</span>
 
-    <script type="text/javascript">
-        window.onload = function() {
-            var input = document.createElement('input');
-            input.value = input.defaultValue = 'DefaultValue2';
-            document.getElementById('container').appendChild(input);
+    <script language="javascript">
+
+        function toggle(source) {
+            checkboxes = document.getElementsByName("foo");
+            for (var i=0, n=checkboxes.length;i<n;i++){
+                checkboxes[i].checked = source.checked; 
+            }
         }
     </script>
     

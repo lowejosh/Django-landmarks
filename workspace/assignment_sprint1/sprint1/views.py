@@ -22,25 +22,33 @@ def navBarFunc(request, isLogged):
 
 # Function that returns the html output of a location
 #TODO
-def locationOutput(locationId, search_query):
+def locationOutput(locationId, search_query, checkedOptions):
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
     except: 
         return ""
 
-    locationName = l.locationName
-    locationBio = l.locationBio
-    locationSt = l.locationAddress
-    locationType = locationTypeOutput(l.locationType)
-    linkId = str(locationId)
+    options = list(map(int, checkedOptions))
 
-    return """
-        <div class='location-wrap'>
-            <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """<span style="float: right; color: #FCFCFC;">""" + locationType + """</span></a>
-            <span class='location-bio'>""" + locationSt + """</span>
-        </div>
-    """
+    for i in checkedOptions:
+        if l.locationType == i:
+            locationName = l.locationName
+            locationBio = l.locationBio
+            locationSt = l.locationAddress
+            locationType = locationTypeOutput(l.locationType)
+            linkId = str(locationId)
 
+            return """
+                <div class='location-wrap'>
+                    <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """<span style="float: right; color: #FCFCFC; margin-right: 6px;">""" + locationType + """</span></a>
+                    <span class='location-bio'>""" + locationSt + """</span>
+                </div>
+            """
+
+    return ""
+
+
+# Returns a list of database objects that match the search query
 def returnSearch(search_query):
     return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
     
@@ -172,25 +180,29 @@ def locationfeed(request, page):
     location6 = ""
     location7 = ""
     location8 = ""
+    checkedOptions = [1, 2, 3, 4, 5]
 
     # If someone searches
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")
+        checkedOptions = list(map(int, request.GET.getlist("foo", [1, 2, 3, 4, 5])))
+        print(checkedOptions)
+        
         resultIds = returnSearch(search_query)
 
-        location1 = locationOutput(page * 8 + 1, search_query)
-        location2 = locationOutput(page * 8 + 2, search_query)
-        location3 = locationOutput(page * 8 + 3, search_query)
-        location4 = locationOutput(page * 8 + 4, search_query)
-        location5 = locationOutput(page * 8 + 5, search_query)
-        location6 = locationOutput(page * 8 + 6, search_query)
-        location7 = locationOutput(page * 8 + 7, search_query)
-        location8 = locationOutput(page * 8 + 8, search_query)
+        location1 = locationOutput(page * 8 + 1, search_query, checkedOptions)
+        location2 = locationOutput(page * 8 + 2, search_query, checkedOptions)
+        location3 = locationOutput(page * 8 + 3, search_query, checkedOptions)
+        location4 = locationOutput(page * 8 + 4, search_query, checkedOptions)
+        location5 = locationOutput(page * 8 + 5, search_query, checkedOptions)
+        location6 = locationOutput(page * 8 + 6, search_query, checkedOptions)
+        location7 = locationOutput(page * 8 + 7, search_query, checkedOptions)
+        location8 = locationOutput(page * 8 + 8, search_query, checkedOptions)
 
     # Show error if there are no results
     errorMessageCount = 0
-    for i in range(1, 8):
-        if (locationOutput(page * 8 + i, search_query) != ""):
+    for i in range(1, Location.objects.count()):
+        if (locationOutput(page * 8 + i, search_query, checkedOptions) != ""):
             errorMessageCount+=1
         
     if errorMessageCount == 0:
@@ -198,7 +210,7 @@ def locationfeed(request, page):
     else:
         errorMessage = ""
     # Show next page button if there exists a location on the next page
-    if (locationOutput((page + 1) * 8 + 1, search_query) != ""):
+    if (locationOutput((page + 1) * 8 + 1, search_query, checkedOptions) != ""):
         nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
     else:
         nextPage = ""
