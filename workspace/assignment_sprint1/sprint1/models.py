@@ -32,6 +32,10 @@ class Location(models.Model):
     locationType = models.IntegerField(null=True)
     locationImagePath = models.CharField(max_length=127, null=True) 
 
+    # Define string representation
+    def __str__(self):
+        return self.locationName
+
 class Review(models.Model):
     user = models.ForeignKey(Profile)
     location = models.ForeignKey(Location)
