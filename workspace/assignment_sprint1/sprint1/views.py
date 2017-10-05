@@ -102,14 +102,34 @@ def signup(request):
 # Location Index
 # needs a lot of work
 def locations(request, location_id):
+
     # Show the correct navBar
     if (request.user.is_authenticated()):
         navBar = navBarFunc(request, True)
     else:
         navBar = navBarFunc(request, False)
+   
+
+    #TODO
+    try:
+        locationId = int(location_id)
+        l = Location.objects.get(id=locationId)
+        locationName = l.locationName
+        locationBio = l.locationBio
+        locationAddress = l.locationAddress
+    except:
+        notification = "This location does not exist"
+        context_dict = {'navBar' : navBar, 'notification' : notification,}
+        return render(request, 'notification.html', context=context_dict)
+
+    
+    # DEFAULTS
+    tags = ""
+    
+    
 
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'location_id' : location_id,}
+    context_dict = {'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress}
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
@@ -135,7 +155,6 @@ def locationfeed(request, page):
     location8 = ""
 
 
-    #TODO
     # If someone searches
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")

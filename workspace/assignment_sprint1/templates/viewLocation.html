@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %} 
-<h2 style="width: 100%; text-align: center;">Location Name Place Holder</h2>
+<h2 style="width: 100%; text-align: center;">{{ locationName }}</h2>
 
 <table align="center">
     <tbody>
@@ -18,27 +18,27 @@
     <tbody>
         <tr>
             <td>
-                Location Description
+                {{ locationBio }}
             </td>
         </tr>
     </tbody>
 </table>
-<table style="float: right; margin-right: 10%; padding-top: 0px; padding-bottom: 0px;">
+{% autoescape off %}
+<!-- <table style="float: right; margin-right: 10%; padding-top: 0px; padding-bottom: 0px;">
     <tr>
-        <td><p>Tag1</p></td>
-        <td><p>Tag2</p></td>
-        <td><p>Tag3</p></td>
     </tr>
 </table>
+-->
+{{ tags }}
+{% endautoescape %} 
 
 <form>
     <h3 style="margin-left: 10%">Location Details</h3>
     <table width="80%" align="center">
         <tr>
             <td>
-                Location Name: <br />
-                Location Address: <br />
-                Email: <br />
+                Location Name: {{ locationName }}<br />
+                Location Address: {{ locationAddress }}<br />
                 <hr />
             </td>
         </tr>
@@ -71,13 +71,8 @@
     </table>
 
     <h3 style="margin-left: 10%">Reviews</h3>
-    <button style="float: left; margin-left: 10%;" class="button">Review</button>
-    <br />
-    <br />
-    <br />
-    <br />
 
-    <table width="80%" align="center">
+    <table class="info" width="80%" align="center">
         <tr>
             <td>
                 <h5 style="float: left; margin-left: 2%;">Example Review</h5>
