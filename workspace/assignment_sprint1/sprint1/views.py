@@ -125,7 +125,7 @@ def locationfeed(request, page):
     page = int(page) - 1
 
     # Defaults
-    location1 = locationOutput(1, search_query)
+    location1 = ""
     location2 = ""
     location3 = ""
     location4 = ""
@@ -150,19 +150,6 @@ def locationfeed(request, page):
         location6 = locationOutput(page * 8 + 6, search_query)
         location7 = locationOutput(page * 8 + 7, search_query)
         location8 = locationOutput(page * 8 + 8, search_query)
-
-
-#        count = 0
-#        if resultIds.count() > 0:
-#            for i in resultIds:
-#                if count < 8:
-#                    d["location{0}".format(count + 1)] = locationOutput(resultIds[count])
-#                    count+=1
-#
-
-
-    # Display the new results
-
 
 
     # Show error if there are no results
@@ -197,12 +184,14 @@ def locationfeed(request, page):
 def modify(request):
     # User must be logged in to access modify page
     navBar = navBarFunc(request, True)
-	
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     context_dict = {'navBar' : navBar}
-	
-    return render(request, 'modify.html', context=context_dict)
+    if (request.user.is_authenticated()):
+        return render(request, 'modify.html', context=context_dict)
+    else:
+        return render(request, 'notAuthenticated.html', context=context_dict)
+
+
+    
 
 
 def edit_profile(request):
