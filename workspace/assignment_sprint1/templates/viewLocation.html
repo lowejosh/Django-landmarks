@@ -35,6 +35,7 @@
 {% endautoescape %} 
 
 <form>
+    {% csrf_token %}
     <h3 style="margin-left: 10%">Location Details</h3>
     <table class="info" width="80%" align="center">
         <tr>
@@ -77,8 +78,8 @@
 
 <h3 style="text-align:center;">Leave a Review</h3>
 <form method="post" accept-charset="utf-8">
-    <div class="centered-content">
     {% csrf_token %}
+    <div class="centered-content">
     {% for field in form %}
     <br />
         <p>

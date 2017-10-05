@@ -174,7 +174,7 @@ def index(request):
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
-        return render(request, 'privateMain.html', context=context_dict)
+        return render(request, 'publicMain.html', context=context_dict)
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
