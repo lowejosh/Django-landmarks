@@ -116,7 +116,6 @@ def signup(request):
     return render(request, 'signup.html', {'form': form, 'navBar' : navBar,})
 
 # Location Index
-# needs a lot of work
 def locations(request, location_id):
 
     # Show the correct navBar
@@ -128,6 +127,7 @@ def locations(request, location_id):
 
     #TODO
     try:
+        # Retrieve data from database
         locationId = int(location_id)
         l = Location.objects.get(id=locationId)
         locationName = l.locationName
@@ -135,6 +135,7 @@ def locations(request, location_id):
         locationAddress = l.locationAddress
         locationTypeId = l.locationType
     except:
+        # If there is no data
         notification = "This location does not exist"
         context_dict = {'navBar' : navBar, 'notification' : notification,}
         return render(request, 'notification.html', context=context_dict)
@@ -172,12 +173,10 @@ def locationfeed(request, page):
     location7 = ""
     location8 = ""
 
-
     # If someone searches
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")
         resultIds = returnSearch(search_query)
-#        d={}
 
         location1 = locationOutput(page * 8 + 1, search_query)
         location2 = locationOutput(page * 8 + 2, search_query)
@@ -187,7 +186,6 @@ def locationfeed(request, page):
         location6 = locationOutput(page * 8 + 6, search_query)
         location7 = locationOutput(page * 8 + 7, search_query)
         location8 = locationOutput(page * 8 + 8, search_query)
-
 
     # Show error if there are no results
     errorMessageCount = 0
