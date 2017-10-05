@@ -117,6 +117,7 @@ def locations(request, location_id):
         locationName = l.locationName
         locationBio = l.locationBio
         locationAddress = l.locationAddress
+        locationTypeId = l.locationType
     except:
         notification = "This location does not exist"
         context_dict = {'navBar' : navBar, 'notification' : notification,}
@@ -126,10 +127,23 @@ def locations(request, location_id):
     # DEFAULTS
     tags = ""
     
-    
+    # Write the location type in plaintext
+    # 1 - Library, 2 - Hotel, 3 - University, 4 - Museum, 5 - Public place
+    if locationTypeId == 1:
+        locationType = "Library"
+    elif locationTypeId == 2:
+        locationType = "Hotel"
+    elif locationTypeId == 3:
+        locationType = "Hotel"
+    elif locationTypeId == 4:
+        locationType = "Museum"
+    elif locationTypeId == 5:
+        locationType = "Public Space"
+    else:
+        locationType = ""
 
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress}
+    context_dict = {'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
