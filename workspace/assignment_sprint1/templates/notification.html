@@ -1,0 +1,12 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+    <div class="centered-content"><p style="margin-top: 52px; font-size: 16px;">
+        {% autoescape off %}
+            {{ notification }}
+        {% endautoescape %}
+    </p></div>
+   <br />
+{% endblock %}
