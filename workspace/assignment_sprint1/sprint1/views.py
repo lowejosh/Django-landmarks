@@ -31,11 +31,12 @@ def locationOutput(locationId, search_query):
     locationName = l.locationName
     locationBio = l.locationBio
     locationSt = l.locationAddress
+    locationType = locationTypeOutput(l.locationType)
     linkId = str(locationId)
 
     return """
         <div class='location-wrap'>
-            <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """</a>
+            <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """<span style="float: right; color: #FCFCFC;">""" + locationType + """</span></a>
             <span class='location-bio'>""" + locationSt + """</span>
         </div>
     """
@@ -44,6 +45,21 @@ def returnSearch(search_query):
     return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
     
 
+# Write the location type in plaintext
+def locationTypeOutput(locationTypeId):
+    # 1 - Library, 2 - Hotel, 3 - University, 4 - Museum, 5 - Public place
+    if locationTypeId == 1:
+        return "Library"
+    elif locationTypeId == 2:
+        return "Hotel"
+    elif locationTypeId == 3:
+        return "University"
+    elif locationTypeId == 4:
+        return "Museum"
+    elif locationTypeId == 5:
+        return "Public Space"
+    else:
+        return ""
 
 # Index page view
 def index(request):
@@ -126,21 +142,9 @@ def locations(request, location_id):
     
     # DEFAULTS
     tags = ""
-    
-    # Write the location type in plaintext
-    # 1 - Library, 2 - Hotel, 3 - University, 4 - Museum, 5 - Public place
-    if locationTypeId == 1:
-        locationType = "Library"
-    elif locationTypeId == 2:
-        locationType = "Hotel"
-    elif locationTypeId == 3:
-        locationType = "Hotel"
-    elif locationTypeId == 4:
-        locationType = "Museum"
-    elif locationTypeId == 5:
-        locationType = "Public Space"
-    else:
-        locationType = ""
+
+    # Render the locationType in plain text
+    locationType = locationTypeOutput(locationTypeId)
 
     # Define the context of the python vars
     context_dict = {'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
