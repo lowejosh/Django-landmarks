@@ -21,7 +21,6 @@ def navBarFunc(request, isLogged):
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
 
 
-#TODO
 # Review output function
 def ReviewOutput(location):
     
@@ -105,10 +104,10 @@ def ReviewOutput(location):
         ReviewList.append("""<table class="info" width="80%" align="center">
             <tr>
                 <td>
-                    <h5 style="float: left; margin-left: 2%;">""" + str(r[i].user) + """</h5>
-                    <div class="rate" style="float: right; margin-right: 2%;">
+                    <span class="review-name">""" + str(r[i].user) + """ said:</span>
+                    <div class="rate">
                     """ + starRating[i] + """
-                    </div>
+                    </div><br />
                     <div class="rating-text">
                     """ + str(r[i].reviewText) + """
                     </div>
@@ -260,9 +259,7 @@ def locations(request, location_id):
     else:
         form = ReviewForm()
 
-    #TODO
     ReviewList = ReviewOutput(locationId)
-
 
     # Define the context of the python vars
     context_dict = {'form': form, 'ReviewList': ReviewList, 'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
