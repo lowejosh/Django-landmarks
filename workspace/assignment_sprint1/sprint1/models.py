@@ -83,3 +83,9 @@ class AdminViewer(models.Model):
     # Define string representation
     def __str__(self):
         return self.user.username
+
+class EmailForm(models.Model):
+    email = models.EmailField()
+    
+    def __str__(self):
+        return self.email

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Profile, Location, Review, Tag, Map, LocationSuggestion 
 from django.contrib import admin, messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
-from .models import Profile, Location, Review, Tag, AdminViewer
+from .models import Profile, Location, Review, Tag, AdminViewer, EmailForm
 from django.utils.html import format_html
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
@@ -33,3 +33,4 @@ class AdminViewerFuntion(admin.ModelAdmin):
     
 admin.site.register(AdminViewer, AdminViewerFuntion)
 
+admin.site.register(EmailForm)
