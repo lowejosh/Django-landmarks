@@ -9,25 +9,25 @@
                 <table class="checkbox-table">
                     <tr>
                         <td>
-                            <input type="checkbox" name="foo" value="1" checked>Libraries</input>
+                            <input type="checkbox" name="foo" value="1" onClick="removeAllCheck()" checked>Libraries</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="2" checked>Hotels</input>
+                            <input type="checkbox" name="foo" value="2" onClick="removeAllCheck()" checked>Hotels</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="3" checked>Universities</input>
+                            <input type="checkbox" name="foo" value="3" onClick="removeAllCheck()" checked>Universities</input>
                         </td>
                     </tr>
                     <tr>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="4" checked>Museums</input>
+                            <input type="checkbox" name="foo" value="4" onClick="removeAllCheck()" checked>Museums</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="5" checked>Public Places</input>
+                            <input type="checkbox" name="foo" value="5" onClick="removeAllCheck()" checked>Public Places</input>
                         </td>
                         <td>
-                            <input type="checkbox" value="5" onClick="toggle(this)" checked>Select All</input>
+                            <input type="checkbox" id="all-check" value="5" onClick="toggle(this)" checked>Select All</input>
                         </td>
                 </table>
             </div>
@@ -60,6 +60,10 @@
     <span class="current-page">Current page: {{ page }}</span>
 
     <script language="javascript">
+
+        function removeAllCheck() {
+            document.getElementById("all-check").checked = false; 
+        }
 
         function toggle(source) {
             checkboxes = document.getElementsByName("foo");

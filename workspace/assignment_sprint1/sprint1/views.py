@@ -186,7 +186,6 @@ def locationfeed(request, page):
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")
         checkedOptions = list(map(int, request.GET.getlist("foo", [1, 2, 3, 4, 5])))
-        print(checkedOptions)
         
         resultIds = returnSearch(search_query)
 
@@ -239,9 +238,6 @@ def modify(request):
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
-
-
-    
 
 
 def edit_profile(request):
