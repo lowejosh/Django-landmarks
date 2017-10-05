@@ -14,21 +14,18 @@ from django.conf import settings
 def navBarFunc(request, isLogged): 
     if (isLogged):
         if (request.session.get('admin', None) == True):
-            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
         else :
-            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/page-1">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/page-1">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
 
 # Function that returns the html output of a location
-#TODO
 def locationOutput(locationId, search_query, checkedOptions):
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
     except: 
         return ""
-
-    options = list(map(int, checkedOptions))
 
     for i in checkedOptions:
         if l.locationType == i:
@@ -133,7 +130,6 @@ def locations(request, location_id):
         navBar = navBarFunc(request, False)
    
 
-    #TODO
     try:
         # Retrieve data from database
         locationId = int(location_id)
@@ -163,56 +159,79 @@ def locations(request, location_id):
 
     
 # Location Feed
-def locationfeed(request, page):
+def locationfeed(request):
     
     # Default Search Query
     search_query = ""
 
     # To normalize it (yeah i know)
-    page = int(page) - 1
+#    page = int(page) - 1
+
 
     # Defaults
-    location1 = ""
-    location2 = ""
-    location3 = ""
-    location4 = ""
-    location5 = ""
-    location6 = ""
-    location7 = ""
-    location8 = ""
-    checkedOptions = [1, 2, 3, 4, 5]
+    locationList = [] 
+#    checkedOptions = [1, 2, 3, 4, 5]
+    checked1 = "checked"
+    checked2 = "checked"
+    checked3 = "checked"
+    checked4 = "checked"
+    checked5 = "checked"
+
+
+    checkedOptions = list(map(int, request.GET.getlist("foo", [])))
+
 
     # If someone searches
     if request.method == 'GET':
         search_query = request.GET.get('search-box', "")
-        checkedOptions = list(map(int, request.GET.getlist("foo", [1, 2, 3, 4, 5])))
-        
-        resultIds = returnSearch(search_query)
+        if request.GET.getlist("foo"):
 
-        location1 = locationOutput(page * 8 + 1, search_query, checkedOptions)
-        location2 = locationOutput(page * 8 + 2, search_query, checkedOptions)
-        location3 = locationOutput(page * 8 + 3, search_query, checkedOptions)
-        location4 = locationOutput(page * 8 + 4, search_query, checkedOptions)
-        location5 = locationOutput(page * 8 + 5, search_query, checkedOptions)
-        location6 = locationOutput(page * 8 + 6, search_query, checkedOptions)
-        location7 = locationOutput(page * 8 + 7, search_query, checkedOptions)
-        location8 = locationOutput(page * 8 + 8, search_query, checkedOptions)
+            # 'nother default if the list exists
+            checked1 = ""
+            checked2 = ""
+            checked3 = ""
+            checked4 = ""
+            checked5 = ""
 
+            # Save the checked data - because it resets upon submit
+            for i in checkedOptions: 
+                if i == 1:
+                    checked1 = "checked"
+                elif i == 2:
+                    checked2 = "checked"
+                elif i == 3:
+                    checked3 = "checked"
+                elif i == 4:
+                    checked4 = "checked"
+                elif i == 5:
+                    checked5 = "checked"
+
+
+    locationMax = 50;
+    for i in range(1, Location.objects.count() + 1):
+        if i <= locationMax:
+            locationList.append(locationOutput(i, search_query, checkedOptions))
+
+    
+    # Show next page button if there exists a location on the next page
+   # if (locationOutput((page + 1) * 8 + 1, search_query, checkedOptions) != ""):
+   #     nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
+   # else:
+    #    nextPage = ""
+
+    
     # Show error if there are no results
     errorMessageCount = 0
-    for i in range(1, Location.objects.count()):
-        if (locationOutput(page * 8 + i, search_query, checkedOptions) != ""):
+    for i in range(1, Location.objects.count() + 1):
+        if (locationOutput(i, search_query, checkedOptions) != ""):
             errorMessageCount+=1
         
     if errorMessageCount == 0:
-        errorMessage = "<span class='no-location-error'>Sorry, there are no locations matching your search</span>"
+        errorMessage = "<span class='no-location-error'>Press Search to view available locations</span>"
     else:
         errorMessage = ""
-    # Show next page button if there exists a location on the next page
-    if (locationOutput((page + 1) * 8 + 1, search_query, checkedOptions) != ""):
-        nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
-    else:
-        nextPage = ""
+
+
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
@@ -222,7 +241,7 @@ def locationfeed(request, page):
 
     
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'errorMessage': errorMessage, 'page': page + 1, 'nextPage': nextPage, 'location1': location1, 'location2': location2, 'location3': location3,'location4': location4,'location5': location5,'location6': location6,'location7': location7,'location8': location8,}
+    context_dict = {'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)

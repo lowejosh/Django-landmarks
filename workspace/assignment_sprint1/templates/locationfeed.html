@@ -3,36 +3,35 @@
 
 
     <div class="search-bar"> 
-        <form type="get" action"." id="container">
+        <form type="get" action="." id="container">
             <input id="search-box" type="text" name="search-box" placeholder="Search a location name..."><br />
+        </form>
+        <form type="get" action="." id="container-auto">
             <div class="search-checkboxes">
                 <table class="checkbox-table">
                     <tr>
                         <td>
-                            <input type="checkbox" name="foo" value="1" onClick="removeAllCheck()" checked>Libraries</input>
+                            <input type="checkbox" name="foo" value="1" onClick="removeAllCheck()" {{ checked1 }}>Libraries</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="2" onClick="removeAllCheck()" checked>Hotels</input>
+                            <input type="checkbox" name="foo" value="2" onClick="removeAllCheck()" {{ checked2 }}>Hotels</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="3" onClick="removeAllCheck()" checked>Universities</input>
+                            <input type="checkbox" name="foo" value="3" onClick="removeAllCheck()" {{ checked3 }}>Universities</input>
                         </td>
                     </tr>
                     <tr>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="4" onClick="removeAllCheck()" checked>Museums</input>
+                            <input type="checkbox" name="foo" value="4" onClick="removeAllCheck()" {{ checked4 }}>Museums</input>
                         </td>
                         <td>
-                            <input type="checkbox" name="foo" value="5" onClick="removeAllCheck()" checked>Public Places</input>
-                        </td>
-                        <td>
-                            <input type="checkbox" id="all-check" value="5" onClick="toggle(this)" checked>Select All</input>
+                            <input type="checkbox" name="foo" value="5" onClick="removeAllCheck()" {{ checked5 }}>Public Places</input>
                         </td>
                 </table>
             </div>
-            <input type="submit" value="Search" id="submit">
         </form>
+        <input type="button" value="Search" id="submit" onclick="submitForms()">
     </div>
 
 
@@ -43,35 +42,25 @@
     {% autoescape off %}
         {{ errorMessage }}
     
-        {{ location1 }}
-        {{ location2 }}
-        {{ location3 }}
-        {{ location4 }}
-        {{ location5 }}
-        {{ location6 }}
-        {{ location7 }}
-        {{ location8 }}
+        {% for location in locationList %}
+            {{ location }}
+        {% endfor %}
 
         <!-- Only shows when there is a next page of data -->
         {{ nextPage }}
     
     {% endautoescape %}
 
-    <span class="current-page">Current page: {{ page }}</span>
+    <!--  <span class="current-page">Current page: {{ page }}</span> -->
 
     <script language="javascript">
-
-        function removeAllCheck() {
-            document.getElementById("all-check").checked = false; 
+        submitForms = function(){
+            document.getElementById("container").submit();
+            document.getElementById("container-auto").submit();
         }
 
-        function toggle(source) {
-            checkboxes = document.getElementsByName("foo");
-            for (var i=0, n=checkboxes.length;i<n;i++){
-                checkboxes[i].checked = source.checked; 
-            }
-        }
     </script>
+
     
 {% endblock %}
 

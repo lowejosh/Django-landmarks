@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/',}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^location/$', views.locationfeed, name='locationfeed'),
-    url(r'^location/page-(?P<page>[0-9]+)/', views.locationfeed, name='locationfeed'),
     url(r'^location/individual/(?P<location_id>[0-9]+)/$', views.locations, name='locations'),
     url(r'^modify/$', views.modify, name='modify'),
     url(r'^modify/edit_profile/$', views.edit_profile, name='edit_profile'),
