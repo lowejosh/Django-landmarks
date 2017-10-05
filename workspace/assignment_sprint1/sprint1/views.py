@@ -224,9 +224,11 @@ def locations(request, location_id):
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
+        submitButton = '<button class="pretty-button" type="submit" >Leave Review</button><br />'
         navBar = navBarFunc(request, True)
     else:
         navBar = navBarFunc(request, False)
+        submitButton = '<button class="pretty-button" type="submit" disabled>Leave Review</button><br /><br /><div class="centered-content">You need to be logged in to submit a review</div>'
 
     try:
         # Retrieve data from database
@@ -263,8 +265,10 @@ def locations(request, location_id):
 
     ReviewList = ReviewOutput(locationId)
 
+    
+
     # Define the context of the python vars
-    context_dict = {'form': form, 'ReviewList': ReviewList, 'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
+    context_dict = {'submitButton': submitButton, 'form': form, 'ReviewList': ReviewList, 'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)

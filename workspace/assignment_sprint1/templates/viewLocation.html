@@ -91,7 +91,10 @@
         </p>
     {% endfor %}
     <br />
-    <button class="pretty-button" type='submit'>Leave Review</button><br />
+    
+    {% autoescape off %}
+        {{ submitButton }}
+    {% endautoescape %}
     </div>
 </form>
 
