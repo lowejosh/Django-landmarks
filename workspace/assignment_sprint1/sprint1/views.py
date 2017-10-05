@@ -164,9 +164,6 @@ def locationfeed(request):
     # Default Search Query
     search_query = ""
 
-    # To normalize it (yeah i know)
-#    page = int(page) - 1
-
 
     # Defaults
     locationList = [] 
