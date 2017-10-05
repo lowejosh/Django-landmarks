@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from sprint1.models import Location
 # Signup imports
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm
 
