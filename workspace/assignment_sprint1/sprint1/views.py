@@ -164,19 +164,15 @@ def locationfeed(request):
     # Default Search Query
     search_query = ""
 
-
     # Defaults
     locationList = [] 
-#    checkedOptions = [1, 2, 3, 4, 5]
     checked1 = "checked"
     checked2 = "checked"
     checked3 = "checked"
     checked4 = "checked"
     checked5 = "checked"
 
-
     checkedOptions = list(map(int, request.GET.getlist("foo", [])))
-
 
     # If someone searches
     if request.method == 'GET':
@@ -209,14 +205,6 @@ def locationfeed(request):
         if i <= locationMax:
             locationList.append(locationOutput(i, search_query, checkedOptions))
 
-    
-    # Show next page button if there exists a location on the next page
-   # if (locationOutput((page + 1) * 8 + 1, search_query, checkedOptions) != ""):
-   #     nextPage = '<span class="next-page"><a class="pretty-button" href="/location/page-' + str(page + 2) + '">Next page?</a></button></span>'
-   # else:
-    #    nextPage = ""
-
-    
     # Show error if there are no results
     errorMessageCount = 0
     for i in range(1, Location.objects.count() + 1):
@@ -227,8 +215,6 @@ def locationfeed(request):
         errorMessage = "<span class='no-location-error'>Press Search to view available locations</span>"
     else:
         errorMessage = ""
-
-
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
