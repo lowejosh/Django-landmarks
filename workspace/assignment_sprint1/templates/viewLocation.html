@@ -66,27 +66,31 @@
     </table>
 
     <h3 style="margin-left: 10%">Reviews</h3>
+    {% autoescape off %}
+        {% for review in ReviewList %}
+            {{ review }}
+        {% endfor %}
+    {% endautoescape %}
 
-    <table class="info" width="80%" align="center">
-        <tr>
-            <td>
-                <h5 style="float: left; margin-left: 2%;">Example Review</h5>
-                <div class="rate" style="float: right; margin-right: 2%;">
-                    <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
-                    <label for="st1"></label>
-                    <input type="checkbox" id="st2" value="2" /> <!-- 4 Star if checked="checked" -->
-                    <label for="st2"></label>
-                    <input type="checkbox" id="st3" value="3" checked="checked" /> <!-- 3 Star if checked="checked" -->
-                    <label for="st3"></label>
-                    <input type="checkbox" id="st4" value="4" /> <!-- 2 Star if checked="checked" -->
-                    <label for="st4"></label>
-                    <input type="checkbox" id="st5" value="5" /> <!-- 1 Star if checked="checked" -->
-                    <label for="st5"></label>
-                </div>
-            </td>
-        </tr>
-    </table>
         <br />
+</form>
+
+<form method="post" accept-charset="utf-8">
+    <div class="centered-content">
+    {% csrf_token %}
+    {% for field in form %}
+    <br />
+        <p>
+        {{ field.label_tag }} <br />
+            {{ field }}
+            {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        </p>
+    {% endfor %}
+    <br />
+    <button class="pretty-button" type='submit'>Leave Review</button><br />
+    </div>
 </form>
 
 

@@ -1,7 +1,9 @@
 # Imports
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from sprint1.models import Review
 
 # Sign up form (additional) fields
 class SignUpForm(UserCreationForm):
@@ -51,3 +53,8 @@ class ContactForm(forms.Form):
 	message = forms.CharField(widget=forms.Textarea)
 	sendto_email = forms.EmailField()
 	
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'reviewText']
+        labels = {'reviewText': 'Review', 'rating': 'Rating'}

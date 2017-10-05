@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import ModelForm
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Profile Model
 class Profile(models.Model):
@@ -36,11 +37,17 @@ class Location(models.Model):
     def __str__(self):
         return self.locationName
 
+
+ratings = [(1, 1),(2, 2), (3, 3), (4, 4), (5, 5)]
+
 class Review(models.Model):
     user = models.ForeignKey(Profile)
     location = models.ForeignKey(Location)
     reviewText = models.TextField(max_length=1023)
-    rating = models.IntegerField(null=True)
+    rating = models.IntegerField(default=1, choices=ratings)
+
+    def __str__(self):
+        return "review" + str(self.id)
 
 class Image(models.Model):
     location = models.ForeignKey(Location)
