@@ -254,8 +254,10 @@ def locations(request, location_id):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.location_id = locationId
-            instance.user = Profile.objects.get(id=(request.user.id))
+            instance.user = Profile.objects.get(user=(request.user))
             instance.save()
+            return HttpResponseRedirect("")
+
     else:
         form = ReviewForm()
 

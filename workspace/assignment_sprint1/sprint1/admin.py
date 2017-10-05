@@ -10,13 +10,19 @@ from django.http import HttpResponse
 from sprint1.models import Location, User
 from django.conf import settings
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'firstName', 'lastName', 'gender', 'accountType', 'dateOfBirth', 'email', 'phoneNumber', 'address'] 
+
+
 # Register your models here.
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Location)
 admin.site.register(Review)
 admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
 admin.site.register(Map)
+
+
 
 def autologin(modeladmin, request, queryset):
     if queryset.count() != 1:
