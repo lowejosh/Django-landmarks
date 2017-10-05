@@ -5,8 +5,6 @@
     <div class="search-bar"> 
         <form type="get" action="." id="container">
             <input id="search-box" type="text" name="search-box" placeholder="Search a location name..."><br />
-        </form>
-        <form type="get" action="." id="container-auto">
             <div class="search-checkboxes">
                 <table class="checkbox-table">
                     <tr>
@@ -30,8 +28,8 @@
                         </td>
                 </table>
             </div>
+            <input type="submit" value="Search" id="submit">
         </form>
-        <input type="button" value="Search" id="submit" onclick="submitForms()">
     </div>
 
 
@@ -49,15 +47,6 @@
     {% endautoescape %}
 
     <!--  <span class="current-page">Current page: {{ page }}</span> -->
-
-    <script language="javascript">
-        submitForms = function(){
-            document.getElementById("container").submit();
-            document.getElementById("container-auto").submit();
-        }
-
-    </script>
-
     
 {% endblock %}
 
