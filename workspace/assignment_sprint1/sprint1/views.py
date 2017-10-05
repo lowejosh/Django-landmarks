@@ -183,11 +183,13 @@ def locationfeed(request, page):
 
 def modify(request):
     # User must be logged in to access modify page
-    navBar = navBarFunc(request, True)
-    context_dict = {'navBar' : navBar}
     if (request.user.is_authenticated()):
+        navBar = navBarFunc(request, True)
+        context_dict = {'navBar' : navBar}
         return render(request, 'modify.html', context=context_dict)
     else:
+        navBar = navBarFunc(request, False)
+        context_dict = {'navBar' : navBar}
         return render(request, 'notAuthenticated.html', context=context_dict)
 
 
