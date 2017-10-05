@@ -2,19 +2,21 @@
 {% block content %} 
 <h2 style="width: 100%; text-align: center;">{{ locationName }}</h2>
 
-<table align="center">
+<!--
+<table align="center" class="info">
     <tbody>
         <tr>
             <td>
-                <img src="" alt="Location Image" />
+                
             </td>
         </tr>
     </tbody>
 </table>
+-->
+{{ locationImage }}
 
 <h3 style="margin-left: 10%">Bio</h3>
-
-<table width="80%" align="center">
+<table class="info" width="80%" align="center">
     <tbody>
         <tr>
             <td>
@@ -34,38 +36,31 @@
 
 <form>
     <h3 style="margin-left: 10%">Location Details</h3>
-    <table width="80%" align="center">
+    <table class="info" width="80%" align="center">
         <tr>
             <td>
-                Location Name: {{ locationName }}<br />
-                Location Address: {{ locationAddress }}<br />
+                {{ locationName }}<br />
+                <i>{{ locationAddress }}</i><br />
+                {{ locationType }}<br />
+                <br />
                 <hr />
             </td>
         </tr>
         <tr>
             <td>
-                <label for="picture">Upload your own Pictures of the Location:</label>
-                <input type="file" name="picture" accept="image/*" />
+        <br />
+                <div class="centered-content">
+                    <label for="picture">Upload your own Pictures of the Location:</label>
+                    <input type="file" name="picture" accept="image/*" />
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                (Preview of Uploaded Image)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Customer Submitted Pictures of the Location
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <br />
-
-                <section id="photos">
-                    <img src="images/cat-1.jpg" alt="Cute cat"> <!-- Example of how to setout the photos-->
-                    <img src="images/cat-2.jpg" alt="Serious cat">
-                </section>
+                {{ customerPhotos }}
+                <!--    <section id="photos">
+                <img src="images/cat-2.jpg" alt="Serious cat">
+                </section> -->
             </td>
         </tr>
     </table>
@@ -88,30 +83,10 @@
                     <input type="checkbox" id="st5" value="5" /> <!-- 1 Star if checked="checked" -->
                     <label for="st5"></label>
                 </div>
-                </td>
-            </tr>
-        </table>
+            </td>
+        </tr>
+    </table>
         <br />
-        <table width="80%" align="center">
-            <tr>
-                <td>
-                    <h5 style="float: left; margin-left: 2%;">Example Review</h5>
-                    <div class="rate" style="float: right; margin-right: 2%;">
-                        <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
-                        <label for="st1"></label>
-                        <input type="checkbox" id="st2" value="2" /> <!-- 4 Star if checked="checked" -->
-                        <label for="st2"></label>
-                        <input type="checkbox" id="st3" value="3" checked="checked" /> <!-- 3 Star if checked="checked" -->
-                        <label for="st3"></label>
-                        <input type="checkbox" id="st4" value="4" /> <!-- 2 Star if checked="checked" -->
-                        <label for="st4"></label>
-                        <input type="checkbox" id="st5" value="5" /> <!-- 1 Star if checked="checked" -->
-                        <label for="st5"></label>
-                    </div>
-                </td>
-            </tr>
-        </table>
     </form>
     <br />
-    <!-- if we get time lol... <button style="float: right; margin-right: 50%;" class="button">Load More</button> might be 2 much work -->
 {% endblock %}

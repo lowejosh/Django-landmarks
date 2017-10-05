@@ -64,6 +64,10 @@
     display: block;
 }
 
+.info {
+    border: none;
+    background-color: #F9F9F9;
+}
 
 .current-page {
     float: right;
