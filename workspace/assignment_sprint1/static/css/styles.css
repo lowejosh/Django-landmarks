@@ -10,6 +10,31 @@
     box-sizing: inherit;
 }
 
+.rate {
+    border: none;
+    margin: 0 auto;
+    float: right;
+    height: 46px;
+    padding: 0 10px;
+    pointer-events: none
+    
+}
+
+.review-name {
+    display: block;
+    float: left;
+    font-style: italic;
+    margin-top: 8px;
+    font-size: 18px;
+}
+
+.rating-text {
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+
+}
+
 
 .location-wrap {
     margin-top: 32px;
@@ -318,13 +343,6 @@ a {
 /*
     Star Review System
 */
-.rate {
-    border: 1px solid #cccccc;
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-    pointer-events: none
-}
 
     .rate:not(:checked) > input {
         position: absolute;

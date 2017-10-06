@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from sprint1.models import Location
+from sprint1.models import Location, Profile, Review
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
+<<<<<<< HEAD
 from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
+=======
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm
+>>>>>>> 65ceb4231ec7ef296246e962d6439a38a367feaf
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -19,6 +23,105 @@ def navBarFunc(request, isLogged):
             return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
     else:
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+
+
+# Review output function
+def ReviewOutput(location):
+    
+    try:
+        r = Review.objects.filter(location=Location.objects.get(id=location))
+    except: 
+        return ""
+
+    ReviewList = []
+
+    starRating = []
+    
+    for i in range(0, r.count()):
+        if r[i].rating == 1:
+            starRating.append("""
+                            <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
+                            <label for="st1"></label>
+                            <input type="checkbox" id="st2" value="2" />
+                            <label for="st2"></label>
+                            <input type="checkbox" id="st3" value="3" />
+                            <label for="st3"></label>
+                            <input type="checkbox" id="st4" value="4" />
+                            <label for="st4"></label>
+                            <input type="checkbox" id="st5" value="5" checked/> 
+                            <label for="st5"></label>
+                        """)
+        elif r[i].rating == 2:
+            starRating.append("""
+                            <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
+                            <label for="st1"></label>
+                            <input type="checkbox" id="st2" value="2" />
+                            <label for="st2"></label>
+                            <input type="checkbox" id="st3" value="3" />
+                            <label for="st3"></label>
+                            <input type="checkbox" id="st4" value="4" checked/>
+                            <label for="st4"></label>
+                            <input type="checkbox" id="st5" value="5" /> 
+                            <label for="st5"></label>
+                        """)
+        elif r[i].rating == 3:
+            starRating.append("""
+                            <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
+                            <label for="st1"></label>
+                            <input type="checkbox" id="st2" value="2" />
+                            <label for="st2"></label>
+                            <input type="checkbox" id="st3" value="3" checked/>
+                            <label for="st3"></label>
+                            <input type="checkbox" id="st4" value="4" />
+                            <label for="st4"></label>
+                            <input type="checkbox" id="st5" value="5" /> 
+                            <label for="st5"></label>
+                        """)
+        elif r[i].rating == 4:
+            starRating.append("""
+                            <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
+                            <label for="st1"></label>
+                            <input type="checkbox" id="st2" value="2" checked/>
+                            <label for="st2"></label>
+                            <input type="checkbox" id="st3" value="3" />
+                            <label for="st3"></label>
+                            <input type="checkbox" id="st4" value="4" />
+                            <label for="st4"></label>
+                            <input type="checkbox" id="st5" value="5" /> 
+                            <label for="st5"></label>
+                        """)
+        elif r[i].rating == 5:
+            starRating.append("""
+                            <input type="checkbox" id="st1" value="1" checked/> <!-- 5 Star if checked="checked" -->
+                            <label for="st1"></label>
+                            <input type="checkbox" id="st2" value="2" />
+                            <label for="st2"></label>
+                            <input type="checkbox" id="st3" value="3" />
+                            <label for="st3"></label>
+                            <input type="checkbox" id="st4" value="4" />
+                            <label for="st4"></label>
+                            <input type="checkbox" id="st5" value="5" /> 
+                            <label for="st5"></label>
+                        """)
+
+    for i in range(0, r.count()):
+        ReviewList.append("""<table class="info" width="80%" align="center">
+            <tr>
+                <td>
+                    <span class="review-name">""" + str(r[i].user) + """ said:</span>
+                    <div class="rate">
+                    """ + starRating[i] + """
+                    </div><br />
+                    <div class="rating-text">
+                    """ + str(r[i].reviewText) + """
+                    </div>
+                </td>
+            </tr>
+        </table><br />""")
+
+    return ReviewList
+
+
 
 # Function that returns the html output of a location
 def locationOutput(locationId, search_query, checkedOptions):
@@ -75,7 +178,7 @@ def index(request):
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
-        return render(request, 'privateMain.html', context=context_dict)
+        return render(request, 'publicMain.html', context=context_dict)
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
@@ -125,10 +228,11 @@ def locations(request, location_id):
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
+        submitButton = '<button class="pretty-button" type="submit" >Leave Review</button><br />'
         navBar = navBarFunc(request, True)
     else:
         navBar = navBarFunc(request, False)
-   
+        submitButton = '<button class="pretty-button" type="submit" disabled>Leave Review</button><br /><br /><div class="centered-content">You need to be logged in to submit a review</div>'
 
     try:
         # Retrieve data from database
@@ -144,15 +248,31 @@ def locations(request, location_id):
         context_dict = {'navBar' : navBar, 'notification' : notification,}
         return render(request, 'notification.html', context=context_dict)
 
-    
     # DEFAULTS
     tags = ""
 
     # Render the locationType in plain text
     locationType = locationTypeOutput(locationTypeId)
 
+    # Retrieve information if a review has been submitted
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.location_id = locationId
+            instance.user = Profile.objects.get(user=(request.user))
+            instance.save()
+            return HttpResponseRedirect("")
+
+    else:
+        form = ReviewForm()
+
+    ReviewList = ReviewOutput(locationId)
+
+    
+
     # Define the context of the python vars
-    context_dict = {'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
+    context_dict = {'submitButton': submitButton, 'form': form, 'ReviewList': ReviewList, 'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
 
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
