@@ -4,11 +4,8 @@ from sprint1.models import Location, Profile, Review
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-<<<<<<< HEAD
 from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
-=======
 from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm
->>>>>>> 65ceb4231ec7ef296246e962d6439a38a367feaf
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -20,7 +17,7 @@ def navBarFunc(request, isLogged):
         if (request.session.get('admin', None) == True):
             return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
         else :
-            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li></ul>'
     else:
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
 
@@ -436,4 +433,5 @@ def email(request):
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
+   
    
