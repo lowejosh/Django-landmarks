@@ -128,6 +128,7 @@ def locationOutput(locationId, search_query, checkedOptions):
         return ""
 
     for i in checkedOptions:
+
         if l.locationType == i:
             locationName = l.locationName
             locationBio = l.locationBio
