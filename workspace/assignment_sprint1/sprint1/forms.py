@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from sprint1.models import EmailForm
 
 # Sign up form (additional) fields
 class SignUpForm(UserCreationForm):
@@ -35,19 +36,13 @@ class EditProfileForm(UserChangeForm):
 
 			
 
-class EmailForm(forms.Form):
-	email = forms.EmailField()
-	first_name = forms.CharField()
-	last_name = forms.CharField()
-	
-
-
 class DeleteUserForm(forms.Form):
 	username = forms.CharField()
 
-class ContactForm(forms.Form):
-	from_email = forms.EmailField()
-	subject = forms.CharField()
-	message = forms.CharField(widget=forms.Textarea)
-	sendto_email = forms.EmailField()
-	
+
+class EmailForm(forms.ModelForm):
+    email = forms.EmailField()
+    
+    class Meta:
+        model = EmailForm
+        fields = ('email',)

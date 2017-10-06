@@ -4,7 +4,7 @@ from sprint1.models import Location
 # Signup imports
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm
+from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -298,24 +298,22 @@ def del_user(request):
         context = {'form': form, 'navBar' : navBar}
         return render(request, 'del_user.html', context)
     
-    
+   
+
 def email(request):
     navBar = navBarFunc(request, True)
-    if request.method == 'GET':
-        form = ContactForm()
-    else:
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email, ['sendto_email'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return redirect('email')
+    
+    form = EmailForm(request.POST)
+    
+    if form.is_valid():
+        save_it = form.save()
+        subject = "Your friend is asking you to join 'The Good Guys'"
+        message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
+        from_email = settings.EMAIL_HOST_USER
+        to_list = [save_it.email]
+        send_mail(subject, message, from_email, to_list, fail_silently=False)
+        return redirect('email')
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
-def thanks(request):
-    return HttpResponse('Thank you for your message.')
+   
