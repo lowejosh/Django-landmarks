@@ -164,7 +164,7 @@ What was achieved:
 
 The task checklist was looked over and we reviewed the assignment feedback for our release plan.
 
-# 10th Meeting 8/October/2017 7:30PM - PM
+# 10th Meeting 8/October/2017 7:30PM - 8:15PM
 
 Present Members:
 
