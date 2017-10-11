@@ -26,8 +26,8 @@ class Profile(models.Model):
 class Location(models.Model):
     # The primary key is automatically created if not specified (id)
     locationName = models.CharField(max_length=254, null=True)
-    latitude = models.IntegerField(null=True)
-    longtiude = models.IntegerField(null=True)
+    latitude = models.FloatField(null=True)
+    longtiude = models.FloatField(null=True)
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
@@ -66,6 +66,7 @@ class LocationSuggestion(models.Model):
     locationType = models.IntegerField(null=True)
     locationImagePath = models.CharField(max_length=127, null=True) 
 
+# delet this
 class Map(models.Model):
     city = models.CharField(max_length=127)
     imagePath = models.CharField(max_length=127)
