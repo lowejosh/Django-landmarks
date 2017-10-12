@@ -424,6 +424,69 @@ a {
     }
 
 /*
+    Email Referral Form
+*/
+
+.email_form ul {
+    visibility: hidden;
+}
+
+.email_form p {
+    width: 560px;
+    list-style-type: none;
+    list-style-position: outside;
+    align-items: center;
+}
+
+.email_form label {
+    width: 250px;
+    text-align: right;
+    margin-top: 40px;
+    float: left;
+    padding: 3px;
+    font-size: 16px;
+}
+
+.email_form input, .email_form select {
+    height: 30px;
+    width: 300px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: 'Arial Rounded MT';
+}
+
+.email_form input, .email_form select, .email_form label {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.email_form textarea {
+    padding: 8px;
+    width: 300px;
+    resize: none;
+}
+
+.email_form input, .email_form textarea, .email_form select {
+    border: 1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius: 2px;
+}
+
+    .email_form input:focus, .email_form textarea:focus {
+        background: #fff;
+        border: 1px solid #555;
+        box-shadow: 0 0 3px #aaa;
+    }
+
+    .email_form input:disabled {
+        background: #fff;
+        border: 1px solid #aaa;
+        box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+        border-radius: 2px;
+        color: black;
+    }
+
+/*
     Star Review System
 */
 

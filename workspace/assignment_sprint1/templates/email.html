@@ -4,14 +4,15 @@
 <!-- Main content -->
 {% block content %}
 <h1>Send Referal Link</h1>
+<div class="email_form">
 <form method="post">
     {% csrf_token %}
     {{ form }}
     <div class="form-actions">
-      <button type="submit">Send</button>
+      <button type="submit" style="float:right; margin-right: 5%">Send</button>
     </div>
 </form>
-
+</div>
 <br>
 <br>
 
