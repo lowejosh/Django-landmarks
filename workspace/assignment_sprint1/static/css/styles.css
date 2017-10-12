@@ -17,7 +17,6 @@
     height: 46px;
     padding: 0 10px;
     pointer-events: none
-    
 }
 
 .review-name {
@@ -32,7 +31,6 @@
     display: block;
     text-align: center;
     margin-top: 50px;
-
 }
 
 
@@ -43,7 +41,7 @@
     margin-right: 10%;
 }
 
-.location-name { 
+.location-name {
     padding: 6px;
     padding-left: 12px;
     text-decoration: none;
@@ -72,7 +70,7 @@
 .no-location-error {
     text-align: center;
     margin-top: 32px;
-    display: block; 
+    display: block;
     margin-bottom: 12px;
 }
 
@@ -133,34 +131,34 @@
     padding: 0em;
 }
 
-.nav-wrap ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #474747;
-}
+    .nav-wrap ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #474747;
+    }
 
-.nav-wrap li.right {
-    float: right;
-}
+    .nav-wrap li.right {
+        float: right;
+    }
 
-.nav-wrap li {
-    float: left;
-}
+    .nav-wrap li {
+        float: left;
+    }
 
-.nav-wrap li a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 14px 16px;
-    -webkit-transition-duration: 0.2s; /* Safari */
-    transition-duration: 0.2s;
-}
+        .nav-wrap li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+            -webkit-transition-duration: 0.2s; /* Safari */
+            transition-duration: 0.2s;
+        }
 
-.nav-wrap li a:hover {
-    background-color: #111;
-}
+            .nav-wrap li a:hover {
+                background-color: #111;
+            }
 
 .pretty-button {
     background-color: #474747;
@@ -172,12 +170,29 @@
     display: inline-block;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
-.pretty-button:hover {
-    background-color: #111;
+    .pretty-button:hover {
+        background-color: #111;
+    }
+
+button {
+    background-color: #474747;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
+
+    button:hover {
+        background-color: #111;
+    }
 
 body {
     position: relative;
@@ -201,6 +216,9 @@ p {
     margin-bottom: 0px;
 }
 
+/*
+    Hyperlink formatting
+*/
 a {
     text-decoration: none;
 }
@@ -219,27 +237,6 @@ a {
 
     a:hover, a:active {
         text-decoration: none;
-    }
-
-.button {
-    background-color: white;
-    border: 2px solid #808080;
-    border-radius: 4px;
-    color: #808080;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-    .button:hover {
-        background-color: #808080;
-        color: white;
     }
 
 .topcorner {
@@ -277,13 +274,13 @@ a {
     background-position: 0%;
 }
 
-.footermain a {
-    color: #000;
-}
+    .footermain a {
+        color: #000;
+    }
 
-.footermain a:hover {
-    text-decoration: underline;
-}
+        .footermain a:hover {
+            text-decoration: underline;
+        }
 
 .centered-content {
     text-align: center;
@@ -295,40 +292,46 @@ a {
     box-shadow: 0 0 10px #FF0000;
 }
 
-.contact_form ul {
-    width: 750px;
+/* 
+    Basic Form Design
+*/
+
+.contact_form p {
+    width: 560px;
     list-style-type: none;
     list-style-position: outside;
-    margin: 0px;
-    padding: 0px;
-}
-
-.contact_form li {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    position: relative;
+    align-items: center;
 }
 
 .contact_form label {
     width: 250px;
-    margin-top: 3px;
-    display: inline-block;
+    text-align: right;
+    margin-top: 15px;
     float: left;
     padding: 3px;
+    font-size: 16px;
 }
 
-.contact_form input {
+.contact_form input, .contact_form select {
     height: 30px;
-    width: 220px;
+    width: 300px;
     padding: 5px 8px;
+    font-size: 14px;
+    font-family: 'Arial Rounded MT';
+}
+
+.contact_form input, .contact_form select, .contact_form label {
+    display: inline-block;
+    vertical-align: bottom;
 }
 
 .contact_form textarea {
     padding: 8px;
     width: 300px;
+    resize: none;
 }
 
-.contact_form input, .contact_form textarea {
+.contact_form input, .contact_form textarea, .contact_form select {
     border: 1px solid #aaa;
     box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
     border-radius: 2px;
@@ -340,32 +343,112 @@ a {
         box-shadow: 0 0 3px #aaa;
     }
 
+    .contact_form input:disabled {
+        background: #fff;
+        border: 1px solid #aaa;
+        box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+        border-radius: 2px;
+        color: black;
+    }
+
+/*
+    Edit Profile Form
+*/
+
+.edit_form p {
+    width: 560px;
+    list-style-type: none;
+    list-style-position: outside;
+    align-items: center;
+}
+
+    .edit_form p:after {
+        content: "\a\a";
+        white-space: pre;
+    }
+
+    .edit_form div {
+        display: none;
+    }
+
+    .edit_form span {
+        width: 80%;
+        margin-left: 5%;
+    }
+
+.edit_form label {
+    width: 250px;
+    text-align: right;
+    margin-top: 3px;
+    float: left;
+    padding: 3px;
+    font-size: 16px;
+}
+
+.edit_form input, .edit_form select {
+    height: 30px;
+    width: 300px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: 'Arial Rounded MT';
+}
+
+.edit_form input, .edit_form select, .edit_form label {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.edit_form textarea {
+    padding: 8px;
+    width: 300px;
+}
+
+.edit_form input, .edit_form textarea, .edit_form select {
+    border: 1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius: 2px;
+}
+
+.edit_form input:focus, .edit_form textarea:focus {
+    background: #fff;
+    border: 1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+}
+
+    .edit_form input:disabled {
+        background: #fff;
+        border: 1px solid #aaa;
+        box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+        border-radius: 2px;
+        color: black;
+    }
+
 /*
     Star Review System
 */
 
-    .rate:not(:checked) > input {
-        position: absolute;
-        top: -9999px;
+.rate:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+    .rate:not(:checked) > label:before {
+        content: '★ ';
     }
 
-    .rate:not(:checked) > label {
-        float: right;
-        width: 1em;
-        overflow: hidden;
-        white-space: nowrap;
-        cursor: pointer;
-        font-size: 30px;
-        color: #ccc;
-    }
-
-        .rate:not(:checked) > label:before {
-            content: '★ ';
-        }
-
-    .rate > input:checked ~ label {
-        color: #ffc700;
-    }
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
 
 /*
     Review Images

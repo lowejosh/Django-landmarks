@@ -3,21 +3,29 @@
 
 <!-- Main content -->
 {% block content %}
-<div style="width:40%; margin-left: 10%; display: inline-block; font-size: 12px;">
+<div class="centered-content">
     <h1>Profile Information</h1>
-    <p><strong>Username:</strong> {{ user }}</p>
-    <p><strong>First Name:</strong> {{ user.profile.firstName }}</p>
-    <p><strong>Last Name:</strong> {{ user.profile.lastName }}</p>
-    <p><strong>Email Address:</strong> {{ user.email }}</p>
-    <p><strong>Account Type:</strong> {{ user.profile.accountType }}</p>
-    <p><strong>Phone Number:</strong> {{ user.profile.phoneNumber }}</p>
-    <p><strong>Address:</strong> {{ user.profile.address }}</p>
+	<div class="contact_form">
+	<form>
+		<p><label>Username:</label><br /><input type="text" placeHolder="{{ user }}" disabled /></p>
+		<p><label>First Name:</label><br /><input type="text" placeHolder="{{ user.profile.firstName }}" disabled /></p>
+		<p><label>Last Name:</label><br /><input type="text" placeHolder="{{ user.profile.lastName }}" disabled /></p>
+		<p><label>Email Address:</label><br /><input type="text" placeHolder="{{ user.email }}" disabled /></p>
+		<p><label>Account Type:</label><br /><input type="text" placeHolder="{{ user.profile.accountType }}" disabled /></p>
+		<p><label>Phone Number:</label><br /><input type="text" placeHolder="{{ user.profile.phoneNumber }}" disabled /></p>
+		<p><label>Address:</label><br /><input type="text" placeHolder="{{ user.profile.address }}" disabled /></p>
+	</form>
+	</div>
 </div>
-<div style="width:40%; float: right; margin-left: 10%; display: inline-block;">
-    <br />
-    <a href="/modify/edit_profile/">Edit Profile Information</a><br />
-	<a href="/modify/del_user/">Delete Your Account</a><br />
-</div>
+
+<br />
+<form action="/modify/del_user/" style="float:right; margin-right: 5%;">
+	<button class="pretty-button" type="submit">Delete Profile</button>
+</form>
+<form action="/modify/edit_profile/" style="float:right; margin-right: 10px;">
+	<button class="pretty-button" type="submit">Edit Profile</button>
+</form>
+
 
    <br />
 {% endblock %}

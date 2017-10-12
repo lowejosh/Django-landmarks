@@ -5,11 +5,13 @@
 {% block content %}
 
 <h3>Please Enter You Username:</h3>
+<div class="edit_form">
 <form method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<br><button type="submit">Submit</button>
+	<br><button type="submit" style="float: right; margin-right: 5%;">Submit</button>
 </form>
+</div>
 <br>
 <br>
 

@@ -5,6 +5,7 @@
 {% block content %}
 	<div class="centered-content">
 		<h2>Sign up</h2>
+		<div class="contact_form">
 		<form method='post'>
 			{% csrf_token %}
 			{% for field in form %}
@@ -18,7 +19,8 @@
 				</p>
 			{% endfor %}
             <br />
-			<button class="pretty-button" type='submit'>Sign up</button><br />
-		</form><br />
+			<button class="pretty-button" type='submit' style="float:right; margin-right: 5%;">Sign up</button><br />
+		</form>
+		</div><br />
 	</div>
 {% endblock %}

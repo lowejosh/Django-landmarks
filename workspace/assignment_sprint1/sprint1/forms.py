@@ -21,10 +21,6 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2', )
-    
-	
-
-	
 
 class EditProfileForm(UserChangeForm):
 	
