@@ -1,0 +1,22 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+<div class="centered-content">
+<h1>Report Website Bugs</h1>
+</div>
+
+<div class="bug_form">
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <div class="form-actions">
+      <button type="submit" style="float:right; margin-right: 5%">Send</button>
+    </div>
+</form>
+</div>
+<br>
+<br>
+
+{% endblock %}

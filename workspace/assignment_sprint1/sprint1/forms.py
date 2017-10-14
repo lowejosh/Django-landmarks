@@ -1,11 +1,10 @@
 # Imports
 from django import forms
 from django.forms import ModelForm
+from django.db import models
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from sprint1.models import EmailForm
-
-from sprint1.models import Review
+from .models import Bug, EmailForm, Review
 
 # Sign up form (additional) fields
 class SignUpForm(UserCreationForm):
@@ -23,7 +22,7 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2', )
 
 class EditProfileForm(UserChangeForm):
-	
+
 	class Meta:
 		model = User
 		fields = (
@@ -33,15 +32,13 @@ class EditProfileForm(UserChangeForm):
 			'password'
 			)
 
-			
-
 class DeleteUserForm(forms.Form):
 	username = forms.CharField()
 
 
 class EmailForm(forms.ModelForm):
     email = forms.EmailField()
-    
+
     class Meta:
         model = EmailForm
         fields = ('email',)
@@ -51,9 +48,15 @@ class ContactForm(forms.Form):
 	subject = forms.CharField()
 	message = forms.CharField(widget=forms.Textarea)
 	sendto_email = forms.EmailField()
-	
+
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
+
+class BugForm(ModelForm):
+    class Meta:
+        model = Bug
+        fields = ['subject', 'description']
+        labels = {'subject' : 'Subject:', 'description' : 'Description'}
