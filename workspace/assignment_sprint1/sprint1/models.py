@@ -6,6 +6,22 @@ from django.dispatch import receiver
 from django.forms import ModelForm
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+# Bug Model
+class Bug(models.Model):
+    SUBJECTS = (
+        ('A', 'Security'),
+        ('B', 'Visual Bug'),
+        ('C', 'Feature Not Working'),
+        ('D', 'Website Crashing'),
+        ('E', 'Other'),
+    )
+    subject = models.CharField(max_length = 1, choices = SUBJECTS)
+    description = models.CharField(max_length = 300)
+
+    # Define string representation
+    def __str__(self):
+        return self.subject
+
 # Profile Model
 class Profile(models.Model):
     # Model the table fields
@@ -31,7 +47,7 @@ class Location(models.Model):
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
-    locationImagePath = models.CharField(max_length=127, null=True) 
+    locationImagePath = models.CharField(max_length=127, null=True)
 
     # Define string representation
     def __str__(self):
@@ -64,14 +80,14 @@ class LocationSuggestion(models.Model):
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
-    locationImagePath = models.CharField(max_length=127, null=True) 
+    locationImagePath = models.CharField(max_length=127, null=True)
 
 # delet this
 class Map(models.Model):
     city = models.CharField(max_length=127)
     imagePath = models.CharField(max_length=127)
 
- 
+
 # Create and update user from signal
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -98,6 +114,6 @@ class AdminViewer(models.Model):
 
 class EmailForm(models.Model):
     email = models.EmailField()
-    
+
     def __str__(self):
         return self.email
