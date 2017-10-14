@@ -19,29 +19,23 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2', )
+        fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2')
 
 class EditProfileForm(UserChangeForm):
 
 	class Meta:
 		model = User
-		fields = (
-			'email',
-			'first_name',
-			'last_name',
-			'password'
-			)
+		fields = ('email', 'first_name', 'last_name')
 
 class DeleteUserForm(forms.Form):
-	username = forms.CharField()
+	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder' : 'Username'}))
 
-
-class EmailForm(forms.ModelForm):
-    email = forms.EmailField()
+class EmailForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder' : 'Recipient Email Address'}))
 
     class Meta:
         model = EmailForm
-        fields = ('email',)
+        fields = ('email')
 
 class ContactForm(forms.Form):
 	from_email = forms.EmailField()

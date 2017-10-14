@@ -419,11 +419,10 @@ def email(request):
     form = EmailForm(request.POST)
 
     if form.is_valid():
-        save_it = form.save()
+        to_list = [form.cleaned_data['email']]
         subject = "Your friend is asking you to join 'The Good Guys'"
         message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
         from_email = settings.EMAIL_HOST_USER
-        to_list = [save_it.email]
         send_mail(subject, message, from_email, to_list, fail_silently=False)
         return redirect('email')
     context = {'form': form, 'navBar': navBar}

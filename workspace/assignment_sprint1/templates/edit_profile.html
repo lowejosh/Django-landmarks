@@ -20,7 +20,8 @@
   {% for field in form.visible_fields %}
   <ul>
     <li>
-      {{ field.label_tag }}{% render_field field placeholder=field.name %}
+      {{ field.label_tag }}
+			{% render_field field %}
     </li>
   </ul>
   {% endfor %}
@@ -31,6 +32,9 @@
   </div>
 </form>
 
+<form action="/modify/password">
+	<button type="submit" class="pretty-button" style="float:right; margin-right: 10px;">Change Password</button>
+</form>
 <form action="/modify">
 	<button type="submit" class="pretty-button" style="float:right; margin-right: 10px;">Cancel</button>
 </form>

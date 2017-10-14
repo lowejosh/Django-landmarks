@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 <!DOCTYPE html>
 <html>
@@ -15,11 +16,11 @@
 					<!-- The navBar is dynamic (just in case) -->
 					<td align="right">
 							<!-- Temporarily turn autoescape off so HTML isn't escaped -->
-							{% autoescape off %} 
+							{% autoescape off %}
 							{{ navBar }}
 							{% endautoescape %}
-					
-					</td> 
+
+					</td>
                 </tr>
             </tbody>
         </table>
