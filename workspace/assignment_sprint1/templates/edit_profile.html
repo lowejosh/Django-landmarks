@@ -1,22 +1,40 @@
 <!-- This file is an extension of base.html -->
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 <!-- Main content -->
 {% block content %}
 <br>
-<div class="centered-content">
-<div class="edit_form">
+
 <form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<br>
-	<button type="submit" class="pretty-button" style="float:right; margin-right: 5%;">Submit</button>
+	<div class="form">
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {% for field in form.visible_fields %}
+  <ul>
+    <li>
+      {{ field.label_tag }}{% render_field field placeholder=field.name %}
+    </li>
+  </ul>
+  {% endfor %}
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" style="float:right; margin-right: 5%">Submit</button>
+  </div>
 </form>
+
 <form action="/modify">
 	<button type="submit" class="pretty-button" style="float:right; margin-right: 10px;">Cancel</button>
 </form>
-</div>
-</div>
+
 <br>
 <br>
 

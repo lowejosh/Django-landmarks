@@ -4,19 +4,47 @@
 <!-- Main content -->
 {% block content %}
 <div class="centered-content">
-    <h1>Profile Information</h1>
-	<div class="contact_form">
-	<form>
-		<p><label>Username:</label><br /><input type="text" placeHolder="{{ user }}" disabled /></p>
-		<p><label>First Name:</label><br /><input type="text" placeHolder="{{ user.profile.firstName }}" disabled /></p>
-		<p><label>Last Name:</label><br /><input type="text" placeHolder="{{ user.profile.lastName }}" disabled /></p>
-		<p><label>Email Address:</label><br /><input type="text" placeHolder="{{ user.email }}" disabled /></p>
-		<p><label>Account Type:</label><br /><input type="text" placeHolder="{{ user.profile.accountType }}" disabled /></p>
-		<p><label>Phone Number:</label><br /><input type="text" placeHolder="{{ user.profile.phoneNumber }}" disabled /></p>
-		<p><label>Address:</label><br /><input type="text" placeHolder="{{ user.profile.address }}" disabled /></p>
-	</form>
-	</div>
+  <h1>Profile Information</h1>
 </div>
+<form>
+  <div class="form">
+    <ul>
+      <li>
+        <label>Username:</label><input type="text" placeHolder="{{ user }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>First Name:</label><input type="text" placeHolder="{{ user.profile.firstName }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Last Name:</label><input type="text" placeHolder="{{ user.profile.lastName }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Email Address:</label><input type="text" placeHolder="{{ user.email }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Account Type:</label><input type="text" placeHolder="{{ user.profile.accountType }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Phone Number:</label><input type="text" placeHolder="{{ user.profile.phoneNumber }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Address:</label><input type="text" placeHolder="{{ user.profile.address }}" disabled />
+      </li>
+    </ul>
+	</div>
+</form>
 
 <br />
 <form action="/modify/del_user/" style="float:right; margin-right: 5%;">

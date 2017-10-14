@@ -55,8 +55,11 @@ class ReviewForm(ModelForm):
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
 
-class BugForm(ModelForm):
+class BugForm(forms.Form):
+    subject = forms.ChoiceField(label = 'Subject', choices = [('A', 'Security'), ('B', 'Visual Bug'), ('C', 'Feature Not Working'), ('D', 'Website Crashing'), ('E', 'Other')])
+    description = forms.CharField(label = 'Description', widget=forms.Textarea, max_length = 300)
+
     class Meta:
         model = Bug
-        fields = ['subject', 'description']
+        field = ['subject', 'description']
         labels = {'subject' : 'Subject:', 'description' : 'Description'}

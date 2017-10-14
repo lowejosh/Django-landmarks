@@ -1,14 +1,38 @@
 {% extends 'loginBase.html' %}
-
+{% load widget_tweaks %}
 
 {% block content %}
 <center>
-	<h2>Login</h2>
-	<form method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-            <br />
-			<button class="pretty-button" type="submit">Login</button>
-	</form>
+	<h3>Login</h3>
 </center>
+
+<form method="post">
+  <div class="form">
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {% for field in form.visible_fields %}
+  <ul>
+    <li>
+      {{ field.label_tag }}
+      {% render_field field placeholder=field.name %}
+    </li>
+  </ul>
+  {% endfor %}
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" style="float:right; margin-right: 5%">Send</button>
+  </div>
+</form>
+
+<br />
+<br />
+
 {% endblock %}

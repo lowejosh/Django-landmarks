@@ -352,205 +352,57 @@ Basic Form Design
 }
 
 /*
-Edit Profile Form
+Form Design
 */
 
-.edit_form p {
-  width: 560px;
-  list-style-type: none;
-  list-style-position: outside;
-  align-items: center;
+.form ul {
+    width: 750px;
+    list-style-type: none;
+    list-style-position: outside;
+    padding: 0px;
 }
 
-.edit_form p:after {
-  content: "\a\a";
-  white-space: pre;
+.form li {
+    position: relative;
 }
 
-.edit_form div {
-  display: none;
+.form label {
+    width: 150px;
+    margin-left: 10%;
+    margin-top: 3px;
+    display: inline-block;
+    float: left;
+    padding: 3px;
+    text-align: right;
 }
 
-.edit_form span {
-  width: 80%;
-  margin-left: 5%;
+.form input, .form select, .form input:disabled {
+    height: 30px;
+    width: 300px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: inherit;
 }
 
-.edit_form label {
-  width: 250px;
-  text-align: right;
-  margin-top: 3px;
-  float: left;
-  padding: 3px;
-  font-size: 16px;
+.form textarea {
+    padding: 8px;
+    width: 300px;
+    resize: none;
+    font-size: 14px;
+    font-family: inherit;
 }
 
-.edit_form input, .edit_form select {
-  height: 30px;
-  width: 300px;
-  padding: 5px 8px;
-  font-size: 14px;
-  font-family: 'Arial Rounded MT';
+.form input, .form select, .form textarea, .form input:disabled {
+    border: 1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius: 4px;
 }
 
-.edit_form input, .edit_form select, .edit_form label {
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.edit_form textarea {
-  padding: 8px;
-  width: 300px;
-}
-
-.edit_form input, .edit_form textarea, .edit_form select {
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-}
-
-.edit_form input:focus, .edit_form textarea:focus {
-  background: #fff;
-  border: 1px solid #555;
-  box-shadow: 0 0 3px #aaa;
-}
-
-.edit_form input:disabled {
-  background: #fff;
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-  color: black;
-}
-
-/*
-Email Referral Form
-*/
-
-.email_form ul {
-  visibility: hidden;
-}
-
-.email_form p {
-  width: 560px;
-  list-style-type: none;
-  list-style-position: outside;
-  align-items: center;
-}
-
-.email_form label {
-  width: 250px;
-  text-align: right;
-  margin-top: 40px;
-  float: left;
-  padding: 3px;
-  font-size: 16px;
-}
-
-.email_form input, .email_form select {
-  height: 30px;
-  width: 300px;
-  padding: 5px 8px;
-  font-size: 14px;
-  font-family: 'Arial Rounded MT';
-}
-
-.email_form input, .email_form select, .email_form label {
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.email_form textarea {
-  padding: 8px;
-  width: 300px;
-  resize: none;
-}
-
-.email_form input, .email_form textarea, .email_form select {
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-}
-
-.email_form input:focus, .email_form textarea:focus {
-  background: #fff;
-  border: 1px solid #555;
-  box-shadow: 0 0 3px #aaa;
-}
-
-.email_form input:disabled {
-  background: #fff;
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-  color: black;
-}
-
-/*
-Bugs Form
-*/
-
-.bug_form ul {
-  visibility: hidden;
-}
-
-.bug_form p {
-  width: 560px;
-  list-style-type: none;
-  list-style-position: outside;
-  align-items: center;
-}
-
-.bug_form label {
-  width: 250px;
-  text-align: right;
-  margin-top: 40px;
-  float: left;
-  margin-left: 10px;
-  padding: 3px;
-  font-size: 16px;
-}
-
-.bug_form input, .bug_form select {
-  float: left;
-  margin-left: 10px;
-  height: 30px;
-  width: 300px;
-  padding: 5px 8px;
-  font-size: 14px;
-  font-family: 'Arial Rounded MT';
-}
-
-.bug_form input, .bug_form select, .bug_form label {
-  display: inline-block;
-  vertical-align: bottom;
-}
-
-.bug_form textarea {
-  padding: 8px;
-  width: 300px;
-  resize: none;
-}
-
-.bug_form input, .bug_form textarea, .bug_form select {
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-}
-
-.bug_form input:focus, .bug_form textarea:focus {
-  background: #fff;
-  border: 1px solid #555;
-  box-shadow: 0 0 3px #aaa;
-}
-
-.bug_form input:disabled {
-  background: #fff;
-  border: 1px solid #aaa;
-  box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-  border-radius: 2px;
-  color: black;
-}
+    .form input:focus, .form select, .form textarea:focus {
+        background: #fff;
+        border: 1px solid #555;
+        box-shadow: 0 0 3px #aaa;
+    }
 
 /*
 Star Review System

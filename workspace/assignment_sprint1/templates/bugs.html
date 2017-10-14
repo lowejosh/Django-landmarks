@@ -1,21 +1,39 @@
 <!-- This file is an extension of base.html -->
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 <!-- Main content -->
 {% block content %}
 <div class="centered-content">
-<h1>Report Website Bugs</h1>
+<h3>Report Website Bugs</h3>
 </div>
 
-<div class="bug_form">
 <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-actions">
-      <button type="submit" style="float:right; margin-right: 5%">Send</button>
-    </div>
+  <div class="form">
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {% for field in form.visible_fields %}
+  <ul>
+    <li>
+      {{ field.label_tag }}
+      {% render_field field placeholder=field.name %}
+    </li>
+  </ul>
+  {% endfor %}
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" style="float:right; margin-right: 5%">Send</button>
+  </div>
 </form>
-</div>
+
 <br>
 <br>
 
