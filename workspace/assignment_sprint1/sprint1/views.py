@@ -9,14 +9,16 @@ from .forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm, BugFo
 from .models import Location, Profile, Review, Bug
 
 # Navbar function that returns the proper list
-def navBarFunc(request, isLogged):
-    if (isLogged):
+def navBarFunc(request):
+    if (request.user.is_authenticated()):
+        toolbar = '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
+
         if (request.session.get('admin', None) == True):
-            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button>' + toolbar
         else :
-            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li></ul>'
+            return toolbar
     else:
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
 
 
 # Review output function
@@ -169,7 +171,7 @@ def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
@@ -177,7 +179,7 @@ def index(request):
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
@@ -188,7 +190,7 @@ def index(request):
 def signup(request):
 
     # Define the navbar
-    navBar = navBarFunc(request, False)
+    navBar = navBarFunc(request)
 
     # Form functions
     if request.method == 'POST' :
@@ -224,9 +226,9 @@ def locations(request, location_id):
     # Show the correct navBar
     if (request.user.is_authenticated()):
         submitButton = '<button class="pretty-button" type="submit" >Leave Review</button><br />'
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
         submitButton = '<button class="pretty-button" type="submit" disabled>Leave Review</button><br /><br /><div class="centered-content">You need to be logged in to submit a review</div>'
 
     try:
@@ -333,9 +335,9 @@ def locationfeed(request):
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
 
 
     # Define the context of the python vars
@@ -347,18 +349,18 @@ def locationfeed(request):
 def modify(request):
     # User must be logged in to access modify page
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
         context_dict = {'navBar' : navBar}
         return render(request, 'modify.html', context=context_dict)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
 
 
 def edit_profile(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -374,7 +376,7 @@ def edit_profile(request):
 
 
 def password(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -392,7 +394,7 @@ def password(request):
 
 def del_user(request):
     # User must be logged in to access modify page
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
@@ -414,7 +416,7 @@ def del_user(request):
         return render(request, 'del_user.html', context)
 
 def email(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     form = EmailForm(request.POST)
 
@@ -429,7 +431,7 @@ def email(request):
     return render(request, "email.html", context)
 
 def bugs(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     form = BugForm(request.POST)
 
