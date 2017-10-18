@@ -167,7 +167,6 @@ def locationTypeOutput(locationTypeId):
         return ""
 
 
-# TODO
 # Map Output
 def mapOutput(locationId, search_query, checkedOptions):
     try:
@@ -337,7 +336,6 @@ def locationfeed(request):
     locationMax = 50;
     for i in range(1, Location.objects.count() + 1):
         if i <= locationMax:
-            # TODO
             locationList.append(locationOutput(i, search_query, checkedOptions))
             if mapOutput(i, search_query, checkedOptions) != None:
                 pointsList.append(mapOutput(i, search_query, checkedOptions))
@@ -366,8 +364,9 @@ def locationfeed(request):
         navBar = navBarFunc(request)
 
 
+    # TODO
     # Define the context of the python vars
-    context_dict = {'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
+    context_dict = {'coordinateList': coordinateList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
