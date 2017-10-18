@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
     <div class="search-bar"> 
         <form type="get" action="." id="container">
             <input id="search-box" type="text" name="search-box" placeholder="Search a location name..."><br />
@@ -34,7 +33,6 @@
 
 
     <!-- MAP STUFF -->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&    signed_in=true"></script>
 	<script> 
 
 		function initialize() {
@@ -42,21 +40,21 @@
 		var map;
 		var mapOptions = {
 			zoom: 16,
-			center: new google.maps.LatLng({{latitude}},{{longitude}})
+//			center: new google.maps.LatLng({{latitude}},{{longitude}})
+			center: new google.maps.LatLng(0, 0)
 		}
-		map = new google.maps.Map(document.getElementById('map-canvas'),
-									mapOptions);
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	  //var image = '/static/checkmark.png';
 
 	  {% for point in points %}
 		//console.log({{ point.lat }}, {{ point.lon }});
-		var myLatLng = new google.maps.LatLng({{ point.lat }}, {{ point.lon }});
+		var myLatLng = new google.maps.LatLng({{ point.latitude }}, {{ point.longitude }});
 
 		marker = new google.maps.Marker({
 			position: myLatLng,
 			map: map,
-			title: '{{ point.name }}',
+			title: '{{ point.locationName }}',
 			url: '/{{point.id}}',
 		});
 		google.maps.event.addListener(marker, 'click', function() {
@@ -98,8 +96,9 @@
 	</script>
 
 
-
-
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkVCuLeN13ZYSpn7TVq1IhjPO4TTzgFXw&callback=initialize">
+    </script>
 
 
     {% if page > 1 %}
