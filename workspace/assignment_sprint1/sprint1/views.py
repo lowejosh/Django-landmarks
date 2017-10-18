@@ -166,6 +166,22 @@ def locationTypeOutput(locationTypeId):
     else:
         return ""
 
+
+# TODO
+# Map Output
+def mapOutput(locationId, search_query, checkedOptions):
+    try:
+        l = Location.objects.get(id=locationId, locationName__contains=search_query)
+    except:
+        return None
+
+    for i in checkedOptions:
+
+        if l.locationType == i:
+            
+            return l
+
+
 # Index page view
 def index(request):
     # If the user is logged in
@@ -283,6 +299,7 @@ def locationfeed(request):
 
     # Defaults
     locationList = []
+    pointsList = []
     checked1 = "checked"
     checked2 = "checked"
     checked3 = "checked"
@@ -320,7 +337,16 @@ def locationfeed(request):
     locationMax = 50;
     for i in range(1, Location.objects.count() + 1):
         if i <= locationMax:
+            # TODO
             locationList.append(locationOutput(i, search_query, checkedOptions))
+            if mapOutput(i, search_query, checkedOptions) != None:
+                pointsList.append(mapOutput(i, search_query, checkedOptions))
+
+    coordinateList = []
+    for i in pointsList:
+        coordinateList.append([i.latitude, i.longitude])
+
+    print(coordinateList)
 
     # Show error if there are no results
     errorMessageCount = 0

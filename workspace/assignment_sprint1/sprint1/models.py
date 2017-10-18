@@ -43,7 +43,7 @@ class Location(models.Model):
     # The primary key is automatically created if not specified (id)
     locationName = models.CharField(max_length=254, null=True)
     latitude = models.FloatField(null=True)
-    longtiude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
@@ -76,7 +76,7 @@ class Tag(models.Model):
 class LocationSuggestion(models.Model):
     locationName = models.CharField(max_length=254, null=True)
     latitude = models.IntegerField(null=True)
-    longtiude = models.IntegerField(null=True)
+    longitude = models.IntegerField(null=True)
     locationAddress = models.CharField(max_length=254, null=True)
     locationBio = models.TextField(max_length=511, null=True)
     locationType = models.IntegerField(null=True)
