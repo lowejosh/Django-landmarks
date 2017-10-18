@@ -405,7 +405,7 @@ def del_user(request):
             rem = User.objects.get(username=form.cleaned_data['username'])
             if rem is not None:
                 rem.delete()
-                return redirect ('index.html')
+                return redirect ('../../login')
 
             else:
                 return redirect('del_user.html')

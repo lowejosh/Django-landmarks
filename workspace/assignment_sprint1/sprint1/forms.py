@@ -25,7 +25,9 @@ class EditProfileForm(UserChangeForm):
 
 	class Meta:
 		model = User
-		fields = ('email', 'first_name', 'last_name')
+		fields = ('email', 'first_name', 'last_name', 'password',)
+        
+
 
 class DeleteUserForm(forms.Form):
 	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder' : 'Username'}))
