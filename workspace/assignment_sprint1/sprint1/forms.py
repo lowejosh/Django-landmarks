@@ -3,7 +3,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from sprint1.models import EmailForm
+from sprint1.models import EmailForm, PostImage
 
 from sprint1.models import Review
 
@@ -61,3 +61,13 @@ class ReviewForm(ModelForm):
         model = Review
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
+
+        
+class PostImage(forms.ModelForm):
+    class Meta:
+        model = PostImage
+        fields = {
+            "title",
+            "content",
+            "image",
+        }

@@ -5,7 +5,7 @@ from sprint1.models import Location, Profile, Review
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -435,4 +435,16 @@ def email(request):
     return render(request, "email.html", context)
 
    
+   
+def imageform(request):
+    # User must be logged in to access modify page
+    navBar = navBarFunc(request, True)
+    form = PostImage(request.POST, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('imageform')
+    else:
+        context = {'form': form, 'navBar': navBar}
+        return render(request, 'imageform.html', context)
+    
    

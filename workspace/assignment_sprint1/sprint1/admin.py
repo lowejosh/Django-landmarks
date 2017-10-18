@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Location, Review, Tag, Map, LocationSuggestion 
+from .models import Profile, Location, Review, Tag, Map, LocationSuggestion, PostImage
 from django.contrib import admin, messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from .models import Profile, Location, Review, Tag, AdminViewer, EmailForm
@@ -40,3 +40,4 @@ class AdminViewerFuntion(admin.ModelAdmin):
 admin.site.register(AdminViewer, AdminViewerFuntion)
 
 admin.site.register(EmailForm)
+admin.site.register(PostImage)

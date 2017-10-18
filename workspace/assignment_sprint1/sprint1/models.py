@@ -100,3 +100,13 @@ class EmailForm(models.Model):
     
     def __str__(self):
         return self.email
+        
+ 
+class PostImage(models.Model):
+    title = models.CharField(max_length=120)
+    image = models.FileField(null=True, blank=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
+    
