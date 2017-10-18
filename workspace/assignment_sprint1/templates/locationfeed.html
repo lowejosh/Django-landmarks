@@ -33,9 +33,10 @@
 
 <style>
 #map-canvas {
-    background-color: yellow;
-    width: 500px;
-    height: 500px;
+    background-color: #BABABA;
+    width: 100%;
+    height: 300px;
+    border-bottom: solid #BABABA 1px;
 }
 </style>
 
@@ -62,7 +63,7 @@
 			position: myLatLng,
 			map: map,
 			title: '{{ point.locationName }}',
-			url: '/{{point.id}}',
+			url: 'individual/{{point.id}}',
 		});
 		google.maps.event.addListener(marker, 'click', function() {
 			console.log("here");
