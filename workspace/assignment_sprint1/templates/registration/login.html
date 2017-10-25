@@ -4,10 +4,9 @@
 {% block content %}
 <center>
 	<h3>Login</h3>
-</center>
 
 <form method="post">
-  <div class="form">
+  <div class="form" style="margin-right: 220px">
   {% csrf_token %}
 
   {{ form.non_field_errors }}
@@ -28,8 +27,9 @@
   </div>
 
   <div class="form-actions">
-    <button type="submit" style="float:right; margin-right: 5%">Login</button>
+    <button type="submit">Login</button>
   </div>
+  </center>
 </form>
 
 <br />

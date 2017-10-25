@@ -301,11 +301,10 @@ def locationfeed(request):
     # Defaults
     locationList = []
     pointsList = []
-    checked1 = "checked"
-    checked2 = "checked"
-    checked3 = "checked"
-    checked4 = "checked"
-    checked5 = "checked"
+    checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
+
+    #TODO
+
 
     checkedOptions = list(map(int, request.GET.getlist("foo", [])))
 
@@ -315,11 +314,7 @@ def locationfeed(request):
         if request.GET.getlist("foo"):
 
             # 'nother default if the list exists
-            checked1 = ""
-            checked2 = ""
-            checked3 = ""
-            checked4 = ""
-            checked5 = ""
+            checked1 = checked2 = checked3 = checked4 = checked5 = ""
 
             # Save the checked data - because it resets upon submit
             for i in checkedOptions:
@@ -359,14 +354,17 @@ def locationfeed(request):
     else:
         errorMessage = ""
 
-    # Show the correct navBar
+    # If the user is logged in 
     if (request.user.is_authenticated()):
         navBar = navBarFunc(request)
     else:
+       #TODO
         navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
+       
 
-
-    # TODO
     # Define the context of the python vars
     context_dict = {'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
