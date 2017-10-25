@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Location, Review, Tag, Map, LocationSuggestion, PostImage
+from .models import Profile, Location, Review, Tag, LocationSuggestion, PostImage
 
 from django.contrib import admin, messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
-from .models import Profile, Location, Review, User, Tag, Map, LocationSuggestion, AdminViewer, EmailForm, Bug
+from .models import Profile, Location, Review, User, Tag, LocationSuggestion, AdminViewer, EmailForm, Bug
 
 # Function to allow admins to solve bugs
 def AcceptBug(modeladmin, request, queryset):
@@ -59,7 +59,6 @@ admin.site.register(Location)
 admin.site.register(Review)
 admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
-admin.site.register(Map)
 admin.site.register(Bug, ProfileBug);
 admin.site.register(AdminViewer, AdminViewerFuntion)
 

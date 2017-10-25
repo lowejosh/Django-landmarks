@@ -82,12 +82,6 @@ class LocationSuggestion(models.Model):
     locationType = models.IntegerField(null=True)
     locationImagePath = models.CharField(max_length=127, null=True)
 
-# delet this
-class Map(models.Model):
-    city = models.CharField(max_length=127)
-    imagePath = models.CharField(max_length=127)
-
-
 # Create and update user from signal
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
