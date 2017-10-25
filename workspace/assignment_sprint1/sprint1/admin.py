@@ -59,7 +59,6 @@ admin.site.register(Location)
 admin.site.register(Review)
 admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
-admin.site.register(Map)
 admin.site.register(Bug, ProfileBug);
 admin.site.register(AdminViewer, AdminViewerFuntion)
 
