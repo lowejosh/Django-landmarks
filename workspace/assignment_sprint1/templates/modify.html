@@ -3,21 +3,57 @@
 
 <!-- Main content -->
 {% block content %}
-<div style="width:40%; margin-left: 10%; display: inline-block; font-size: 12px;">
-    <h1>Profile Information</h1>
-    <p><strong>Username:</strong> {{ user }}</p>
-    <p><strong>First Name:</strong> {{ user.profile.firstName }}</p>
-    <p><strong>Last Name:</strong> {{ user.profile.lastName }}</p>
-    <p><strong>Email Address:</strong> {{ user.email }}</p>
-    <p><strong>Account Type:</strong> {{ user.profile.accountType }}</p>
-    <p><strong>Phone Number:</strong> {{ user.profile.phoneNumber }}</p>
-    <p><strong>Address:</strong> {{ user.profile.address }}</p>
+<div class="centered-content">
+  <h1>Profile Information</h1>
 </div>
-<div style="width:40%; float: right; margin-left: 10%; display: inline-block;">
-    <br />
-    <a href="/modify/edit_profile/">Edit Profile Information</a><br />
-	<a href="/modify/del_user/">Delete Your Account</a><br />
-</div>
+<form>
+  <div class="form">
+    <ul>
+      <li>
+        <label>Username:</label><input type="text" placeHolder="{{ user }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>First Name:</label><input type="text" placeHolder="{{ user.profile.firstName }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Last Name:</label><input type="text" placeHolder="{{ user.profile.lastName }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Email Address:</label><input type="text" placeHolder="{{ user.email }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Account Type:</label><input type="text" placeHolder="{{ user.profile.accountType }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Phone Number:</label><input type="text" placeHolder="{{ user.profile.phoneNumber }}" disabled />
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <label>Address:</label><input type="text" placeHolder="{{ user.profile.address }}" disabled />
+      </li>
+    </ul>
+	</div>
+</form>
+
+<br />
+<form action="/modify/del_user/" style="float:right; margin-right: 5%;">
+	<button class="pretty-button" type="submit">Delete Profile</button>
+</form>
+<form action="/modify/edit_profile/" style="float:right; margin-right: 10px;">
+	<button class="pretty-button" type="submit">Edit Profile</button>
+</form>
+
 
    <br />
 {% endblock %}

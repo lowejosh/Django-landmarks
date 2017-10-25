@@ -1,39 +1,44 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from sprint1.models import Location, Profile, Review
-# Signup imports
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, update_session_auth_hash
+<<<<<<< HEAD
 from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
 from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage
 
+=======
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+>>>>>>> master
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from .forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm, BugForm, ContactForm, ReviewForm
+from .models import Location, Profile, Review, Bug
 
-# Navbar function that returns the proper list 
-def navBarFunc(request, isLogged): 
-    if (isLogged):
+# Navbar function that returns the proper list
+def navBarFunc(request):
+    if (request.user.is_authenticated()):
+        toolbar = '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
+
         if (request.session.get('admin', None) == True):
-            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button><ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li></ul>'
+            return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button>' + toolbar
         else :
-            return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li></ul>'
+            return toolbar
     else:
-        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li><a href="/location/">Locations</a></li></ul>'
+        return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
 
 
 # Review output function
 def ReviewOutput(location):
-    
+
     try:
         r = Review.objects.filter(location=Location.objects.get(id=location))
-    except: 
+    except:
         return ""
 
     ReviewList = []
 
     starRating = []
-    
+
     for i in range(0, r.count()):
         if r[i].rating == 1:
             starRating.append("""
@@ -45,7 +50,7 @@ def ReviewOutput(location):
                             <label for="st3"></label>
                             <input type="checkbox" id="st4" value="4" />
                             <label for="st4"></label>
-                            <input type="checkbox" id="st5" value="5" checked/> 
+                            <input type="checkbox" id="st5" value="5" checked/>
                             <label for="st5"></label>
                         """)
         elif r[i].rating == 2:
@@ -58,7 +63,7 @@ def ReviewOutput(location):
                             <label for="st3"></label>
                             <input type="checkbox" id="st4" value="4" checked/>
                             <label for="st4"></label>
-                            <input type="checkbox" id="st5" value="5" /> 
+                            <input type="checkbox" id="st5" value="5" />
                             <label for="st5"></label>
                         """)
         elif r[i].rating == 3:
@@ -71,7 +76,7 @@ def ReviewOutput(location):
                             <label for="st3"></label>
                             <input type="checkbox" id="st4" value="4" />
                             <label for="st4"></label>
-                            <input type="checkbox" id="st5" value="5" /> 
+                            <input type="checkbox" id="st5" value="5" />
                             <label for="st5"></label>
                         """)
         elif r[i].rating == 4:
@@ -84,7 +89,7 @@ def ReviewOutput(location):
                             <label for="st3"></label>
                             <input type="checkbox" id="st4" value="4" />
                             <label for="st4"></label>
-                            <input type="checkbox" id="st5" value="5" /> 
+                            <input type="checkbox" id="st5" value="5" />
                             <label for="st5"></label>
                         """)
         elif r[i].rating == 5:
@@ -97,7 +102,7 @@ def ReviewOutput(location):
                             <label for="st3"></label>
                             <input type="checkbox" id="st4" value="4" />
                             <label for="st4"></label>
-                            <input type="checkbox" id="st5" value="5" /> 
+                            <input type="checkbox" id="st5" value="5" />
                             <label for="st5"></label>
                         """)
 
@@ -124,7 +129,7 @@ def ReviewOutput(location):
 def locationOutput(locationId, search_query, checkedOptions):
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
-    except: 
+    except:
         return ""
 
     for i in checkedOptions:
@@ -149,7 +154,7 @@ def locationOutput(locationId, search_query, checkedOptions):
 # Returns a list of database objects that match the search query
 def returnSearch(search_query):
     return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
-    
+
 
 # Write the location type in plaintext
 def locationTypeOutput(locationTypeId):
@@ -167,12 +172,27 @@ def locationTypeOutput(locationTypeId):
     else:
         return ""
 
+
+# Map Output
+def mapOutput(locationId, search_query, checkedOptions):
+    try:
+        l = Location.objects.get(id=locationId, locationName__contains=search_query)
+    except:
+        return None
+
+    for i in checkedOptions:
+
+        if l.locationType == i:
+            
+            return l
+
+
 # Index page view
 def index(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
         # Define the navbar to only show logout button
-        navBar = navBarFunc(request, True)   
+        navBar = navBarFunc(request)
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
@@ -180,18 +200,18 @@ def index(request):
         # If the user isn't logged in
     else:
         # Define the navbar to show login button
-        navBar = navBarFunc(request, False) 
+        navBar = navBarFunc(request)
         # Define the context of the python vars
         context_dict = {'navBar' : navBar,}
         # Return the template
         return render(request, 'publicMain.html', context=context_dict)
-        
+
 
 # Signup page view
 def signup(request):
 
     # Define the navbar
-    navBar = navBarFunc(request, False)
+    navBar = navBarFunc(request)
 
     # Form functions
     if request.method == 'POST' :
@@ -227,9 +247,9 @@ def locations(request, location_id):
     # Show the correct navBar
     if (request.user.is_authenticated()):
         submitButton = '<button class="pretty-button" type="submit" >Leave Review</button><br />'
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
         submitButton = '<button class="pretty-button" type="submit" disabled>Leave Review</button><br /><br /><div class="centered-content">You need to be logged in to submit a review</div>'
 
     try:
@@ -267,7 +287,7 @@ def locations(request, location_id):
 
     ReviewList = ReviewOutput(locationId)
 
-    
+
 
     # Define the context of the python vars
     context_dict = {'submitButton': submitButton, 'form': form, 'ReviewList': ReviewList, 'navBar' : navBar, 'location_id' : location_id, 'locationName': locationName, 'locationBio': locationBio, 'locationAddress': locationAddress, 'locationType': locationType}
@@ -275,15 +295,16 @@ def locations(request, location_id):
     # Return the template
     return render(request, 'viewLocation.html', context=context_dict)
 
-    
+
 # Location Feed
 def locationfeed(request):
-    
+
     # Default Search Query
     search_query = ""
 
     # Defaults
-    locationList = [] 
+    locationList = []
+    pointsList = []
     checked1 = "checked"
     checked2 = "checked"
     checked3 = "checked"
@@ -305,7 +326,7 @@ def locationfeed(request):
             checked5 = ""
 
             # Save the checked data - because it resets upon submit
-            for i in checkedOptions: 
+            for i in checkedOptions:
                 if i == 1:
                     checked1 = "checked"
                 elif i == 2:
@@ -322,13 +343,21 @@ def locationfeed(request):
     for i in range(1, Location.objects.count() + 1):
         if i <= locationMax:
             locationList.append(locationOutput(i, search_query, checkedOptions))
+            if mapOutput(i, search_query, checkedOptions) != None:
+                pointsList.append(mapOutput(i, search_query, checkedOptions))
+
+    coordinateList = []
+    for i in pointsList:
+        coordinateList.append([i.latitude, i.longitude])
+
+    print(coordinateList)
 
     # Show error if there are no results
     errorMessageCount = 0
     for i in range(1, Location.objects.count() + 1):
         if (locationOutput(i, search_query, checkedOptions) != ""):
             errorMessageCount+=1
-        
+
     if errorMessageCount == 0:
         errorMessage = "<span class='no-location-error'>Press Search to view available locations</span>"
     else:
@@ -336,13 +365,14 @@ def locationfeed(request):
 
     # Show the correct navBar
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
 
-    
+
+    # TODO
     # Define the context of the python vars
-    context_dict = {'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
+    context_dict = {'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
@@ -350,26 +380,26 @@ def locationfeed(request):
 def modify(request):
     # User must be logged in to access modify page
     if (request.user.is_authenticated()):
-        navBar = navBarFunc(request, True)
+        navBar = navBarFunc(request)
         context_dict = {'navBar' : navBar}
         return render(request, 'modify.html', context=context_dict)
     else:
-        navBar = navBarFunc(request, False)
+        navBar = navBarFunc(request)
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
 
 
 def edit_profile(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
-        
+
         if form.is_valid():
             form.save()
             return redirect('modify')
-    
+
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form, 'navBar': navBar}
@@ -377,63 +407,61 @@ def edit_profile(request):
 
 
 def password(request):
-    navBar = navBarFunc(request, True)
+    navBar = navBarFunc(request)
 
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
-        
+
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('modify')
         else:
             return redirect('/modify/password')
-    else: 
+    else:
         form = PasswordChangeForm(user=request.user)
         args = {'form': form, 'navBar': navBar}
         return render(request, 'password.html', args)
 
 def del_user(request):
     # User must be logged in to access modify page
-    navBar = navBarFunc(request, True)
-	
+    navBar = navBarFunc(request)
+
     # Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     if request.method == 'POST':
         form = DeleteUserForm(request.POST)
-        
+
         if form.is_valid():
             rem = User.objects.get(username=form.cleaned_data['username'])
             if rem is not None:
                 rem.delete()
-                return redirect ('index.html')
-                                
+                return redirect ('../../login')
+
             else:
                 return redirect('del_user.html')
-                
+
     else:
         form = DeleteUserForm()
         context = {'form': form, 'navBar' : navBar}
         return render(request, 'del_user.html', context)
-    
-   
 
 def email(request):
-    navBar = navBarFunc(request, True)
-    
+    navBar = navBarFunc(request)
+
     form = EmailForm(request.POST)
-    
+
     if form.is_valid():
-        save_it = form.save()
+        to_list = [form.cleaned_data['email']]
         subject = "Your friend is asking you to join 'The Good Guys'"
         message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
         from_email = settings.EMAIL_HOST_USER
-        to_list = [save_it.email]
         send_mail(subject, message, from_email, to_list, fail_silently=False)
         return redirect('email')
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
+<<<<<<< HEAD
    
    
 def imageform(request):
@@ -448,3 +476,17 @@ def imageform(request):
         return render(request, 'imageform.html', context)
     
    
+=======
+def bugs(request):
+    navBar = navBarFunc(request)
+
+    form = BugForm(request.POST)
+
+    if form.is_valid():
+        formSubject = form.cleaned_data['subject']
+        formDescription = form.cleaned_data['description']
+        bugReport = Bug.objects.create(subject = formSubject, description = formDescription)
+        return redirect('index')
+    context = {'form': form, 'navBar': navBar}
+    return render(request, "bugs.html", context)
+>>>>>>> master

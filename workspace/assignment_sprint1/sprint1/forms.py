@@ -1,11 +1,16 @@
 # Imports
 from django import forms
 from django.forms import ModelForm
+from django.db import models
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from sprint1.models import EmailForm, PostImage
 
 from sprint1.models import Review
+=======
+from .models import Bug, EmailForm, Review
+>>>>>>> master
 
 # Sign up form (additional) fields
 class SignUpForm(UserCreationForm):
@@ -20,48 +25,39 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2', )
-    
-	
-
-	
+        fields = ('username', 'firstName', 'lastName', 'gender', 'accountType', 'email', 'dateOfBirth', 'phoneNumber', 'address', 'password1', 'password2')
 
 class EditProfileForm(UserChangeForm):
-	
+
 	class Meta:
 		model = User
-		fields = (
-			'email',
-			'first_name',
-			'last_name',
-			'password'
-			)
+		fields = ('email', 'first_name', 'last_name', 'password',)
+        
 
-			
 
 class DeleteUserForm(forms.Form):
-	username = forms.CharField()
+	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder' : 'Username'}))
 
+class EmailForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder' : 'Recipient Email Address'}))
 
-class EmailForm(forms.ModelForm):
-    email = forms.EmailField()
-    
     class Meta:
         model = EmailForm
-        fields = ('email',)
+        fields = ('email')
 
 class ContactForm(forms.Form):
 	from_email = forms.EmailField()
 	subject = forms.CharField()
 	message = forms.CharField(widget=forms.Textarea)
 	sendto_email = forms.EmailField()
-	
+
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
 
+<<<<<<< HEAD
         
 class PostImage(forms.ModelForm):
     class Meta:
@@ -71,3 +67,13 @@ class PostImage(forms.ModelForm):
             "content",
             "image",
         }
+=======
+class BugForm(forms.Form):
+    subject = forms.ChoiceField(label = 'Subject', choices = [('A', 'Security'), ('B', 'Visual Bug'), ('C', 'Feature Not Working'), ('D', 'Website Crashing'), ('E', 'Other')])
+    description = forms.CharField(label = 'Description', widget=forms.Textarea, max_length = 300)
+
+    class Meta:
+        model = Bug
+        field = ['subject', 'description']
+        labels = {'subject' : 'Subject:', 'description' : 'Description'}
+>>>>>>> master

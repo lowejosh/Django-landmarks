@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
     <div class="search-bar"> 
         <form type="get" action="." id="container">
             <input id="search-box" type="text" name="search-box" placeholder="Search a location name..."><br />
@@ -31,6 +30,76 @@
             <input type="submit" value="Search" id="submit">
         </form>
     </div>
+
+<style>
+#map-canvas {
+    background-color: #BABABA;
+    width: 100%;
+    height: 300px;
+    border-bottom: solid #BABABA 1px;
+}
+</style>
+
+    <!-- MAP STUFF -->
+	<script> 
+
+		function initialize() {
+		var marker;
+		var map;
+		var mapOptions = {
+			zoom: 12,
+//			center: new google.maps.LatLng({{latitude}},{{longitude}})
+			center: new google.maps.LatLng(-27.4698, 153.0251)
+		}
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	  //var image = '/static/checkmark.png';
+
+	  {% for point in points %}
+		console.log({{ point.latitude }}, {{ point.longitude }});
+		var myLatLng = new google.maps.LatLng({{ point.latitude }}, {{ point.longitude }});
+
+		marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			title: '{{ point.locationName }}',
+			url: 'individual/{{point.id}}',
+		});
+		google.maps.event.addListener(marker, 'click', function() {
+			console.log("here");
+			window.location.href = this.url;
+		});
+	  {% endfor %}
+	}
+
+	</script>
+
+    
+	<div id="map-canvas"></div>
+	<script type="text/javascript">
+
+	var x = document.getElementById("demo");
+
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+			} else { 
+				x.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+
+		function showPosition(position) {
+			document.getElementById('latitude').value =  position.coords.latitude ;
+			document.getElementById('longitude').value =  position.coords.longitude ;
+			x.innerHTML = "Latitude: " + position.coords.latitude + 
+			"<br>Longitude: " + position.coords.longitude;  
+		}
+	</script>
+
+
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkVCuLeN13ZYSpn7TVq1IhjPO4TTzgFXw&callback=initialize">
+    </script>
 
 
     {% if page > 1 %}
