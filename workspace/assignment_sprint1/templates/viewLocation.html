@@ -79,8 +79,9 @@
 </form>
 
 <h3 style="text-align:center;">Leave a Review</h3>
+<center>
 <form method="post">
-  <div class="form">
+  <div class="form" style="margin-right: 220px;">
   {% csrf_token %}
 
   {{ form.non_field_errors }}
@@ -101,9 +102,10 @@
   </div>
 
   <div class="form-actions">
-    <button type="submit" style="float:right; margin-right: 5%">Leave Review</button>
+    <button type="submit">Leave Review</button>
   </div>
 </form>
+</center>
 
 <br />
 <br />
