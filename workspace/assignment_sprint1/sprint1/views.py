@@ -457,12 +457,13 @@ def email(request):
 
    
 def imageform(request):
+    navBar = navBarFunc(request)
     form = PostImage(request.POST, request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('imageform')
     else:
-        context = {'form': form}
+        context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
     
    

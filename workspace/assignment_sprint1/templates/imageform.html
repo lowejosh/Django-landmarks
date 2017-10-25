@@ -1,16 +1,33 @@
 <!-- This file is an extension of base.html -->
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 <!-- Main content -->
 {% block content %}
 <h1>Insert Image</h1>
-<center><form method="post" enctype='multipart/form-data'>
+<form method="post" enctype='multipart/form-data'>
+<div class="form">
     {% csrf_token %}
-    {{ form }}
+
+  {{ form.non_field_errors }}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  {% for field in form.visible_fields %}
+  <ul>
+    <li>
+      {{ field.label_tag }}{% render_field field %}
+    </li>
+  </ul>
+  {% endfor %}
+</div>
     <div class="form-actions">
-      <button type="submit" class="pretty-button">Send</button>
+      <button type="submit" class="pretty-button" style="float:right; margin-right: 5%;">Send</button>
     </div>
-</form></center>
+</form>
 
 <br>
 <br>
