@@ -1,11 +1,7 @@
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-<<<<<<< HEAD
 from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
 from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage
-
-=======
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
->>>>>>> master
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
@@ -461,22 +457,17 @@ def email(request):
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
-<<<<<<< HEAD
-   
    
 def imageform(request):
-    # User must be logged in to access modify page
-    navBar = navBarFunc(request, True)
     form = PostImage(request.POST, request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('imageform')
     else:
-        context = {'form': form, 'navBar': navBar}
+        context = {'form': form}
         return render(request, 'imageform.html', context)
     
    
-=======
 def bugs(request):
     navBar = navBarFunc(request)
 
@@ -489,4 +480,3 @@ def bugs(request):
         return redirect('index')
     context = {'form': form, 'navBar': navBar}
     return render(request, "bugs.html", context)
->>>>>>> master

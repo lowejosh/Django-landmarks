@@ -4,13 +4,11 @@ from django.forms import ModelForm
 from django.db import models
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from sprint1.models import EmailForm, PostImage
 
 from sprint1.models import Review
-=======
 from .models import Bug, EmailForm, Review
->>>>>>> master
+
 
 # Sign up form (additional) fields
 class SignUpForm(UserCreationForm):
@@ -57,7 +55,7 @@ class ReviewForm(ModelForm):
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
 
-<<<<<<< HEAD
+
         
 class PostImage(forms.ModelForm):
     class Meta:
@@ -67,7 +65,7 @@ class PostImage(forms.ModelForm):
             "content",
             "image",
         }
-=======
+
 class BugForm(forms.Form):
     subject = forms.ChoiceField(label = 'Subject', choices = [('A', 'Security'), ('B', 'Visual Bug'), ('C', 'Feature Not Working'), ('D', 'Website Crashing'), ('E', 'Other')])
     description = forms.CharField(label = 'Description', widget=forms.Textarea, max_length = 300)
@@ -76,4 +74,4 @@ class BugForm(forms.Form):
         model = Bug
         field = ['subject', 'description']
         labels = {'subject' : 'Subject:', 'description' : 'Description'}
->>>>>>> master
+

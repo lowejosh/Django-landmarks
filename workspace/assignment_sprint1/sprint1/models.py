@@ -117,7 +117,6 @@ class EmailForm(models.Model):
 
     def __str__(self):
         return self.email
-<<<<<<< HEAD
         
  
 class PostImage(models.Model):
@@ -128,5 +127,4 @@ class PostImage(models.Model):
     def __str__(self):
         return self.title
     
-=======
->>>>>>> master
+

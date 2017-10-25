@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 from django.contrib import admin
 from .models import Profile, Location, Review, Tag, Map, LocationSuggestion, PostImage
-=======
->>>>>>> master
+
 from django.contrib import admin, messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.utils.html import format_html
@@ -52,10 +50,9 @@ class AdminViewerFuntion(admin.ModelAdmin):
     # Remove default remove user action
     del actions[0]
 
-<<<<<<< HEAD
 admin.site.register(EmailForm)
 admin.site.register(PostImage)
-=======
+
 # Register your models here.
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Location)
@@ -65,5 +62,4 @@ admin.site.register(LocationSuggestion)
 admin.site.register(Map)
 admin.site.register(Bug, ProfileBug);
 admin.site.register(AdminViewer, AdminViewerFuntion)
-admin.site.register(EmailForm)
->>>>>>> master
+
