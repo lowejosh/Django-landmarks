@@ -1,0 +1,18 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+<h1>Insert Image</h1>
+<center><form method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form }}
+    <div class="form-actions">
+      <button type="submit" class="pretty-button">Send</button>
+    </div>
+</form></center>
+
+<br>
+<br>
+
+{% endblock %}

@@ -29,6 +29,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # Finds directory path for project static folder
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -139,3 +140,8 @@ USE_TZ = True
 STATICFILES_DIRS = [STATIC_DIR, ]
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = "media"
+MEDIA_URL = "media/"
+
+
