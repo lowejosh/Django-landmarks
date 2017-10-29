@@ -297,14 +297,30 @@ def locationfeed(request):
 
     # Default Search Query
     search_query = ""
-
+    
     # Defaults
+    accountType = 0
+    invisibleStyle = "style='display: none;'"
     locationList = []
     pointsList = []
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
+    style1 = style2 = style3 = style4 = style5 = ""
 
-    #TODO
+    # If the user is logged in 
+    if (request.user.is_authenticated()):
 
+        #TODO - HIDE AND UNCHECK SEARCH OPTIONS DETERMINED BY USER TYPE
+        # maybe disable the checkboxes instead and add a little notification
+        # 1 - Student (universities, libraries), 2 - Business (hotels, libraries), 3 - Tourist (public places, museums)
+        accountType = Profile.objects.get(user=(request.user)).accountType
+    
+        navBar = navBarFunc(request)
+
+    else:
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
 
     checkedOptions = list(map(int, request.GET.getlist("foo", [])))
 
@@ -341,8 +357,6 @@ def locationfeed(request):
     for i in pointsList:
         coordinateList.append([i.latitude, i.longitude])
 
-    print(coordinateList)
-
     # Show error if there are no results
     errorMessageCount = 0
     for i in range(1, Location.objects.count() + 1):
@@ -354,16 +368,6 @@ def locationfeed(request):
     else:
         errorMessage = ""
 
-    # If the user is logged in 
-    if (request.user.is_authenticated()):
-        navBar = navBarFunc(request)
-    else:
-       #TODO
-        navBar = navBarFunc(request)
-        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
-        context_dict = {'navBar' : navBar, 'notification' : notification}
-        return render(request, 'notification.html', context=context_dict)
-       
 
     # Define the context of the python vars
     context_dict = {'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
