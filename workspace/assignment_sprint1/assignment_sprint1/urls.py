@@ -39,7 +39,8 @@ urlpatterns = [
     url(r'^email/$', views.email, name='email'),
     url(r'^imageform/$', views.imageform, name='imageform'),
     url(r'^bugs/$', views.bugs, name='bugs'),
-    url(r'^modify/del_user/$', views.del_user, name='del_user')
+    url(r'^modify/del_user/$', views.del_user, name='del_user'),
+    url(r'^location/suggest$', views.suggestLocation, name='suggestLocation')
 
 ]
 
