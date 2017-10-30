@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from sprint1.models import EmailForm, PostImage
 
 from sprint1.models import Review
-from .models import Bug, EmailForm, Review
+from .models import Bug, EmailForm, Review, LocationSuggestion
 
 
 # Sign up form (additional) fields
@@ -75,3 +75,9 @@ class BugForm(forms.Form):
         field = ['subject', 'description']
         labels = {'subject' : 'Subject:', 'description' : 'Description'}
 
+# Suggest Location form
+class SuggestLocationForm(ModelForm):
+    class Meta:
+        model = LocationSuggestion
+        #fields = ['rating', 'reviewText']
+        #labels = {'reviewText': 'Review', 'rating': 'Rating'}
