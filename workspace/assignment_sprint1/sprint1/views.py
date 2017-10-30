@@ -203,6 +203,23 @@ def index(request):
         return render(request, 'publicMain.html', context=context_dict)
 
 
+#TODO
+# Suggest location view
+def suggestLocation(request):
+
+    # Define the navbar
+    navBar = navBarFunc(request)
+
+    # Retrieve information if a review has been submitted
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.location_id = locationId
+            instance.user = Profile.objects.get(user=(request.user))
+            instance.save()
+            return HttpResponseRedirect("")
+
 # Signup page view
 def signup(request):
 
@@ -276,7 +293,7 @@ def locations(request, location_id):
             instance.location_id = locationId
             instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("")
+            return HttpResponseRedirect("/")
 
     else:
         form = ReviewForm()
