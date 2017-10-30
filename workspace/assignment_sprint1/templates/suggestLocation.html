@@ -4,11 +4,11 @@
 
 <!-- Main content -->
 {% block content %}
+<h2 class="centered-content">Suggest a location</h2>
 <form method="post">
   <div class="form">
   {% csrf_token %}
 
-  <!-- 
   {{ form.non_field_errors }}
 
   {% for hidden_field in form.hidden_fields %}
@@ -25,10 +25,11 @@
   </ul>
   {% endfor %}
   </div>
-  --> 
-
+  <br />
+  <center>
   <div class="form-actions">
-    <button type="submit" style="float:right; margin-right: 5%">Sign Up</button>
+      <button type="submit">Submit</button>
   </div>
+  </center>
 </form>
 {% endblock %}

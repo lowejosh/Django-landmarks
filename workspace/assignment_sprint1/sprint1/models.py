@@ -82,6 +82,10 @@ class LocationSuggestion(models.Model):
     locationType = models.IntegerField(null=True)
     locationImagePath = models.CharField(max_length=127, null=True)
 
+    # Define string representation
+    def __str__(self):
+        return self.locationName
+
 # Create and update user from signal
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

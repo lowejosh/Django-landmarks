@@ -79,5 +79,5 @@ class BugForm(forms.Form):
 class SuggestLocationForm(ModelForm):
     class Meta:
         model = LocationSuggestion
-        fields = ['locationName', 'locationBio']
+        fields = ['locationName', 'locationBio', 'locationAddress', 'locationType', 'latitude', 'longitude']
         #labels = {'reviewText': 'Review', 'rating': 'Rating'}

@@ -1,6 +1,5 @@
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage, SuggestLocationForm
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -212,13 +211,16 @@ def suggestLocation(request):
 
     # Retrieve information if a review has been submitted
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        form = SuggestLocationForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.location_id = locationId
-            instance.user = Profile.objects.get(user=(request.user))
+#            instance.location_id = locationId
+#            instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("")
+            return HttpResponseRedirect("/")
+    else:
+        form = SuggestLocationForm()
+    return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
 
 # Signup page view
 def signup(request):
