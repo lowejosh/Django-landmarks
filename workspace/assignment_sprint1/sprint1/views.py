@@ -12,7 +12,7 @@ from .models import Location, Profile, Review, Bug
 # Navbar function that returns the proper list
 def navBarFunc(request):
     if (request.user.is_authenticated()):
-        toolbar = '<ul><li><a href="/">Home</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
+        toolbar = '<ul><li><a href="/">Home</a></li><li><a href="/suggestLocation/">Suggest Location</a></li><li class="right"><a href="/logout/">Log out</a></li><li><a href="/location/">Locations</a></li><li class="right"><a href="/modify/">Modify Account</a></li><li class="right"><a href="/email/">Referral</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
 
         if (request.session.get('admin', None) == True):
             return '<button onclick="location.href=\'http://127.0.0.1:8000/admin/login/?next=/admin/\'" style="position:absolute; top: 10px; right: 10px;" class="button">Admin</button>' + toolbar
