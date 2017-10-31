@@ -22,18 +22,21 @@ def navBarFunc(request):
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
 
 
-# Review output function
+# Review HTML output function
 def ReviewOutput(location):
 
+    # Try to find a review for the location input
     try:
         r = Review.objects.filter(location=Location.objects.get(id=location))
+    # If no review
     except:
         return ""
 
+    # Defaults
     ReviewList = []
-
     starRating = []
 
+    # For every review - append the star checkbox HTML output into a list
     for i in range(0, r.count()):
         if r[i].rating == 1:
             starRating.append("""
@@ -101,6 +104,7 @@ def ReviewOutput(location):
                             <label for="st5"></label>
                         """)
 
+    # For every review - append the full HTML output into the review list
     for i in range(0, r.count()):
         ReviewList.append("""<table class="info" width="80%" align="center">
             <tr>
@@ -116,19 +120,24 @@ def ReviewOutput(location):
             </tr>
         </table><br />""")
 
+    # Return a list of the HTML output
     return ReviewList
 
 
 
 # Function that returns the html output of a location
 def locationOutput(locationId, search_query, checkedOptions):
+    # Try to see if a location matches the search query
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
+    # If no results
     except:
         return ""
 
+    # For every checked option filter
     for i in checkedOptions:
 
+        # If the location type matches the filter
         if l.locationType == i:
             locationName = l.locationName
             locationBio = l.locationBio
@@ -136,6 +145,7 @@ def locationOutput(locationId, search_query, checkedOptions):
             locationType = locationTypeOutput(l.locationType)
             linkId = str(locationId)
 
+            # Return the HTML output
             return """
                 <div class='location-wrap'>
                     <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """<span style="float: right; color: #FCFCFC; margin-right: 6px;">""" + locationType + """</span></a>
@@ -143,12 +153,8 @@ def locationOutput(locationId, search_query, checkedOptions):
                 </div>
             """
 
+    # If there are no results at all
     return ""
-
-
-# Returns a list of database objects that match the search query
-def returnSearch(search_query):
-    return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
 
 
 # Write the location type in plaintext
@@ -167,18 +173,21 @@ def locationTypeOutput(locationTypeId):
     else:
         return ""
 
-
-# Map Output
+# Simple map location object grabber
 def mapOutput(locationId, search_query, checkedOptions):
+    # Try to search locations matching search query
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
     except:
         return None
 
+    # Filter by checked options
     for i in checkedOptions:
 
+        # If its a match
         if l.locationType == i:
             
+            # Return location
             return l
 
 
@@ -212,14 +221,16 @@ def suggestLocation(request):
         form = SuggestLocationForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-#            instance.location_id = locationId
-#            instance.user = Profile.objects.get(user=(request.user))
             instance.save()
             notification = "Your location suggestion has been submitted"
             context_dict = {'navBar' : navBar, 'notification' : notification,}
+            # Return a notification if the form succeeds
             return render(request, 'notification.html', context=context_dict)
     else:
+        # Render the form if the method isnt POST (form not submitted)
         form = SuggestLocationForm()
+    
+    # in any case render the page
     return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
 
 # Signup page view
