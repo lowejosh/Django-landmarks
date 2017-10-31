@@ -42,13 +42,8 @@ class ProfileAdmin(admin.ModelAdmin):
 class ProfileBug(admin.ModelAdmin):
     list_display = ['subject', 'description']
     actions = [AcceptBug, RemoveBug]
-    # Remove default delete bugs action
-    del actions[0]
-
 class AdminViewerFuntion(admin.ModelAdmin):
     actions = [AutoLogin]
-    # Remove default remove user action
-    del actions[0]
 
 admin.site.register(EmailForm)
 admin.site.register(PostImage)
@@ -61,4 +56,3 @@ admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
 admin.site.register(Bug, ProfileBug);
 admin.site.register(AdminViewer, AdminViewerFuntion)
-
