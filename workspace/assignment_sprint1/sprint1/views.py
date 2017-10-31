@@ -186,12 +186,8 @@ def mapOutput(locationId, search_query, checkedOptions):
 
         # If its a match
         if l.locationType == i:
-<<<<<<< HEAD
             
             # Return location
-=======
-
->>>>>>> f6606c8d303e67aa255e74544999273cbcdf7aa8
             return l
 
 
