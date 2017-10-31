@@ -8,20 +8,24 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
+from django.core.mail import send_mail, BadHeaderError
+from django.db.models.aggregates import Count
+from random import randint
+from .views import sendEmail
 from .models import Profile, Location, Review, User, Tag, LocationSuggestion, AdminViewer, EmailForm, Bug, Subscription
 
 # Function to allow admins to solve bugs
 def AcceptBug(modeladmin, request, queryset):
     modeladmin.message_user(request, "You have accepted " + str(queryset.count()) + " bugs as being solved.")
     for entry in queryset:
-        Bug.objects.filter(id=entry.id).delete();
+        Bug.objects.filter(id=entry.id).delete()
 AcceptBug.short_description = "Accept Bugs as Solved"
 
 # Function to allow admins to remove bugs
 def RemoveBug(modeladmin, request, queryset):
     modeladmin.message_user(request, "You have removed " + str(queryset.count()) + " bugs.")
     for entry in queryset:
-        Bug.objects.filter(id=entry.id).delete();
+        Bug.objects.filter(id=entry.id).delete()
 RemoveBug.short_description = "Remove Invalid Bugs"
 
 # Function to allow admins to login as the selected user
@@ -36,6 +40,41 @@ def AutoLogin(modeladmin, request, queryset):
     return redirect('index')
 AutoLogin.short_description = "Login as User"
 
+def SendNewsletter(modeladmin, request, queryset):
+    #Retrieve Random List of Locations
+    touristSelection = Location.objects.filter(locationType = 4)
+    touristCount = randint(0, touristSelection.aggregate(count=Count('locationName'))['count'] - 1)
+    studentSelection = Location.objects.filter(locationType = 1)
+    studentCount = randint(0, studentSelection.aggregate(count=Count('locationName'))['count'] - 1)
+    businessmanSelection = Location.objects.filter(locationType = 2)
+    businessmanCount = randint(0, businessmanSelection.aggregate(count=Count('locationName'))['count'] - 1)
+    premiumCount = randint(0, Location.objects.aggregate(count=Count('locationName'))['count'] - 1)
+
+    #Add all people to email list
+    for entry in queryset:
+        print(entry.accountType)
+        #Student
+        if entry.accountType == '1':
+            location = studentSelection[studentCount].locationName
+        #Business
+        if entry.accountType == '2':
+            location = businessmanSelection[studentCount].locationName
+        #Tourist
+        if entry.accountType == '3':
+            location = touristSelection[studentCount].locationName
+
+        #Send Email
+        subject = "Newsletter"
+        message = "Hello, we have chosen a location that may be interesting to you. " + location + " is an amazing place to visit!"
+        to_email = [entry.email]
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(subject, message, from_email, to_email, fail_silently=False)
+
+    #Show Email has been sent
+    modeladmin.message_user(request, "Newsletter has been sent to all selected users")
+
+SendNewsletter.short_description = "Send Newsletter"
+
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'firstName', 'lastName', 'gender', 'accountType', 'dateOfBirth', 'email', 'phoneNumber', 'address']
 
@@ -44,6 +83,10 @@ class ProfileBug(admin.ModelAdmin):
     actions = [AcceptBug, RemoveBug]
 class AdminViewerFuntion(admin.ModelAdmin):
     actions = [AutoLogin]
+
+class LocationSuggestionFunction(admin.ModelAdmin):
+    list_display = ['firstName', 'accountType', 'email']
+    actions = [SendNewsletter]
 
 admin.site.register(EmailForm)
 admin.site.register(PostImage)
@@ -56,4 +99,4 @@ admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
 admin.site.register(Bug, ProfileBug)
 admin.site.register(AdminViewer, AdminViewerFuntion)
-admin.site.register(Subscription)
+admin.site.register(Subscription, LocationSuggestionFunction)
