@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage, SuggestLocationForm, SubscriptionForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage, SuggestLocationForm
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -505,11 +505,27 @@ def bugs(request):
 
 def subscription(request):
     navBar = navBarFunc(request)
-    form = SubscriptionForm(request.POST)
-
-    if form.is_valid():
-        formEmail = form.cleaned_data['email']
-        subscriptionReport = Subscription.objects.create(email = formEmail)
-        return redirect('modify')
-    context = {'form': form, 'navBar': navBar}
+    context = {'navBar': navBar}
     return render(request, "subscription.html", context)
+
+def subscribe(request):
+    #Retrive Email Address of User
+    username = request.user
+    userQuery = Profile.objects.get(user = username)
+
+    #Determine if already subscribed
+    if Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).exists() == False:
+        #Subscribe
+        subscriptionReport = Subscription.objects.create(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType)
+    return redirect('modify')
+
+def unsubscribe(request):
+    #Retrive Email Address of User
+    username = request.user
+    userQuery = Profile.objects.get(user = username)
+
+    #Determine if already subscribed
+    if Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).exists() == True:
+        #Subscribe
+        subscriptionReport = Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).delete()
+    return redirect('modify')

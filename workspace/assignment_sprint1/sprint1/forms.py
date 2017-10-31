@@ -77,11 +77,3 @@ class SuggestLocationForm(ModelForm):
         model = LocationSuggestion
         fields = ['locationName', 'locationBio', 'locationAddress', 'locationType', 'latitude', 'longitude']
         #labels = {'reviewText': 'Review', 'rating': 'Rating'}
-
-class SubscriptionForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder' : 'Subscription Email Address'}))
-
-    class Meta:
-        model = Subscription
-        fields = ['email']
-        labels = ['email', 'Email Address']
