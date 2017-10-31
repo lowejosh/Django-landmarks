@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from sprint1.models import EmailForm, PostImage
 
 from sprint1.models import Review
-from .models import Bug, EmailForm, Review, LocationSuggestion
+from .models import Bug, EmailForm, Review, LocationSuggestion, Subscription
 
 
 # Sign up form (additional) fields
@@ -30,8 +30,6 @@ class EditProfileForm(UserChangeForm):
 	class Meta:
 		model = User
 		fields = ('email', 'first_name', 'last_name', 'password',)
-        
-
 
 class DeleteUserForm(forms.Form):
 	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder' : 'Username'}))
@@ -55,8 +53,6 @@ class ReviewForm(ModelForm):
         fields = ['rating', 'reviewText']
         labels = {'reviewText': 'Review', 'rating': 'Rating'}
 
-
-        
 class PostImage(forms.ModelForm):
     class Meta:
         model = PostImage
@@ -81,3 +77,11 @@ class SuggestLocationForm(ModelForm):
         model = LocationSuggestion
         fields = ['locationName', 'locationBio', 'locationAddress', 'locationType', 'latitude', 'longitude']
         #labels = {'reviewText': 'Review', 'rating': 'Rating'}
+
+class SubscriptionForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder' : 'Subscription Email Address'}))
+
+    class Meta:
+        model = Subscription
+        fields = ['email']
+        labels = ['email', 'Email Address']

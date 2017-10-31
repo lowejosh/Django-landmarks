@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate, update_session_auth_hash
-from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage, SuggestLocationForm
+from sprint1.forms import SignUpForm, EditProfileForm, EmailForm, DeleteUserForm, ContactForm, ReviewForm, PostImage, SuggestLocationForm, SubscriptionForm
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
@@ -7,7 +7,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm, BugForm, ContactForm, ReviewForm
-from .models import Location, Profile, Review, Bug
+from .models import Location, Profile, Review, Bug, Subscription
 
 # Navbar function that returns the proper list
 def navBarFunc(request):
@@ -178,7 +178,7 @@ def mapOutput(locationId, search_query, checkedOptions):
     for i in checkedOptions:
 
         if l.locationType == i:
-            
+
             return l
 
 
@@ -316,7 +316,7 @@ def locationfeed(request):
 
     # Default Search Query
     search_query = ""
-    
+
     # Defaults
     accountType = 0
     invisibleStyle = "style='display: none;'"
@@ -325,14 +325,14 @@ def locationfeed(request):
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
     style1 = style2 = style3 = style4 = style5 = ""
 
-    # If the user is logged in 
+    # If the user is logged in
     if (request.user.is_authenticated()):
 
         #TODO - HIDE AND UNCHECK SEARCH OPTIONS DETERMINED BY USER TYPE
         # maybe disable the checkboxes instead and add a little notification
         # 1 - Student (universities, libraries), 2 - Business (hotels, libraries), 3 - Tourist (public places, museums)
         accountType = Profile.objects.get(user=(request.user)).accountType
-    
+
         navBar = navBarFunc(request)
 
     else:
@@ -478,7 +478,7 @@ def email(request):
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
-   
+
 def imageform(request):
     navBar = navBarFunc(request)
     form = PostImage(request.POST, request.FILES or None)
@@ -488,8 +488,8 @@ def imageform(request):
     else:
         context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
-    
-   
+
+
 def bugs(request):
     navBar = navBarFunc(request)
 
@@ -499,6 +499,17 @@ def bugs(request):
         formSubject = form.cleaned_data['subject']
         formDescription = form.cleaned_data['description']
         bugReport = Bug.objects.create(subject = formSubject, description = formDescription)
-        return redirect('index')
+        return redirect('bugs')
     context = {'form': form, 'navBar': navBar}
     return render(request, "bugs.html", context)
+
+def subscription(request):
+    navBar = navBarFunc(request)
+    form = SubscriptionForm(request.POST)
+
+    if form.is_valid():
+        formEmail = form.cleaned_data['email']
+        subscriptionReport = Subscription.objects.create(email = formEmail)
+        return redirect('modify')
+    context = {'form': form, 'navBar': navBar}
+    return render(request, "subscription.html", context)

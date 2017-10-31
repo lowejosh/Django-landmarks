@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
-from .models import Profile, Location, Review, User, Tag, LocationSuggestion, AdminViewer, EmailForm, Bug
+from .models import Profile, Location, Review, User, Tag, LocationSuggestion, AdminViewer, EmailForm, Bug, Subscription
 
 # Function to allow admins to solve bugs
 def AcceptBug(modeladmin, request, queryset):
@@ -54,5 +54,6 @@ admin.site.register(Location)
 admin.site.register(Review)
 admin.site.register(Tag)
 admin.site.register(LocationSuggestion)
-admin.site.register(Bug, ProfileBug);
+admin.site.register(Bug, ProfileBug)
 admin.site.register(AdminViewer, AdminViewerFuntion)
+admin.site.register(Subscription)
