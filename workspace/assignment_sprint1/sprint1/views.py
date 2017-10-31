@@ -201,8 +201,6 @@ def index(request):
         # Return the template
         return render(request, 'publicMain.html', context=context_dict)
 
-
-#TODO
 # Suggest location view
 def suggestLocation(request):
 
@@ -217,7 +215,9 @@ def suggestLocation(request):
 #            instance.location_id = locationId
 #            instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("/")
+            notification = "Your location suggestion has been submitted"
+            context_dict = {'navBar' : navBar, 'notification' : notification,}
+            return render(request, 'notification.html', context=context_dict)
     else:
         form = SuggestLocationForm()
     return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
@@ -295,7 +295,7 @@ def locations(request, location_id):
             instance.location_id = locationId
             instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("")
 
     else:
         form = ReviewForm()
@@ -366,13 +366,18 @@ def locationfeed(request):
 
 
     locationMax = 50;
+    # For ever location
     for i in range(1, Location.objects.count() + 1):
+        # If the max amount hasnt been reached
         if i <= locationMax:
+            # Add the location to the location list
             locationList.append(locationOutput(i, search_query, checkedOptions))
             if mapOutput(i, search_query, checkedOptions) != None:
+                # Add the location object to the points list
                 pointsList.append(mapOutput(i, search_query, checkedOptions))
 
     coordinateList = []
+    # For every location in the points list, retrieve the lat and lon and append it into a multi-dimensional list
     for i in pointsList:
         coordinateList.append([i.latitude, i.longitude])
 
