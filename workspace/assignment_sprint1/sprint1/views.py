@@ -7,7 +7,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SignUpForm, EditProfileForm, DeleteUserForm, EmailForm, BugForm, ContactForm, ReviewForm
-from .models import Location, Profile, Review, Bug
+from .models import Location, Profile, Review, Bug, Subscription
 
 # Navbar function that returns the proper list
 def navBarFunc(request):
@@ -186,8 +186,12 @@ def mapOutput(locationId, search_query, checkedOptions):
 
         # If its a match
         if l.locationType == i:
+<<<<<<< HEAD
             
             # Return location
+=======
+
+>>>>>>> f6606c8d303e67aa255e74544999273cbcdf7aa8
             return l
 
 
@@ -327,7 +331,7 @@ def locationfeed(request):
 
     # Default Search Query
     search_query = ""
-    
+
     # Defaults
     accountType = 0
     invisibleStyle = "style='display: none;'"
@@ -336,14 +340,14 @@ def locationfeed(request):
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
     style1 = style2 = style3 = style4 = style5 = ""
 
-    # If the user is logged in 
+    # If the user is logged in
     if (request.user.is_authenticated()):
 
         #TODO - HIDE AND UNCHECK SEARCH OPTIONS DETERMINED BY USER TYPE
         # maybe disable the checkboxes instead and add a little notification
         # 1 - Student (universities, libraries), 2 - Business (hotels, libraries), 3 - Tourist (public places, museums)
         accountType = Profile.objects.get(user=(request.user)).accountType
-    
+
         navBar = navBarFunc(request)
 
     else:
@@ -410,6 +414,8 @@ def locationfeed(request):
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
 
+
+# Modify view which has a nav bar and fail safe user logged in function
 def modify(request):
     # User must be logged in to access modify page
     if (request.user.is_authenticated()):
@@ -423,25 +429,26 @@ def modify(request):
         return render(request, 'notification.html', context=context_dict)
 
 
+# Edit Profile function which updates database with the user details entered by the user
 def edit_profile(request):
     navBar = navBarFunc(request)
-
+    # If send button pressed, send the forms inputs to the database and update
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
             return redirect('modify')
-
+    # If send button not pressed, continue to display a input edit form and nav bar
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form, 'navBar': navBar}
         return render(request, 'edit_profile.html', args)
 
-
+# Password function which updates the password for that user if they opt to change it
 def password(request):
     navBar = navBarFunc(request)
-
+    # If send button pressed, send the forms inputs to the database and update
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
 
@@ -451,17 +458,17 @@ def password(request):
             return redirect('modify')
         else:
             return redirect('/modify/password')
+    # If send button not pressed, continue to display a input password form and nav bar
     else:
         form = PasswordChangeForm(user=request.user)
         args = {'form': form, 'navBar': navBar}
         return render(request, 'password.html', args)
 
+# Delete User function which deletes the user account from the system
 def del_user(request):
-    # User must be logged in to access modify page
-    navBar = navBarFunc(request)
 
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    navBar = navBarFunc(request)
+    # If send button pressed, send the forms inputs to the database and update
     if request.method == 'POST':
         form = DeleteUserForm(request.POST)
 
@@ -470,20 +477,21 @@ def del_user(request):
             if rem is not None:
                 rem.delete()
                 return redirect ('../../login')
-
             else:
                 return redirect('del_user.html')
-
+    # If send button not pressed, continue to display a input delete form and nav bar
     else:
         form = DeleteUserForm()
         context = {'form': form, 'navBar' : navBar}
         return render(request, 'del_user.html', context)
 
+
+# Email function which sends a generated email message to the specified email that the user input
 def email(request):
     navBar = navBarFunc(request)
 
     form = EmailForm(request.POST)
-
+    # If send button pressed, send the forms inputs to the database and also a email to the recipient
     if form.is_valid():
         to_list = [form.cleaned_data['email']]
         subject = "Your friend is asking you to join 'The Good Guys'"
@@ -494,18 +502,20 @@ def email(request):
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
 
-   
+# Imageform function which saves images to the database that the users upload
 def imageform(request):
     navBar = navBarFunc(request)
     form = PostImage(request.POST, request.FILES or None)
+    # If send button pressed, send the forms inputs to the database and update
     if form.is_valid():
         form.save()
         return redirect('imageform')
+    # If send button not pressed, continue to display a input image form and nav bar
     else:
         context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
-    
-   
+
+
 def bugs(request):
     navBar = navBarFunc(request)
 
@@ -515,6 +525,33 @@ def bugs(request):
         formSubject = form.cleaned_data['subject']
         formDescription = form.cleaned_data['description']
         bugReport = Bug.objects.create(subject = formSubject, description = formDescription)
-        return redirect('index')
+        return redirect('bugs')
     context = {'form': form, 'navBar': navBar}
     return render(request, "bugs.html", context)
+
+def subscription(request):
+    navBar = navBarFunc(request)
+    context = {'navBar': navBar}
+    return render(request, "subscription.html", context)
+
+def subscribe(request):
+    #Retrive Email Address of User
+    username = request.user
+    userQuery = Profile.objects.get(user = username)
+
+    #Determine if already subscribed
+    if Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).exists() == False:
+        #Subscribe
+        subscriptionReport = Subscription.objects.create(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType)
+    return redirect('modify')
+
+def unsubscribe(request):
+    #Retrive Email Address of User
+    username = request.user
+    userQuery = Profile.objects.get(user = username)
+
+    #Determine if already subscribed
+    if Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).exists() == True:
+        #Subscribe
+        subscriptionReport = Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).delete()
+    return redirect('modify')

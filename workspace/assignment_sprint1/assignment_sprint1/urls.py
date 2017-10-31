@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^modify/$', views.modify, name='modify'),
     url(r'^modify/edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^modify/password/$', views.password, name='password'),
+    url(r'^modify/subscribe/$', views.subscribe, name='subscribe'),
+    url(r'^modify/unsubscribe/$', views.unsubscribe, name='unsubscribe'),
     url(r'^email/$', views.email, name='email'),
     url(r'^imageform/$', views.imageform, name='imageform'),
     url(r'^bugs/$', views.bugs, name='bugs'),
@@ -47,4 +49,3 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
