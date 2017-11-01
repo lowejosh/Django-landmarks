@@ -76,4 +76,4 @@ class SuggestLocationForm(ModelForm):
     class Meta:
         model = LocationSuggestion
         fields = ['locationName', 'locationBio', 'locationAddress', 'locationType', 'latitude', 'longitude']
-        #labels = {'reviewText': 'Review', 'rating': 'Rating'}
+        labels = {'locationName': 'Location Name', 'locationBio': 'Location Bio', 'locationAddress': 'Location Address', 'locationType' : 'Location Type',}

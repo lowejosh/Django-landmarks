@@ -306,7 +306,7 @@ def locations(request, location_id):
             instance.location_id = locationId
             instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("")
+            return HttpResponseRedirect("/location")
 
     else:
         form = ReviewForm()
@@ -341,7 +341,6 @@ def locationfeed(request):
     # If the user is logged in
     if (request.user.is_authenticated()):
 
-        #TODO - HIDE AND UNCHECK SEARCH OPTIONS DETERMINED BY USER TYPE
         # maybe disable the checkboxes instead and add a little notification
         # 1 - Student (universities, libraries), 2 - Business (hotels, libraries), 3 - Tourist (public places, museums)
         accountType = Profile.objects.get(user=(request.user)).accountType

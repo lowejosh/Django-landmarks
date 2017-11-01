@@ -5,7 +5,7 @@
 <!-- Main content -->
 {% block content %}
 <form method="post">
-  <div class="form">
+  <div class="form" style="margin-left: 120px">
   {% csrf_token %}
 
   {{ form.non_field_errors }}
@@ -25,8 +25,11 @@
   {% endfor %}
   </div>
 
+  <br />
+  <center>
   <div class="form-actions">
-    <button type="submit" style="float:right; margin-right: 5%">Sign Up</button>
+    <button type="submit">Sign Up</button>
   </div>
+  </center>
 </form>
 {% endblock %}
