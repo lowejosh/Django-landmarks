@@ -395,11 +395,22 @@ def locationfeed(request):
                 elif i == 5:
                     checked5 = "checked"
 
-            print(accountType)
-            if accountType == "1":
-                checked2 = "disabled"
-                checked4 = "disabled"
-                checked5 = "disabled"
+                if accountType == "1":
+                    checked2 = "disabled"
+                    checked4 = "disabled"
+                    checked5 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a student account, you can only search for libraries and universities, to view others, you need to upgrade to our premium plan</p>"
+                elif accountType == "2":
+                    checked3 = "disabled"
+                    checked4 = "disabled"
+                    checked5 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a business account, you can only search for libraries and hotels, to view others, you need to upgrade to our premium plan</p>"
+                elif accountType == "3":
+                    checked1 = "disabled"
+                    checked2 = "disabled"
+                    checked3 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a tourist account, you can only search for museums and public places, to view others, you need to upgrade to our premium plan</p>"
+
                 
 
 
