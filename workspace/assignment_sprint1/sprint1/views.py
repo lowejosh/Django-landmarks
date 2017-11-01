@@ -214,24 +214,28 @@ def index(request):
 def suggestLocation(request):
 
     # Define the navbar
-    navBar = navBarFunc(request)
-
-    # Retrieve information if a review has been submitted
-    if request.method == 'POST':
-        form = SuggestLocationForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            notification = "Your location suggestion has been submitted"
-            context_dict = {'navBar' : navBar, 'notification' : notification,}
-            # Return a notification if the form succeeds
-            return render(request, 'notification.html', context=context_dict)
+    if (request.user.is_authenticated()):
+        navBar = navBarFunc(request)
+        # Retrieve information if a review has been submitted
+        if request.method == 'POST':
+            form = SuggestLocationForm(request.POST)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.save()
+                notification = "Your location suggestion has been submitted"
+                context_dict = {'navBar' : navBar, 'notification' : notification,}
+                # Return a notification if the form succeeds
+                return render(request, 'notification.html', context=context_dict)
+        else:
+            # Render the form if the method isnt POST (form not submitted)
+            form = SuggestLocationForm()
+        # in any case render the page
+        return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
     else:
-        # Render the form if the method isnt POST (form not submitted)
-        form = SuggestLocationForm()
-
-    # in any case render the page
-    return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
 
 # Signup page view
 def signup(request):
@@ -466,72 +470,95 @@ def modify(request):
 # Edit Profile function which updates database with the user details entered by the user
 def edit_profile(request):
     navBar = navBarFunc(request)
-    # If send button pressed, send the forms inputs to the database and update
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+    
+    if (request.user.is_authenticated()):
+        # If send button pressed, send the forms inputs to the database and update
+        if request.method == 'POST':
+            form = EditProfileForm(request.POST, instance=request.user)
 
-        if form.is_valid():
-            form.save()
-            return redirect('modify')
-    # If send button not pressed, continue to display a input edit form and nav bar
+            if form.is_valid():
+                form.save()
+                return redirect('modify')
+        # If send button not pressed, continue to display a input edit form and nav bar
+        else:
+            form = EditProfileForm(instance=request.user)
+            args = {'form': form, 'navBar': navBar}
+            return render(request, 'edit_profile.html', args)
     else:
-        form = EditProfileForm(instance=request.user)
-        args = {'form': form, 'navBar': navBar}
-        return render(request, 'edit_profile.html', args)
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
 
 # Password function which updates the password for that user if they opt to change it
 def password(request):
     navBar = navBarFunc(request)
-    # If send button pressed, send the forms inputs to the database and update
-    if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
+    if (request.user.is_authenticated()):
+        # If send button pressed, send the forms inputs to the database and update
+        if request.method == 'POST':
+            form = PasswordChangeForm(data=request.POST, user=request.user)
 
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect('modify')
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                return redirect('modify')
+            else:
+                return redirect('/modify/password')
+        # If send button not pressed, continue to display a input password form and nav bar
         else:
-            return redirect('/modify/password')
-    # If send button not pressed, continue to display a input password form and nav bar
+            form = PasswordChangeForm(user=request.user)
+            args = {'form': form, 'navBar': navBar}
+            return render(request, 'password.html', args)
     else:
-        form = PasswordChangeForm(user=request.user)
-        args = {'form': form, 'navBar': navBar}
-        return render(request, 'password.html', args)
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
 
 # Delete User function which deletes the user account from the system
 def del_user(request):
 
     navBar = navBarFunc(request)
     # If send button pressed, send the forms inputs to the database and update
-    if request.method == 'POST':
-        form = DeleteUserForm(request.POST)
+    if (request.user.is_authenticated()):
+        if request.method == 'POST':
+            form = DeleteUserForm(request.POST)
 
-        if form.is_valid():
-            rem = User.objects.get(username=form.cleaned_data['username'])
-            if rem is not None:
-                rem.delete()
-                return redirect ('../../login')
-            else:
-                return redirect('del_user.html')
-    # If send button not pressed, continue to display a input delete form and nav bar
+            if form.is_valid():
+                rem = User.objects.get(username=form.cleaned_data['username'])
+                if rem is not None:
+                    rem.delete()
+                    return redirect ('../../login')
+                else:
+                    return redirect('del_user.html')
+        # If send button not pressed, continue to display a input delete form and nav bar
+        else:
+            form = DeleteUserForm()
+            context = {'form': form, 'navBar' : navBar}
+            return render(request, 'del_user.html', context)
     else:
-        form = DeleteUserForm()
-        context = {'form': form, 'navBar' : navBar}
-        return render(request, 'del_user.html', context)
-
-
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
+        
 # Email function which sends a generated email message to the specified email that the user input
 def email(request):
     navBar = navBarFunc(request)
-
-    form = EmailForm(request.POST)
-    # If send button pressed, send the forms inputs to the database and also a email to the recipient
-    if form.is_valid():
-        sendEmail([form.cleaned_data['email']])
-        return redirect('email')
-    context = {'form': form, 'navBar': navBar}
-    return render(request, "email.html", context)
-
+    if (request.user.is_authenticated()):
+        form = EmailForm(request.POST)
+        # If send button pressed, send the forms inputs to the database and also a email to the recipient
+        if form.is_valid():
+            sendEmail([form.cleaned_data['email']])
+            return redirect('email')
+        context = {'form': form, 'navBar': navBar}
+        return render(request, "email.html", context)
+    else:
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
+    
+    
 def sendEmail(to_email):
     subject = "Your friend is asking you to join 'The Good Guys'"
     message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
@@ -541,21 +568,25 @@ def sendEmail(to_email):
 # Imageform function which saves images to the database that the users upload
 def imageform(request):
     navBar = navBarFunc(request)
-    form = PostImage(request.POST, request.FILES or None)
-    # If send button pressed, send the forms inputs to the database and update
-    if form.is_valid():
-        form.save()
-        return redirect('imageform')
-    # If send button not pressed, continue to display a input image form and nav bar
+    if (request.user.is_authenticated()):
+        form = PostImage(request.POST, request.FILES or None)
+        # If send button pressed, send the forms inputs to the database and update
+        if form.is_valid():
+            form.save()
+            return redirect('imageform')
+        # If send button not pressed, continue to display a input image form and nav bar
+        else:
+            context = {'form': form, 'navBar': navBar}
+            return render(request, 'imageform.html', context)
     else:
-        context = {'form': form, 'navBar': navBar}
-        return render(request, 'imageform.html', context)
+        navBar = navBarFunc(request)
+        notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
 
 def bugs(request):
     navBar = navBarFunc(request)
-
     form = BugForm(request.POST)
-
     if form.is_valid():
         formSubject = form.cleaned_data['subject']
         formDescription = form.cleaned_data['description']
@@ -563,6 +594,7 @@ def bugs(request):
         return redirect('bugs')
     context = {'form': form, 'navBar': navBar}
     return render(request, "bugs.html", context)
+
 
 def subscription(request):
     navBar = navBarFunc(request)
