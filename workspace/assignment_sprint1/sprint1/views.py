@@ -186,7 +186,7 @@ def mapOutput(locationId, search_query, checkedOptions):
 
         # If its a match
         if l.locationType == i:
-            
+
             # Return location
             return l
 
@@ -229,7 +229,7 @@ def suggestLocation(request):
     else:
         # Render the form if the method isnt POST (form not submitted)
         form = SuggestLocationForm()
-    
+
     # in any case render the page
     return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
 
@@ -489,14 +489,16 @@ def email(request):
     form = EmailForm(request.POST)
     # If send button pressed, send the forms inputs to the database and also a email to the recipient
     if form.is_valid():
-        to_list = [form.cleaned_data['email']]
-        subject = "Your friend is asking you to join 'The Good Guys'"
-        message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
-        from_email = settings.EMAIL_HOST_USER
-        send_mail(subject, message, from_email, to_list, fail_silently=False)
+        sendEmail([form.cleaned_data['email']])
         return redirect('email')
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
+
+def sendEmail(to_email):
+    subject = "Your friend is asking you to join 'The Good Guys'"
+    message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
+    from_email = settings.EMAIL_HOST_USER
+    send_mail(subject, message, from_email, to_email, fail_silently=False)
 
 # Imageform function which saves images to the database that the users upload
 def imageform(request):
@@ -510,7 +512,6 @@ def imageform(request):
     else:
         context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
-
 
 def bugs(request):
     navBar = navBarFunc(request)
