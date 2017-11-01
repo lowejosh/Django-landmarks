@@ -186,7 +186,7 @@ def mapOutput(locationId, search_query, checkedOptions):
 
         # If its a match
         if l.locationType == i:
-            
+
             # Return location
             return l
 
@@ -229,7 +229,7 @@ def suggestLocation(request):
     else:
         # Render the form if the method isnt POST (form not submitted)
         form = SuggestLocationForm()
-    
+
     # in any case render the page
     return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
 
@@ -512,7 +512,6 @@ def imageform(request):
     else:
         context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
-
 
 def bugs(request):
     navBar = navBarFunc(request)
