@@ -22,18 +22,21 @@ def navBarFunc(request):
         return '<ul><li><a href="/">Home</a></li><li class="right"><a href="/login/">Log in</a></li><li class="right"><a href="/signup/">Register</a></li><li class="right"><a href="/bugs/">Bug Report</a></li></ul>'
 
 
-# Review output function
+# Review HTML output function
 def ReviewOutput(location):
 
+    # Try to find a review for the location input
     try:
         r = Review.objects.filter(location=Location.objects.get(id=location))
+    # If no review
     except:
         return ""
 
+    # Defaults
     ReviewList = []
-
     starRating = []
 
+    # For every review - append the star checkbox HTML output into a list
     for i in range(0, r.count()):
         if r[i].rating == 1:
             starRating.append("""
@@ -101,6 +104,7 @@ def ReviewOutput(location):
                             <label for="st5"></label>
                         """)
 
+    # For every review - append the full HTML output into the review list
     for i in range(0, r.count()):
         ReviewList.append("""<table class="info" width="80%" align="center">
             <tr>
@@ -116,19 +120,24 @@ def ReviewOutput(location):
             </tr>
         </table><br />""")
 
+    # Return a list of the HTML output
     return ReviewList
 
 
 
 # Function that returns the html output of a location
 def locationOutput(locationId, search_query, checkedOptions):
+    # Try to see if a location matches the search query
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
+    # If no results
     except:
         return ""
 
+    # For every checked option filter
     for i in checkedOptions:
 
+        # If the location type matches the filter
         if l.locationType == i:
             locationName = l.locationName
             locationBio = l.locationBio
@@ -136,6 +145,7 @@ def locationOutput(locationId, search_query, checkedOptions):
             locationType = locationTypeOutput(l.locationType)
             linkId = str(locationId)
 
+            # Return the HTML output
             return """
                 <div class='location-wrap'>
                     <a class="location-name" href="/location/individual/""" + linkId + """">""" + locationName + """<span style="float: right; color: #FCFCFC; margin-right: 6px;">""" + locationType + """</span></a>
@@ -143,12 +153,8 @@ def locationOutput(locationId, search_query, checkedOptions):
                 </div>
             """
 
+    # If there are no results at all
     return ""
-
-
-# Returns a list of database objects that match the search query
-def returnSearch(search_query):
-    return Location.objects.filter(locationName__contains=search_query).values_list('id', flat=True)
 
 
 # Write the location type in plaintext
@@ -167,18 +173,21 @@ def locationTypeOutput(locationTypeId):
     else:
         return ""
 
-
-# Map Output
+# Simple map location object grabber
 def mapOutput(locationId, search_query, checkedOptions):
+    # Try to search locations matching search query
     try:
         l = Location.objects.get(id=locationId, locationName__contains=search_query)
     except:
         return None
 
+    # Filter by checked options
     for i in checkedOptions:
 
+        # If its a match
         if l.locationType == i:
 
+            # Return location
             return l
 
 
@@ -201,8 +210,6 @@ def index(request):
         # Return the template
         return render(request, 'publicMain.html', context=context_dict)
 
-
-#TODO
 # Suggest location view
 def suggestLocation(request):
 
@@ -214,12 +221,16 @@ def suggestLocation(request):
         form = SuggestLocationForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-#            instance.location_id = locationId
-#            instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("/")
+            notification = "Your location suggestion has been submitted"
+            context_dict = {'navBar' : navBar, 'notification' : notification,}
+            # Return a notification if the form succeeds
+            return render(request, 'notification.html', context=context_dict)
     else:
+        # Render the form if the method isnt POST (form not submitted)
         form = SuggestLocationForm()
+
+    # in any case render the page
     return render(request, 'suggestLocation.html', {'form': form, 'navBar' : navBar,})
 
 # Signup page view
@@ -295,7 +306,7 @@ def locations(request, location_id):
             instance.location_id = locationId
             instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("")
 
     else:
         form = ReviewForm()
@@ -324,6 +335,8 @@ def locationfeed(request):
     pointsList = []
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
     style1 = style2 = style3 = style4 = style5 = ""
+    notif = ""
+            
 
     # If the user is logged in
     if (request.user.is_authenticated()):
@@ -342,6 +355,24 @@ def locationfeed(request):
         return render(request, 'notification.html', context=context_dict)
 
     checkedOptions = list(map(int, request.GET.getlist("foo", [])))
+
+    # default checks
+    if accountType == "1":
+        checked2 = "disabled"
+        checked4 = "disabled"
+        checked5 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a student account, you can only search for libraries and universities, to view others, you need to upgrade to our premium plan</p>"
+    elif accountType == "2":
+        checked3 = "disabled"
+        checked4 = "disabled"
+        checked5 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a business account, you can only search for libraries and hotels, to view others, you need to upgrade to our premium plan</p>"
+    elif accountType == "3":
+        checked1 = "disabled"
+        checked2 = "disabled"
+        checked3 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a tourist account, you can only search for museums and public places, to view others, you need to upgrade to our premium plan</p>"
+
 
     # If someone searches
     if request.method == 'GET':
@@ -364,15 +395,38 @@ def locationfeed(request):
                 elif i == 5:
                     checked5 = "checked"
 
+                if accountType == "1":
+                    checked2 = "disabled"
+                    checked4 = "disabled"
+                    checked5 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a student account, you can only search for libraries and universities, to view others, you need to upgrade to our premium plan</p>"
+                elif accountType == "2":
+                    checked3 = "disabled"
+                    checked4 = "disabled"
+                    checked5 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a business account, you can only search for libraries and hotels, to view others, you need to upgrade to our premium plan</p>"
+                elif accountType == "3":
+                    checked1 = "disabled"
+                    checked2 = "disabled"
+                    checked3 = "disabled"
+                    notif = "<p style='margin-top: 12px'>As a tourist account, you can only search for museums and public places, to view others, you need to upgrade to our premium plan</p>"
+
+                
+
 
     locationMax = 50;
+    # For ever location
     for i in range(1, Location.objects.count() + 1):
+        # If the max amount hasnt been reached
         if i <= locationMax:
+            # Add the location to the location list
             locationList.append(locationOutput(i, search_query, checkedOptions))
             if mapOutput(i, search_query, checkedOptions) != None:
+                # Add the location object to the points list
                 pointsList.append(mapOutput(i, search_query, checkedOptions))
 
     coordinateList = []
+    # For every location in the points list, retrieve the lat and lon and append it into a multi-dimensional list
     for i in pointsList:
         coordinateList.append([i.latitude, i.longitude])
 
@@ -389,7 +443,7 @@ def locationfeed(request):
 
 
     # Define the context of the python vars
-    context_dict = {'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
+    context_dict = {'notif': notif, 'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
@@ -473,14 +527,16 @@ def email(request):
     form = EmailForm(request.POST)
     # If send button pressed, send the forms inputs to the database and also a email to the recipient
     if form.is_valid():
-        to_list = [form.cleaned_data['email']]
-        subject = "Your friend is asking you to join 'The Good Guys'"
-        message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
-        from_email = settings.EMAIL_HOST_USER
-        send_mail(subject, message, from_email, to_list, fail_silently=False)
+        sendEmail([form.cleaned_data['email']])
         return redirect('email')
     context = {'form': form, 'navBar': navBar}
     return render(request, "email.html", context)
+
+def sendEmail(to_email):
+    subject = "Your friend is asking you to join 'The Good Guys'"
+    message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
+    from_email = settings.EMAIL_HOST_USER
+    send_mail(subject, message, from_email, to_email, fail_silently=False)
 
 # Imageform function which saves images to the database that the users upload
 def imageform(request):
@@ -494,7 +550,6 @@ def imageform(request):
     else:
         context = {'form': form, 'navBar': navBar}
         return render(request, 'imageform.html', context)
-
 
 def bugs(request):
     navBar = navBarFunc(request)

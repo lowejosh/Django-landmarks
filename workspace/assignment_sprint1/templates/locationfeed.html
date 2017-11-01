@@ -26,6 +26,9 @@
                 </table>
             </div>
             <input type="submit" value="Search" id="submit">
+            {% autoescape off %}
+            {{ notif }}
+            {% endautoescape %}
         </form>
     </div>
 
@@ -54,7 +57,6 @@
 	  //var image = '/static/checkmark.png';
 
 	  {% for point in points %}
-		console.log({{ point.latitude }}, {{ point.longitude }});
 		var myLatLng = new google.maps.LatLng({{ point.latitude }}, {{ point.longitude }});
 
 		marker = new google.maps.Marker({
@@ -64,7 +66,6 @@
 			url: 'individual/{{point.id}}',
 		});
 		google.maps.event.addListener(marker, 'click', function() {
-			console.log("here");
 			window.location.href = this.url;
 		});
 	  {% endfor %}

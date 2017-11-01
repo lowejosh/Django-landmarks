@@ -5,8 +5,10 @@
 <!-- Main content -->
 {% block content %}
 <h2 class="centered-content">Suggest a location</h2>
-<form method="post">
-  <div class="form">
+<p class="centered-content">Location Type: 1 - Library, 2 - Hotel, 3 - University, 4 - Museum, 5 - Public place
+</p>
+    <form method="post">
+  <div class="form" style="margin-left: 120px">
   {% csrf_token %}
 
   {{ form.non_field_errors }}
