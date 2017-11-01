@@ -430,3 +430,49 @@ Review Images
     column-count: 1;
   }
 }
+
+/*
+* Advertisement Banner
+*/
+.image1 {
+  position: fixed;
+  top: 129px;
+  right: 0px;
+  width: 10%;
+  border: 0;
+}
+.image2 {
+  position: fixed;
+  top: 320px;
+  right: 0px;
+  width: 10%;
+  border: 0;
+}
+.image3 {
+  position: fixed;
+  top: 383px;
+  right: 0px;
+  width: 10%;
+  border: 0;
+}
+.image4 {
+  position: fixed;
+  top: 129px;
+  left: 0px;
+  width: 10%;
+  border: 0;
+}
+.image5 {
+  position: fixed;
+  top: 320px;
+  left: 0px;
+  width: 10%;
+  border: 0;
+}
+.image6 {
+  position: fixed;
+  top: 383px;
+  left: 0px;
+  width: 10%;
+  border: 0;
+}
