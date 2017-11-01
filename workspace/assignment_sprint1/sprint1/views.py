@@ -35,6 +35,7 @@ def ReviewOutput(location):
     # Defaults
     ReviewList = []
     starRating = []
+    
 
     # For every review - append the star checkbox HTML output into a list
     for i in range(0, r.count()):
@@ -109,7 +110,7 @@ def ReviewOutput(location):
         ReviewList.append("""<table class="info" width="80%" align="center">
             <tr>
                 <td>
-                    <span class="review-name">""" + str(r[i].user) + """ said:</span>
+                    <span class="review-name">""" + str(r[i].user) + """</a>said:</span>
                     <div class="rate">
                     """ + starRating[i] + """
                     </div><br />
@@ -238,9 +239,9 @@ def suggestLocation(request):
         return render(request, 'notification.html', context=context_dict)
     
 
-#TODO
 # Profile view
 def profile(request, user_id): 
+    
     # Show the correct navBar
     if (request.user.is_authenticated()):
         navBar = navBarFunc(request)
