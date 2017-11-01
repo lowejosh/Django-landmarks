@@ -1,0 +1,43 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+<!-- Main content -->
+{% block content %}
+    <h2 style="padding-left:10%;">Change Log</h2>
+    <table width="80%" align="center">
+        <tbody>
+            <tr>
+                <td>
+                    01/11/2017:
+                    <ul>
+                      <li>
+                        Created Change Log.
+                      </li>
+                      <li>
+                        Added Google Advertisement to Website.
+                      </li>
+                      <li>
+                        Solved bug when editing profile.
+                      </li>
+                      <li>
+                        Fixed Terms of Service Page.
+                      </li>
+                    </ul>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br /><br />
+
+    <form action="/">
+      <button type="submit" style="float: right; margin-right: 50%;" class="button">Back</button>
+    </form>
+
+    <br /><br /><br /><br /><br /><br /><br /><br />
+
+    <div class="footermain">
+        <h6>&nbsp&nbsp&nbspTelephone: 1300 975 707 | Fax: 1-888-473-2963 | Facebook: <a href="https://www.facebook.com/groups/122820418378364">The Good Boys</a></h6>
+    </div>
+{% endblock %}

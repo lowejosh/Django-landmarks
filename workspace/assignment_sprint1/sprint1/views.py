@@ -340,7 +340,7 @@ def locationfeed(request):
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
     style1 = style2 = style3 = style4 = style5 = ""
     notif = ""
-            
+
 
     # If the user is logged in
     if (request.user.is_authenticated()):
@@ -415,7 +415,7 @@ def locationfeed(request):
                     checked3 = "disabled"
                     notif = "<p style='margin-top: 12px'>As a tourist account, you can only search for museums and public places, to view others, you need to upgrade to our premium plan</p>"
 
-                
+
 
 
     locationMax = 50;
@@ -470,7 +470,7 @@ def modify(request):
 # Edit Profile function which updates database with the user details entered by the user
 def edit_profile(request):
     navBar = navBarFunc(request)
-    
+
     if (request.user.is_authenticated()):
         # If send button pressed, send the forms inputs to the database and update
         if request.method == 'POST':
@@ -540,7 +540,7 @@ def del_user(request):
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
-        
+
 # Email function which sends a generated email message to the specified email that the user input
 def email(request):
     navBar = navBarFunc(request)
@@ -557,8 +557,8 @@ def email(request):
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
-    
-    
+
+
 def sendEmail(to_email):
     subject = "Your friend is asking you to join 'The Good Guys'"
     message = "Hello, your friend is asking you to join us. Please sign up following this link - http://127.0.0.1:8000/signup/"
@@ -622,3 +622,13 @@ def unsubscribe(request):
         #Subscribe
         subscriptionReport = Subscription.objects.filter(firstName = userQuery.firstName, email = userQuery.email, accountType = userQuery.accountType).delete()
     return redirect('modify')
+
+def changelog(request):
+    navBar = navBarFunc(request)
+    context = {'navBar': navBar}
+    return render(request, 'ChangeLOG.html', context)
+
+def TOS(request):
+    navBar = navBarFunc(request)
+    context = {'navBar': navBar}
+    return render(request, 'ToS.html', context)
