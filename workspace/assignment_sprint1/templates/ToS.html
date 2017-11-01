@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Really Good Boys</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+{% load widget_tweaks %}
 
-    <br>
-    <table class="headerTable"><tr><td><h1>The Good Boys</h1></td></tr></table>
-    <button type="submit" style="position:absolute; top: 10px; right: 10px;" class="button">Back</button>
-</head>
-
-<body>
+<!-- Main content -->
+{% block content %}
     <br />
     <h2 style="padding-left:10%;">Terms & Conditions</h2>
     <table width="80%" align="center">
@@ -178,5 +172,4 @@
     <div class="footermain">
         <h6>&nbsp&nbsp&nbspTelephone: 1300 975 707 | Fax: 1-888-473-2963 | Facebook: <a href="https://www.facebook.com/groups/122820418378364">The Good Boys</a></h6>
     </div>
-</body>
-</html>
+{% endblock %}

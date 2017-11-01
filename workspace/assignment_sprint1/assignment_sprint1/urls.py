@@ -35,13 +35,15 @@ urlpatterns = [
     url(r'^location/individual/(?P<location_id>[0-9]+)/$', views.locations, name='locations'),
     url(r'^modify/$', views.modify, name='modify'),
     url(r'^modify/edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^modify/del_user/$', views.del_user, name='del_user'),
     url(r'^modify/password/$', views.password, name='password'),
     url(r'^modify/subscribe/$', views.subscribe, name='subscribe'),
     url(r'^modify/unsubscribe/$', views.unsubscribe, name='unsubscribe'),
+    url(r'^changelog', views.changelog, name='ChangeLOG'),
+    url(r'^TOS', views.TOS, name='TOS'),
     url(r'^email/$', views.email, name='email'),
     url(r'^imageform/$', views.imageform, name='imageform'),
     url(r'^bugs/$', views.bugs, name='bugs'),
-    url(r'^modify/del_user/$', views.del_user, name='del_user'),
     url(r'^suggestLocation/$', views.suggestLocation, name='suggestLocation')
 
 ]
