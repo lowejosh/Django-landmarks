@@ -10,6 +10,13 @@ html {
   box-sizing: inherit;
 }
 
+.profile-info {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 15px;
+    background-color: #FCFCFC;
+}
+
 .rate {
   border: none;
   margin: 0 auto;

@@ -44,7 +44,8 @@ urlpatterns = [
     url(r'^email/$', views.email, name='email'),
     url(r'^imageform/$', views.imageform, name='imageform'),
     url(r'^bugs/$', views.bugs, name='bugs'),
-    url(r'^suggestLocation/$', views.suggestLocation, name='suggestLocation')
+    url(r'^suggestLocation/$', views.suggestLocation, name='suggestLocation'),
+    url(r'^profile/(?P<user_id>[0-9]+)/$', views.profile, name='profile')
 
 ]
 

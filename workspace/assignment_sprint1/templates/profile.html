@@ -1,0 +1,16 @@
+<!-- This file is an extension of base.html -->
+{% extends 'base.html' %}
+
+<!-- Main content -->
+{% block content %}
+        <h3 class="centered-content">{{ username }}</h3> 
+        <div class="profile-info">
+            <p><b>First Name:</b> {{ firstName }}</p>
+            <p><b>Gender:</b> {{ gender }}</p>
+            <p><b>Date of Birth:</b> {{ dateofbirth }}</p>
+            <p><b>Account Type:</b> {{ accountType }}</p>
+        </div>
+
+
+   <br />
+{% endblock %}

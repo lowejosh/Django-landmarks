@@ -236,6 +236,33 @@ def suggestLocation(request):
         notification = 'You need to be logged in to view this page. Log in <a href="/login/">here</a>.'
         context_dict = {'navBar' : navBar, 'notification' : notification}
         return render(request, 'notification.html', context=context_dict)
+    
+
+#TODO
+# Profile view
+def profile(request, user_id): 
+    # Show the correct navBar
+    if (request.user.is_authenticated()):
+        navBar = navBarFunc(request)
+    else:
+        navBar = navBarFunc(request)
+
+    try:
+        # Retrieve data from database
+        l = Profile.objects.get(id=int(user_id))
+        username = l.user
+        firstName = l.firstName
+        gender = l.gender
+        accountType = l.accountType
+        dateofbirth = l.dateOfBirth
+        context_dict = {'navBar' : navBar, 'username' : username, 'firstName': firstName, 'gender': gender, 'accountType': accountType, 'dateofbirth': dateofbirth}
+        return render(request, 'profile.html', context=context_dict)
+    except:
+        # If there is no data
+        notification = "This user does not exist"
+        context_dict = {'navBar' : navBar, 'notification' : notification,}
+        return render(request, 'notification.html', context=context_dict)
+
 
 # Signup page view
 def signup(request):
