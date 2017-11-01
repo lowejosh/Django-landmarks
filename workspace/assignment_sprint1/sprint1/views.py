@@ -335,6 +335,8 @@ def locationfeed(request):
     pointsList = []
     checked1 = checked2 = checked3 = checked4 = checked5 = "checked"
     style1 = style2 = style3 = style4 = style5 = ""
+    notif = ""
+            
 
     # If the user is logged in
     if (request.user.is_authenticated()):
@@ -353,6 +355,24 @@ def locationfeed(request):
         return render(request, 'notification.html', context=context_dict)
 
     checkedOptions = list(map(int, request.GET.getlist("foo", [])))
+
+    # default checks
+    if accountType == "1":
+        checked2 = "disabled"
+        checked4 = "disabled"
+        checked5 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a student account, you can only search for libraries and universities, to view others, you need to upgrade to our premium plan</p>"
+    elif accountType == "2":
+        checked3 = "disabled"
+        checked4 = "disabled"
+        checked5 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a business account, you can only search for libraries and hotels, to view others, you need to upgrade to our premium plan</p>"
+    elif accountType == "3":
+        checked1 = "disabled"
+        checked2 = "disabled"
+        checked3 = "disabled"
+        notif = "<p style='margin-top: 12px'>As a tourist account, you can only search for museums and public places, to view others, you need to upgrade to our premium plan</p>"
+
 
     # If someone searches
     if request.method == 'GET':
@@ -374,6 +394,13 @@ def locationfeed(request):
                     checked4 = "checked"
                 elif i == 5:
                     checked5 = "checked"
+
+            print(accountType)
+            if accountType == "1":
+                checked2 = "disabled"
+                checked4 = "disabled"
+                checked5 = "disabled"
+                
 
 
     locationMax = 50;
@@ -405,7 +432,7 @@ def locationfeed(request):
 
 
     # Define the context of the python vars
-    context_dict = {'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
+    context_dict = {'notif': notif, 'points': pointsList, 'checked1': checked1, 'checked2': checked2, 'checked3': checked3, 'checked4': checked4, 'checked5': checked5, 'navBar' : navBar, 'errorMessage': errorMessage, 'locationList': locationList,}
 
     # Return the template
     return render(request, 'locationfeed.html', context=context_dict)
