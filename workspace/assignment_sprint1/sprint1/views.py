@@ -306,7 +306,9 @@ def locations(request, location_id):
             instance.location_id = locationId
             instance.user = Profile.objects.get(user=(request.user))
             instance.save()
-            return HttpResponseRedirect("/location")
+            notification = 'Your review has been successfully submitted'
+            context_dict = {'navBar' : navBar, 'notification' : notification}
+            return render(request, 'notification.html', context=context_dict)
 
     else:
         form = ReviewForm()
@@ -559,7 +561,10 @@ def bugs(request):
         formSubject = form.cleaned_data['subject']
         formDescription = form.cleaned_data['description']
         bugReport = Bug.objects.create(subject = formSubject, description = formDescription)
-        return redirect('bugs')
+        #return redirect('bugs')
+        notification = 'Your bug has been successfully submitted'
+        context_dict = {'navBar' : navBar, 'notification' : notification}
+        return render(request, 'notification.html', context=context_dict)
     context = {'form': form, 'navBar': navBar}
     return render(request, "bugs.html", context)
 
