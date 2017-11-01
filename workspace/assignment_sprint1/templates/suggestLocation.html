@@ -5,8 +5,9 @@
 <!-- Main content -->
 {% block content %}
 <h2 class="centered-content">Suggest a location</h2>
-<p class="centered-content">Location Type: 1 - Student, 2 - Business, 3 - Tourist</p>
-<form method="post">
+<p class="centered-content">Location Type: 1 - Library, 2 - Hotel, 3 - University, 4 - Museum, 5 - Public place
+</p>
+    <form method="post">
   <div class="form" style="margin-left: 120px">
   {% csrf_token %}
 
