@@ -1,57 +1,85 @@
-CREATE TABLE Profile (
-	username VARCHAR(50) NOT NULL,
-	firstName VARCHAR(20) NOT NULL,
-	lastName VARCHAR(20) NOT NULL,
-	gender ENUM('Male', 'Female', 'Other') NOT NULL,
-	accountType ENUM('Student', 'Businessman', 'Tourist', 'Premium') NOT NULL,
-	phoneNumber CHAR(10) NOT NULL,
-	residentialAddress VARCHAR(200) NOT NULL,
-	password CHAR(256) NOT NULL,
-	emailAddress VARCHAR(200) NOT NULL,
-	PRIMARY KEY (username)
-);
 
-CREATE TABLE Locations (
-	locationName VARCHAR(100) NOT NULL,
-	latitude FLOAT NOT NULL,
-	longitude FLOAT NOT NULL,
-	locationAddress VARCHAR(200) NOT NULL,
-	locationBio VARCHAR(300) NOT NULL,
-	locationType ENUM('Library', 'Hotel', 'Museum', 'University', 'Public') NOT NULL,
-	locationImagePath VARCHAR(200) NOT NULL,
-	PRIMARY KEY (locationName)
-);
 
-CREATE TABLE Reviews (
-	reviewID INT(30) NOT NULL,
-	locationName VARCHAR(100) NOT NULL,
-	reviewBio VARCHAR(300) NOT NULL,
-	reviewRating ENUM('1', '2', '3', '4', '5') NOT NULL,
-	username VARCHAR(50) NOT NULL,
-	favouriteStatus BOOLEAN NOT NULL,
-	PRIMARY KEY (reviewID),
-	FOREIGN KEY (locationName) REFERENCES Locations(locationName),
-	FOREIGN KEY (username) REFERENCES Profiles(username),
-);
+INSERT INTO AdminViewer VALUES (user, firstName, lastName, gender, accountType, dateOfBirth, email, phoneNumber, address);
 
-CREATE TABLE Admin_Profile (
-	username VARCHAR(50) NOT NULL,
-	firstName VARCHAR(20) NOT NULL,
-	lastName VARCHAR(20) NOT NULL,
-	password CHAR(256) NOT NULL,
-	staffStatus BOOLEAN NOT NULL,
-	emailAddress VARCHAR(200) NOT NULL,
-	PRIMARY KEY (username)
-);
+INSERT INTO Bug VALUES (subject, description);
 
-CREATE TABLE Favourites (
-	favouriteID INT(30) NOT NULL,	
-	PRIMARY KEY (favouriteID),
-);
+INSERT INTO LocationSuggestion VALUES (locationName, latitude, longitude, locationAddress, locationBio, locationType, locationImagePath);
 
-CREATE TABLE Bug_Report (
-	reportID INT(30) NOT NULL,
-	subject VARCHAR(50) NOT NULL,
-	description VARCHAR(300) NOT NULL,
-	PRIMARY KEY (reportID)
-);
+INSERT INTO Location VALUES (locationName, latitude, longitude, locationAddress, locationBio, locationType, locationImagePath);
+
+INSERT INTO PostImage VALUES (title, image, content);
+
+INSERT INTO Profile VALUES (user, firstName, lastName, gender, accountType, dateOfBirth, email, phoneNumber, address, password);
+
+INSERT INTO Review VALUES (user, location, reviewText, rating);
+
+SELECT (username, password) FROM Profile;
+SELECT (accountType) FROM Profile WHERE user = '';
+SELECT * FROM Location;
+SELECT (locationType) FROM Location WHERE locationName = '';
+SELECT (locationName) FROM Location;
+SELECT * FROM Review;
+SELECT * FROM locationSuggestion;
+SELECT (firstName, lastName, emailAddress, phoneNumber, address) FROM Profiles WHERE user = '';
+SELECT * FROM PostImage WHERE title='';
+
+UPDATE Profiles
+SET firstName = 'firstName'
+WHERE user = '';
+
+UPDATE Profiles
+SET lastName = 'lastName'
+WHERE user = '';
+
+UPDATE Profiles
+SET emailAddress = 'emailAddress'
+WHERE user = '';
+ 
+UPDATE Profiles
+SET password = 'password'
+WHERE user = '';
+
+UPDATE Location
+SET locationName = 'locationName', latitude = 'latitude', longitude = 'longitude', locationAddress = 'locationAddress', locationBio = 'locationBio', locationType = 'locationType', locationImagePath = 'locationImagePath' 
+WHERE locationName = '';
+ 
+UPDATE Review
+SET location = 'location', reviewText = 'reviewText', rating = 'rating'
+WHERE reviewID = '';
+
+UPDATE Tag
+SET location = 'location', tagText = 'tagText'
+WHERE location ='' AND tagText = '';
+
+UPDATE LocationSuggestion
+SET locationName = 'locationName', latitude = 'latitude', longitude = 'longitude', locationAddress = 'locationAddress', locationBio = 'locationBio', locationType = 'locationType', locationImagePath = 'locationImagePath' 
+WHERE locationName = '';
+
+DELETE FROM Profiles
+WHERE user='';
+
+DELETE FROM Locations
+WHERE locationName='';
+
+DELETE FROM Tags
+WHERE location ='' AND tagText = '';
+
+DELETE FROM Reviews
+WHERE reviewID='';
+
+DELETE FROM Bugs
+WHERE subject = '' AND description='';
+
+DELETE FROM Email_forms
+WHERE email='';
+
+DELETE FROM Location_suggestions
+WHERE locationName='';
+
+DELETE FROM Post_images
+WHERE title='';
+
+DELETE FROM Subscriptions
+WHERE firstName = '' AND email='';
+
