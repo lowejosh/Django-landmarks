@@ -39,12 +39,12 @@ RemoveLocationSuggestion.short_description = "Removes suggested location"
 def AcceptLocationSuggestion(modeladmin, request, queryset):
     modeladmin.message_user(request, "You have added " + str(queryset.count()) + " location suggestions to the primary database")
     for entry in queryset:
-        sl = LocationSuggestion.objects.filter(id=entry.id)
+        sl = LocationSuggestion.objects.get(id=entry.id)
         l = Location(locationName = sl.locationName, latitude = sl.latitude, longitude = sl.longitude, locationBio = sl.locationBio, locationAddress = sl.locationAddress, locationType = sl.locationType, locationImagePath = "/")
         l.save()
         sl.delete()
         
-RemoveLocationSuggestion.short_description = "Moves suggested location into the primary location database"
+AcceptLocationSuggestion.short_description = "Moves suggested location into the primary location database"
 
 # Function to allow admins to login as the selected user
 def AutoLogin(modeladmin, request, queryset):

@@ -449,7 +449,7 @@ def locationfeed(request):
 
 
     locationMax = 50;
-    # For ever location
+    # For every location
     for i in range(1, Location.objects.count() + 1):
         # If the max amount hasnt been reached
         if i <= locationMax:
