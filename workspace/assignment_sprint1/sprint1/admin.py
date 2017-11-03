@@ -122,3 +122,4 @@ admin.site.register(LocationSuggestion, LocationAcceptDeny)
 admin.site.register(Bug, ProfileBug)
 admin.site.register(AdminViewer, AdminViewerFuntion)
 admin.site.register(Subscription, LocationSuggestionFunction)
+ 
