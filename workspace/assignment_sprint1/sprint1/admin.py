@@ -28,6 +28,24 @@ def RemoveBug(modeladmin, request, queryset):
         Bug.objects.filter(id=entry.id).delete()
 RemoveBug.short_description = "Remove Invalid Bugs"
 
+# Function to allow admins to remove location suggestions
+def RemoveLocationSuggestion(modeladmin, request, queryset):
+    modeladmin.message_user(request, "You have removed " + str(queryset.count()) + " location suggestions.")
+    for entry in queryset:
+        LocationSuggestion.objects.filter(id=entry.id).delete()
+RemoveLocationSuggestion.short_description = "Removes suggested location"
+
+# Function to allow admins to accept location suggestions
+def AcceptLocationSuggestion(modeladmin, request, queryset):
+    modeladmin.message_user(request, "You have added " + str(queryset.count()) + " location suggestions to the primary database")
+    for entry in queryset:
+        sl = LocationSuggestion.objects.filter(id=entry.id)
+        l = Location(locationName = sl.locationName, latitude = sl.latitude, longitude = sl.longitude, locationBio = sl.locationBio, locationAddress = sl.locationAddress, locationType = sl.locationType, locationImagePath = "/")
+        l.save()
+        sl.delete()
+        
+RemoveLocationSuggestion.short_description = "Moves suggested location into the primary location database"
+
 # Function to allow admins to login as the selected user
 def AutoLogin(modeladmin, request, queryset):
     if queryset.count() != 1:
@@ -81,6 +99,10 @@ class ProfileAdmin(admin.ModelAdmin):
 class ProfileBug(admin.ModelAdmin):
     list_display = ['subject', 'description']
     actions = [AcceptBug, RemoveBug]
+
+class LocationAcceptDeny(admin.ModelAdmin):
+    actions = [RemoveLocationSuggestion, AcceptLocationSuggestion]
+
 class AdminViewerFuntion(admin.ModelAdmin):
     actions = [AutoLogin]
 
@@ -96,7 +118,7 @@ admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Location)
 admin.site.register(Review)
 admin.site.register(Tag)
-admin.site.register(LocationSuggestion)
+admin.site.register(LocationSuggestion, LocationAcceptDeny)
 admin.site.register(Bug, ProfileBug)
 admin.site.register(AdminViewer, AdminViewerFuntion)
 admin.site.register(Subscription, LocationSuggestionFunction)

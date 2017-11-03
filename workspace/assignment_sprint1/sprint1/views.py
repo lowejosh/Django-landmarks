@@ -40,6 +40,7 @@ def ReviewOutput(location):
     # For every review - append the star checkbox HTML output into a list
     for i in range(0, r.count()):
         if r[i].rating == 1:
+            print(r[i].user.id)
             starRating.append("""
                             <input type="checkbox" id="st1" value="1" /> <!-- 5 Star if checked="checked" -->
                             <label for="st1"></label>
@@ -110,7 +111,7 @@ def ReviewOutput(location):
         ReviewList.append("""<table class="info" width="80%" align="center">
             <tr>
                 <td>
-                    <span class="review-name">""" + str(r[i].user) + """</a>said:</span>
+                    <span class="review-name"><a href='/profile/""" + str(r[i].user.id) + """'>""" + str(r[i].user) + """</a> said:</span>
                     <div class="rate">
                     """ + starRating[i] + """
                     </div><br />
